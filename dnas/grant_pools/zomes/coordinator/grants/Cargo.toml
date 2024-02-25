@@ -1,0 +1,17 @@
+[package]
+name = "grants"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+name = "grants"
+
+[dependencies]
+hdk = { workspace = true }
+
+serde = { workspace = true }
+
+grants_integrity = { workspace = true } 
+
+alloy-primitives = { workspace = true }

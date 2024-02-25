@@ -1,0 +1,43 @@
+---
+manifest_version: "1"
+name: grant_pools
+integrity:
+  network_seed: ~
+  properties: ~
+  origin_time: 1708829984825061
+  zomes:
+    - name: profiles_integrity
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/profiles_integrity.wasm"
+      dependencies: ~
+      dylib: ~
+    - name: templates_integrity
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/templates_integrity.wasm"
+      dependencies: ~
+      dylib: ~
+    - name: grants_integrity
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/grants_integrity.wasm"
+      dependencies: ~
+      dylib: ~
+coordinator:
+  zomes:
+    - name: profiles
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/profiles.wasm"
+      dependencies:
+        - name: profiles_integrity
+      dylib: ~
+    - name: templates
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/templates.wasm"
+      dependencies:
+        - name: templates_integrity
+      dylib: ~
+    - name: grants
+      hash: ~
+      bundled: "../../../target/wasm32-unknown-unknown/release/grants.wasm"
+      dependencies:
+        - name: grants_integrity
+      dylib: ~

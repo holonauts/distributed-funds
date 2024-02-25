@@ -1,0 +1,28 @@
+[profile.dev]
+opt-level = "z"
+
+[profile.release]
+opt-level = "z"
+
+[workspace]
+members = ["dnas/*/zomes/coordinator/*", "dnas/*/zomes/integrity/*"]
+
+[workspace.dependencies]
+hdi = "=0.3.6"
+hdk = "=0.2.6"
+serde = { version = "=1.0.166", features = ["derive"] }
+alloy-primitives = { version = "0.6.3", features = ["serde"] }
+hc_zome_profiles_coordinator = { git="https://github.com/holochain-open-dev/profiles.git", rev="a1a487c8d6a8fd9910ba9b3f26e47df0bf0d09ae" }
+hc_zome_profiles_integrity = { git="https://github.com/holochain-open-dev/profiles.git", rev="a1a487c8d6a8fd9910ba9b3f26e47df0bf0d09ae" }
+
+[workspace.dependencies.grants]
+path = "dnas/grant_pools/zomes/coordinator/grants"
+
+[workspace.dependencies.grants_integrity]
+path = "dnas/grant_pools/zomes/integrity/grants"
+
+[workspace.dependencies.profiles]
+path = "dnas/grant_pools/zomes/coordinator/profiles"
+
+[workspace.dependencies.profiles_integrity]
+path = "dnas/grant_pools/zomes/integrity/profiles"

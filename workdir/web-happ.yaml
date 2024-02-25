@@ -1,0 +1,7 @@
+---
+manifest_version: "1"
+name: grant-funding
+ui:
+  bundled: "../ui/dist.zip"
+happ_manifest:
+  bundled: "./grant-funding.happ"
