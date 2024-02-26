@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount, getContext } from 'svelte';
-	import '@material/mwc-circular-progress';
+	import { Spinner } from 'flowbite-svelte';
 	import type {
 		EntryHash,
 		Record,
@@ -58,7 +58,7 @@
 
 {#if loading}
 	<div style="display: flex; flex: 1; align-items: center; justify-content: center">
-		<mwc-circular-progress indeterminate></mwc-circular-progress>
+		<Spinner class="h-4 w-4" />
 	</div>
 {:else if error}
 	<span>Error fetching the applications: {error.data.data}.</span>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
-	import '@material/mwc-circular-progress';
+	import { Spinner } from 'flowbite-svelte';
 	import { decode } from '@msgpack/msgpack';
 	import type {
 		Record,
@@ -12,7 +12,7 @@
 	} from '@holochain/client';
 	import { clientContext } from '../../contexts';
 	import type { ApplicationTemplate } from './types';
-	import '@material/mwc-circular-progress';
+	import { Spinner } from 'flowbite-svelte';
 	import type { Snackbar } from '@material/mwc-snackbar';
 	import '@material/mwc-snackbar';
 	import '@material/mwc-icon-button';
@@ -67,7 +67,7 @@
 
 {#if loading}
 	<div style="display: flex; flex: 1; align-items: center; justify-content: center">
-		<mwc-circular-progress indeterminate></mwc-circular-progress>
+		<Spinner class="h-4 w-4" />
 	</div>
 {:else if error}
 	<span>Error fetching the application template: {error.data.data}</span>
