@@ -1,5 +1,5 @@
-use hdi::prelude::*;
 use alloy_primitives::U256;
+use hdi::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct AmountRange {
@@ -16,6 +16,7 @@ pub struct GrantPool {
     pub application_template: ActionHash,
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
+    pub evaluators: Vec<AgentPubKey>,
 }
 pub fn validate_create_grant_pool(
     _action: EntryCreationAction,
@@ -34,6 +35,11 @@ pub fn validate_create_grant_pool(
     if grant_pool.rules_description.is_empty() {
         return Ok(ValidateCallbackResult::Invalid(
             "Rules description cannot be empty".to_string(),
+        ));
+    }
+    if grant_pool.evaluators.is_empty() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Evaluators cannot be empty".to_string(),
         ));
     }
 
