@@ -11,11 +11,6 @@ integrity:
       bundled: "../../../target/wasm32-unknown-unknown/release/profiles_integrity.wasm"
       dependencies: ~
       dylib: ~
-    - name: templates_integrity
-      hash: ~
-      bundled: "../../../target/wasm32-unknown-unknown/release/templates_integrity.wasm"
-      dependencies: ~
-      dylib: ~
     - name: grants_integrity
       hash: ~
       bundled: "../../../target/wasm32-unknown-unknown/release/grants_integrity.wasm"
@@ -28,12 +23,6 @@ coordinator:
       bundled: "../../../target/wasm32-unknown-unknown/release/profiles.wasm"
       dependencies:
         - name: profiles_integrity
-      dylib: ~
-    - name: templates
-      hash: ~
-      bundled: "../../../target/wasm32-unknown-unknown/release/templates.wasm"
-      dependencies:
-        - name: templates_integrity
       dylib: ~
     - name: grants
       hash: ~
