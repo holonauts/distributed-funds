@@ -1,11 +1,11 @@
-use hdi::prelude::*;
 use alloy_primitives::U256;
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+use hdi::prelude::*;
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct ApplicationOutcome {
     approved: bool,
     grant_pool: ActionHash,
 }
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(tag = "type")]
 pub enum ApplicationStatus {
     Draft,
@@ -15,8 +15,35 @@ pub enum ApplicationStatus {
     // EVM claim Transaction Hash
     Claimed(U256),
 }
+impl ApplicationStatus {
+    fn is_draft(&self) -> bool {
+        match self {
+            ApplicationStatus::Draft => true,
+            _ => false,
+        }
+    }
+    fn is_submitted(&self) -> bool {
+        match self {
+            ApplicationStatus::Submitted(_) => true,
+            _ => false,
+        }
+    }
+    fn is_evaluated(&self) -> bool {
+        match self {
+            ApplicationStatus::Evaluated(_) => true,
+            _ => false,
+        }
+    }
+    fn _is_claimed(&self) -> bool {
+        match self {
+            ApplicationStatus::Claimed(_) => true,
+            _ => false,
+        }
+    }
+}
+
 #[hdk_entry_helper]
-#[derive(Clone, PartialEq)]
+#[derive(Clone, Eq, PartialEq)]
 pub struct Application {
     pub application_template: ActionHash,
     pub content: String,
@@ -25,24 +52,100 @@ pub struct Application {
 }
 pub fn validate_create_application(
     _action: EntryCreationAction,
-    _application: Application,
+    application: Application,
 ) -> ExternResult<ValidateCallbackResult> {
+    if application.content.is_empty() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Content cannot be empty".to_string(),
+        ));
+    }
+    if application.amount == U256::from(0) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Amount cannot be zero".to_string(),
+        ));
+    }
+    let record = must_get_valid_record(application.application_template.clone())?;
+    let _application_template: crate::ApplicationTemplate = record
+        .entry()
+        .to_app_option()
+        .map_err(|e| wasm_error!(e))?
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Dependant action must be accompanied by an entry"
+        ))))?;
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application(
-    _action: Update,
-    _application: Application,
-    _original_action: EntryCreationAction,
-    _original_application: Application,
+    action: Update,
+    application: Application,
+    original_action: EntryCreationAction,
+    original_application: Application,
 ) -> ExternResult<ValidateCallbackResult> {
+    let original_status = original_application.status;
+    if &action.author != original_action.author() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Only original author can update".to_string(),
+        ));
+    }
+    if original_application.application_template != application.application_template {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Application template action hash must be the same".to_string(),
+        ));
+    }
+    if !&original_status.is_draft() {
+        if original_application.content != application.content {
+            return Ok(ValidateCallbackResult::Invalid(
+                "Content can only be changed in draft".to_string(),
+            ));
+        }
+        if original_application.amount != application.amount {
+            return Ok(ValidateCallbackResult::Invalid(
+                "Amount can only be changed in draft".to_string(),
+            ));
+        }
+    }
+
+    match application.status {
+        ApplicationStatus::Draft => {
+            if !&original_status.is_draft() {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Status cannot be reverted".to_string(),
+                ));
+            }
+        }
+        ApplicationStatus::Submitted(_) => {
+            if !&original_status.is_draft() {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Status cannot be reverted".to_string(),
+                ));
+            }
+        }
+        ApplicationStatus::Evaluated(_) => {
+            if !&original_status.is_submitted() {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Status cannot be reverted".to_string(),
+                ));
+            }
+        }
+        ApplicationStatus::Claimed(_) => {
+            if !&original_status.is_evaluated() {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Status cannot be reverted".to_string(),
+                ));
+            }
+        }
+    };
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_delete_application(
     _action: Delete,
     _original_action: EntryCreationAction,
     _original_application: Application,
 ) -> ExternResult<ValidateCallbackResult> {
-    Ok(ValidateCallbackResult::Invalid(String::from("Applications cannot be deleted")))
+    Ok(ValidateCallbackResult::Invalid(String::from(
+        "Applications cannot be deleted",
+    )))
 }
 pub fn validate_create_link_application_updates(
     _action: CreateLink,
@@ -52,38 +155,31 @@ pub fn validate_create_link_application_updates(
 ) -> ExternResult<ValidateCallbackResult> {
     let action_hash = base_address
         .into_action_hash()
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("No action hash associated with link"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "No action hash associated with link"
+        ))))?;
     let record = must_get_valid_record(action_hash)?;
     let _application: crate::Application = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Linked action must reference an entry"))
-            ),
-        )?;
-    let action_hash = target_address
-        .into_action_hash()
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("No action hash associated with link"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Linked action must reference an entry"
+        ))))?;
+    let action_hash =
+        target_address
+            .into_action_hash()
+            .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                "No action hash associated with link"
+            ))))?;
     let record = must_get_valid_record(action_hash)?;
     let _application: crate::Application = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Linked action must reference an entry"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Linked action must reference an entry"
+        ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_application_updates(
@@ -93,11 +189,9 @@ pub fn validate_delete_link_application_updates(
     _target: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    Ok(
-        ValidateCallbackResult::Invalid(
-            String::from("ApplicationUpdates links cannot be deleted"),
-        ),
-    )
+    Ok(ValidateCallbackResult::Invalid(String::from(
+        "ApplicationUpdates links cannot be deleted",
+    )))
 }
 pub fn validate_create_link_all_applications(
     _action: CreateLink,
@@ -105,23 +199,20 @@ pub fn validate_create_link_all_applications(
     target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    let action_hash = target_address
-        .into_action_hash()
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("No action hash associated with link"))
-            ),
-        )?;
+    let action_hash =
+        target_address
+            .into_action_hash()
+            .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                "No action hash associated with link"
+            ))))?;
     let record = must_get_valid_record(action_hash)?;
     let _application: crate::Application = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Linked action must reference an entry"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Linked action must reference an entry"
+        ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_all_applications(
@@ -139,23 +230,20 @@ pub fn validate_create_link_my_applications(
     target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    let action_hash = target_address
-        .into_action_hash()
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("No action hash associated with link"))
-            ),
-        )?;
+    let action_hash =
+        target_address
+            .into_action_hash()
+            .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                "No action hash associated with link"
+            ))))?;
     let record = must_get_valid_record(action_hash)?;
     let _application: crate::Application = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Linked action must reference an entry"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Linked action must reference an entry"
+        ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_my_applications(
