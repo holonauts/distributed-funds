@@ -24,7 +24,7 @@
 	<div class="min-h-screen w-full bg-white dark:bg-gray-900">
 		<Navbar />
 
-		<main class="h-full w-full grow overflow-x-auto p-8">
+		<main class="h-full w-full grow overflow-x-auto px-8">
 			<slot />
 		</main>
 
