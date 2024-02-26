@@ -9,7 +9,7 @@ pub fn validate_create_time_period(
     _action: EntryCreationAction,
     time_period: TimePeriod,
 ) -> ExternResult<ValidateCallbackResult> {
-    if time_period.start_at > time_period.end_at {
+    if time_period.start_at >= time_period.end_at {
         Ok(ValidateCallbackResult::Invalid(
             "End time must be greater than start time".to_string(),
         ))

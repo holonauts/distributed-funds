@@ -56,9 +56,9 @@ pub fn validate_create_evaluation_template(
                         "Label can't be empty".to_string(),
                     ));
                 }
-                if criteria.weight <= 0 {
+                if criteria.weight == 0 {
                     return Ok(ValidateCallbackResult::Invalid(
-                        "Weight must be a positive value".to_string(),
+                        "Weight cannot be zero".to_string(),
                     ));
                 }
             }
