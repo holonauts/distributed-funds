@@ -7,9 +7,15 @@ pub struct TimePeriod {
 }
 pub fn validate_create_time_period(
     _action: EntryCreationAction,
-    _time_period: TimePeriod,
+    time_period: TimePeriod,
 ) -> ExternResult<ValidateCallbackResult> {
-    Ok(ValidateCallbackResult::Valid)
+    if time_period.start_at >= time_period.end_at {
+        Ok(ValidateCallbackResult::Invalid(
+            "End time must be greater than start time".to_string(),
+        ))
+    } else {
+        Ok(ValidateCallbackResult::Valid)
+    }
 }
 pub fn validate_update_time_period(
     _action: Update,
@@ -17,14 +23,18 @@ pub fn validate_update_time_period(
     _original_action: EntryCreationAction,
     _original_time_period: TimePeriod,
 ) -> ExternResult<ValidateCallbackResult> {
-    Ok(ValidateCallbackResult::Invalid(String::from("Time Periods cannot be updated")))
+    Ok(ValidateCallbackResult::Invalid(String::from(
+        "Time Periods cannot be updated",
+    )))
 }
 pub fn validate_delete_time_period(
     _action: Delete,
     _original_action: EntryCreationAction,
     _original_time_period: TimePeriod,
 ) -> ExternResult<ValidateCallbackResult> {
-    Ok(ValidateCallbackResult::Invalid(String::from("Time Periods cannot be deleted")))
+    Ok(ValidateCallbackResult::Invalid(String::from(
+        "Time Periods cannot be deleted",
+    )))
 }
 pub fn validate_create_link_all_time_periods(
     _action: CreateLink,
@@ -32,23 +42,20 @@ pub fn validate_create_link_all_time_periods(
     target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    let action_hash = target_address
-        .into_action_hash()
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("No action hash associated with link"))
-            ),
-        )?;
+    let action_hash =
+        target_address
+            .into_action_hash()
+            .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                "No action hash associated with link"
+            ))))?;
     let record = must_get_valid_record(action_hash)?;
     let _time_period: crate::TimePeriod = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Linked action must reference an entry"))
-            ),
-        )?;
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Linked action must reference an entry"
+        ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_all_time_periods(
