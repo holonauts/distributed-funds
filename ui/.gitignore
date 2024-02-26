@@ -1,26 +1,12 @@
-## editors
-/.idea
-/.vscode
-
-## system files
 .DS_Store
-
-## npm
-/**/node_modules/
-/npm-debug.log
-
-## testing
-/coverage/
-
-## temp folders
-/.tmp/
-
-# build
-/_site/
-/dist/
-/out-tsc/
-/target/
-
-storybook-static
-.rollup.cache
-*.tsbuildinfo
+node_modules
+/build
+/.svelte-kit
+/package
+.env
+.env.*
+!.env.example
+.vercel
+.output
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*

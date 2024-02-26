@@ -21,8 +21,8 @@
     "@holochain-playground/cli": "^0.1.1",
     "@holochain/hc-spin": "^0.200.10",
     "concurrently": "^6.2.1",
-    "rimraf": "^3.0.2",
-    "new-port-cli": "^1.0.0"
+    "new-port-cli": "^1.0.0",
+    "rimraf": "^3.0.2"
   },
   "engines": {
     "npm": ">=7.0.0"
