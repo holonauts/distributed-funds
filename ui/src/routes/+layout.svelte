@@ -21,13 +21,11 @@
   });
 </script>
 
-<main class="flex w-full h-full">
-  {#if loading || true }
-    <div class="flex w-full h-screen justify-center items-center">
-      <Spinner class="w-8 h-8" />
-			<Input />
-    </div>
-  {:else}
-		<slot></slot>
-  {/if}
+<Spinner class="w-4 h-4" />
+
+<main>
+{#if loading}
+{:else}
+  <slot></slot>
+{/if}
 </main>
