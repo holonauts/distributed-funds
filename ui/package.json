@@ -26,7 +26,10 @@
 		"@material/mwc-textarea": "^0.27.0",
 		"@material/mwc-textfield": "^0.27.0",
 		"@msgpack/msgpack": "^2.7.2",
-		"@vaadin/date-time-picker": "^23.2.8"
+		"@vaadin/date-time-picker": "^23.2.8",
+		"flowbite-svelte-icons": "^1.4.0",
+		"lodash": "^4.17.21",
+		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
@@ -36,6 +39,8 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "^8.56.0",
+		"@types/lodash": "^4.14.202",
+		"@types/uuid": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.17",

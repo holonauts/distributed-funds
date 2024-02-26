@@ -1,0 +1,28 @@
+<script lang="ts">
+	import { Breadcrumb, BreadcrumbItem } from 'flowbite-svelte';
+	import { page } from '$app/stores';
+	import { generateBreadcrumbs } from '$lib/utils/breadcrumbs';
+
+	export let title: string;
+
+	$: breadcrumbs = generateBreadcrumbs($page.url.pathname);
+</script>
+
+<div class="m-8 mt-4 flex justify-center">
+	<Breadcrumb
+		olClass="inline-flex items-center rtl:space-x-reverse"
+		aria-label="Default breadcrumb example"
+	>
+		<BreadcrumbItem href="/" home></BreadcrumbItem>
+		{#each breadcrumbs as crumb}
+			<BreadcrumbItem
+				href={crumb.href}
+				linkClass="mr-0 text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white capitalize"
+				>{crumb.label}</BreadcrumbItem
+			>
+		{/each}
+		<BreadcrumbItem spanClass="text-sm font-medium text-gray-700 dark:text-gray-300 capitalize"
+			>{title}</BreadcrumbItem
+		>
+	</Breadcrumb>
+</div>
