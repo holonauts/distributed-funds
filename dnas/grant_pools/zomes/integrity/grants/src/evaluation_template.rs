@@ -53,7 +53,7 @@ pub fn validate_create_evaluation_template(
             for criteria in weighted_criteria {
                 if criteria.label.is_empty() {
                     return Ok(ValidateCallbackResult::Invalid(
-                        "Label can't be empty".to_string(),
+                        "Label cannnot be empty".to_string(),
                     ));
                 }
                 if criteria.weight == 0 {
