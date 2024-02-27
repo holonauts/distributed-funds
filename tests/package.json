@@ -5,9 +5,11 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@msgpack/msgpack": "^2.7.0",
     "@holochain/client": "^0.16.7",
     "@holochain/tryorama": "^0.15.2",
+    "@msgpack/msgpack": "^2.7.0",
+    "diff": "^5.2.0",
+    "source-map": "^0.6.1",
     "typescript": "^4.9.4",
     "vitest": "^0.28.4"
   },

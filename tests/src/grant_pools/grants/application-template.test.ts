@@ -24,7 +24,10 @@ test('create ApplicationTemplate', async () => {
     await scenario.shareAllAgents();
 
     // Alice creates a ApplicationTemplate
-    const record: Record = await createApplicationTemplate(alice.cells[0]);
+    const record: Record = await createApplicationTemplate(alice.cells[0], {
+      name: "My template",
+      json_schema: "{\"example\": 123}",
+    });
     assert.ok(record);
   });
 });
