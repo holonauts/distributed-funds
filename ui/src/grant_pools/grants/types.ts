@@ -51,6 +51,7 @@ export type EntryTypes =
 
 export interface ApplicationTemplate {
 	json_schema: string;
+	name: string;
 }
 
 export interface QuantitativeRating {
@@ -81,6 +82,8 @@ export interface GrantPool {
 	application_template: ActionHash;
 
 	evaluation_template: ActionHash;
+
+	evaluators: AgentPubKey[];
 }
 
 export interface Status {

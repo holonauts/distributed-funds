@@ -1,23 +1,30 @@
 use hdi::prelude::*;
+use serde_json::Value;
 
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct ApplicationTemplate {
     pub json_schema: String,
+    pub name: String,
 }
 pub fn validate_create_application_template(
     _action: EntryCreationAction,
     application_template: ApplicationTemplate,
 ) -> ExternResult<ValidateCallbackResult> {
-    let valid_json: Result<String, serde_json::Error> =
+    let valid_json: Result<Value, serde_json::Error> =
         serde_json::from_str(&application_template.json_schema);
     if valid_json.is_err() {
-        Ok(ValidateCallbackResult::Invalid(
+        return Ok(ValidateCallbackResult::Invalid(
             "Schema not valid json".to_string(),
-        ))
-    } else {
-        Ok(ValidateCallbackResult::Valid)
+        ));
     }
+    if application_template.name.is_empty() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Name cannot be empty".to_string(),
+        ));
+    }
+
+    Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application_template(
     _action: Update,

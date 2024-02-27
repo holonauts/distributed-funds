@@ -6,7 +6,7 @@ export interface BreadCrumb {
 export function generateBreadcrumbs(path: string): BreadCrumb[] {
   const crumbs = path.split('/');
   return crumbs.map((c, i) => ({
-    label: c,
+    label: c.replace('-', ' '),
     href: crumbs.slice(0, i+1).join('/'),
   })).slice(1, -1);
 }

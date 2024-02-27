@@ -21,8 +21,8 @@
 				>{crumb.label}</BreadcrumbItem
 			>
 		{/each}
-		<BreadcrumbItem spanClass="text-sm font-medium text-gray-700 dark:text-gray-300 capitalize"
-			>{title}</BreadcrumbItem
-		>
+		<BreadcrumbItem spanClass="text-sm font-medium text-gray-700 dark:text-gray-300 capitalize">
+			{title}
+		</BreadcrumbItem>
 	</Breadcrumb>
 </div>

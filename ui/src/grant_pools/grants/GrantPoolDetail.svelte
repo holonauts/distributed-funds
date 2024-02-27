@@ -2,20 +2,9 @@
 	import { createEventDispatcher, onMount, getContext } from 'svelte';
 	import { Spinner } from 'flowbite-svelte';
 	import { decode } from '@msgpack/msgpack';
-	import type {
-		Record,
-		ActionHash,
-		AppAgentClient,
-		EntryHash,
-		AgentPubKey,
-		DnaHash
-	} from '@holochain/client';
+	import type { Record, ActionHash, AppAgentClient } from '@holochain/client';
 	import { clientContext } from '../../contexts';
 	import type { GrantPool } from './types';
-	import { Spinner } from 'flowbite-svelte';
-	import type { Snackbar } from '@material/mwc-snackbar';
-	import '@material/mwc-snackbar';
-	import '@material/mwc-icon-button';
 
 	const dispatch = createEventDispatcher();
 
@@ -69,6 +58,8 @@
 	</div>
 {:else if error}
 	<span>Error fetching the grant pool: {error.data.data}</span>
+{:else if grantPool === undefined}
+	<span>Grant Pool not found</span>
 {:else}
 	<div style="display: flex; flex-direction: column">
 		<div style="display: flex; flex-direction: row">
