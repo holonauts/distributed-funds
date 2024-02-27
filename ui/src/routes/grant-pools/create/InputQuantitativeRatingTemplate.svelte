@@ -3,7 +3,6 @@
 	import type {
 		NumberRange,
 		ScoreTemplate,
-		NumberRangeWeightedCriteria,
 		WeightedCriteria
 	} from '../../../grant_pools/grants/types';
 	import { ScoreType } from '../../../grant_pools/grants/types';

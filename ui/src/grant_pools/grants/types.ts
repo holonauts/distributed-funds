@@ -59,11 +59,6 @@ export interface NumberRange {
 	max: number;
 }
 
-export interface NumberRangeWeightedCriteria {
-	range: NumberRange;
-	weighted_criteria: WeightedCriteria[];
-}
-
 export interface WeightedCriteria {
 	label: string,
 	weight: number,
@@ -76,7 +71,7 @@ export enum ScoreType {
 
 export interface ScoreTemplate {
 	type: ScoreType;
-	content: NumberRange | NumberRangeWeightedCriteria;
+	content: undefined | WeightedCriteria[];
 }
 
 export interface EvaluationTemplate {
@@ -84,6 +79,8 @@ export interface EvaluationTemplate {
 	
 	qualitative_json_schema: string;
 
+	score_range: NumberRange,
+	
 	score: ScoreTemplate;
 }
 

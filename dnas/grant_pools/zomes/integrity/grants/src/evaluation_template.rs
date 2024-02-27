@@ -8,12 +8,6 @@ pub struct NumberRange {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
-pub struct NumberRangeWeighted {
-    range: NumberRange,
-    weighted_criteria: Vec<WeightedCriteria>,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct WeightedCriteria {
     label: String,
     weight: u32,
@@ -22,8 +16,8 @@ pub struct WeightedCriteria {
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(tag = "type", content = "content")]
 pub enum ScoreTemplate {
-    Single(NumberRange),
-    Weighted(NumberRangeWeighted),
+    Single,
+    Weighted(Vec<WeightedCriteria>),
 }
 
 #[hdk_entry_helper]
@@ -31,6 +25,7 @@ pub enum ScoreTemplate {
 pub struct EvaluationTemplate {
     pub name: String,
     pub qualitative_json_schema: String,
+    pub score_range: NumberRange,
     pub score: ScoreTemplate,
 }
 pub fn validate_create_evaluation_template(
@@ -44,31 +39,29 @@ pub fn validate_create_evaluation_template(
             "Schema not valid json".to_string(),
         ));
     }
-    match evaluation_template.score {
-        ScoreTemplate::Single(range) => {
-            if range.max < range.min {
-                return Ok(ValidateCallbackResult::Invalid(
-                    "Max must be greater than min".to_string(),
-                ));
-            }
+
+    if evaluation_template.score_range.max < evaluation_template.score_range.min {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Max must be greater than min".to_string(),
+        ));
+    }
+
+    if let ScoreTemplate::Weighted(number_range_weighted) = evaluation_template.score {
+        if number_range_weighted.len() < 2 {
+            return Ok(ValidateCallbackResult::Invalid(
+                "Must have more than one weighted criteria".to_string(),
+            ));
         }
-        ScoreTemplate::Weighted(number_range_weighted) => {
-            if number_range_weighted.weighted_criteria.len() < 2 {
+        for criteria in number_range_weighted {
+            if criteria.label.is_empty() {
                 return Ok(ValidateCallbackResult::Invalid(
-                    "Must have more than one weighted criteria".to_string(),
+                    "Label cannnot be empty".to_string(),
                 ));
             }
-            for criteria in number_range_weighted.weighted_criteria {
-                if criteria.label.is_empty() {
-                    return Ok(ValidateCallbackResult::Invalid(
-                        "Label cannnot be empty".to_string(),
-                    ));
-                }
-                if criteria.weight == 0 {
-                    return Ok(ValidateCallbackResult::Invalid(
-                        "Weight cannot be zero".to_string(),
-                    ));
-                }
+            if criteria.weight == 0 {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Weight cannot be zero".to_string(),
+                ));
             }
         }
     }

@@ -1,34 +1,39 @@
 <script lang="ts">
 	import { Badge, Label, Range } from 'flowbite-svelte';
-	import type { NumberRangeWeightedCriteria, AttributeScore } from '../../grant_pools/grants/types';
+	import type {
+		WeightedCriteria,
+		AttributeScore,
+		NumberRange
+	} from '../../grant_pools/grants/types';
 	import { onMount } from 'svelte';
 
-	export let template: NumberRangeWeightedCriteria;
+	export let scoreRange: NumberRange;
+	export let weightedCriteria: WeightedCriteria[] = [];
 	export let value: AttributeScore[] = [];
 
 	onMount(() => {
-		value = template.weighted_criteria.map((c) => ({
+		value = weightedCriteria.map((c) => ({
 			label: c.label,
-			value: template.range.min
+			value: scoreRange.min
 		}));
 	});
 </script>
 
-{#if value.length === template.weighted_criteria.length}
-	{#each template.weighted_criteria as criteria, i}
+{#if value.length === weightedCriteria.length}
+	{#each weightedCriteria as criteria, i}
 		<div class="mb-2">
 			<Label for="rating">{criteria.label} <span>(Weight {criteria.weight})</span></Label>
 			<div class="flex-grow">
 				<Range
 					id="rating"
 					size="sm"
-					min={template.range.min}
-					max={template.range.max}
+					min={scoreRange.min}
+					max={scoreRange.max}
 					bind:value={value[i].value}
 				/>
 				<div class="flex items-center justify-between">
-					<Badge color="none">{template.range.min}</Badge>
-					<Badge color="none">{template.range.max}</Badge>
+					<Badge color="none">{scoreRange.min}</Badge>
+					<Badge color="none">{scoreRange.max}</Badge>
 				</div>
 			</div>
 		</div>

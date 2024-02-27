@@ -4,7 +4,8 @@
 	import {
 		ScoreType,
 		type EvaluationTemplate,
-		type ScoreTemplate
+		type ScoreTemplate,
+		type NumberRange
 	} from '../../../grant_pools/grants/types';
 	import { Button, Label, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
@@ -17,14 +18,19 @@
 
 	export let qualitativeJsonSchema: string = '';
 	export let name: string = '';
+	export let scoreRange: NumberRange = { min: 0, max: 10 };
 	export let score: ScoreTemplate = {
 		type: ScoreType.Single,
-		content: { min: 0, max: 10 }
+		content: undefined
 	};
 
 	let builderApi: typeof BuilderAPI | undefined = undefined;
 
-	$: isEvaluationTemplateValid = name.length > 0;
+	$: isEvaluationTemplateValid =
+		name.length > 0 &&
+		score !== undefined &&
+		scoreRange !== undefined &&
+		qualitativeJsonSchema.length > 0;
 
 	async function createEvaluationTemplate() {
 		if (!builderApi) return;
@@ -33,7 +39,8 @@
 		const evaluationTemplateEntry: EvaluationTemplate = {
 			name,
 			qualitative_json_schema: qualitativeJsonSchema,
-			score: score
+			score_range: scoreRange,
+			score
 		};
 
 		console.log('evaluationTemplateEntry', evaluationTemplateEntry);
@@ -62,13 +69,13 @@
 	</div>
 
 	<div class="mb-8">
-		<Label>Qualitative Evaluation Template</Label>
+		<Label>Evaluation Template</Label>
 		<BaseFormBuilder bind:builderApi />
 	</div>
 
 	<div class="mb-8">
-		<Label class="mb-2">Quantitative Rating Template</Label>
-		<InputScoreTemplate bind:value={score} />
+		<Label class="mb-2">Score Template</Label>
+		<InputScoreTemplate bind:score bind:scoreRange />
 	</div>
 
 	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>
