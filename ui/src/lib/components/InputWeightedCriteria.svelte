@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { Badge, Label, Range } from 'flowbite-svelte';
-	import type { NumberRangeWeightedCriteria, RatingCriteria } from '../../grant_pools/grants/types';
+	import type { NumberRangeWeightedCriteria, AttributeScore } from '../../grant_pools/grants/types';
 	import { onMount } from 'svelte';
 
 	export let template: NumberRangeWeightedCriteria;
-	export let value: RatingCriteria[] = [];
+	export let value: AttributeScore[] = [];
 
 	onMount(() => {
 		value = template.weighted_criteria.map((c) => ({

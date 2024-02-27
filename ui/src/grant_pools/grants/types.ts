@@ -121,14 +121,14 @@ export interface Application {
 	status: Status;
 }
 
-export interface RatingCriteria {
+export interface AttributeScore {
     label: string,
     value: number,
 }
 
 export interface Score {
 	type: ScoreType
-	content: number | RatingCriteria[]
+	content: number | AttributeScore[]
 }
 
 export interface Evaluation {

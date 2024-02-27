@@ -3,7 +3,7 @@
 		ScoreType,
 		type Score,
 		type ScoreTemplate,
-		type RatingCriteria
+		type AttributeScore
 	} from '../../grant_pools/grants/types';
 	import { Range, Label, Input } from 'flowbite-svelte';
 	import InputWeightedCriteria from '$lib/components/InputWeightedCriteria.svelte';
@@ -12,7 +12,7 @@
 	export let value: Score | undefined = undefined;
 
 	let singleRating: number = 0;
-	let weightedRating: RatingCriteria[] = [];
+	let weightedRating: AttributeScore[] = [];
 
 	$: {
 		value = {

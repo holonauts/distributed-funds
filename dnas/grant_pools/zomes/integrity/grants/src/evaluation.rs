@@ -7,7 +7,7 @@ pub enum EvaluationStatus {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-pub struct RatingCriteria {
+pub struct AttributeScore {
     label: String,
     value: u64,
 }
@@ -15,7 +15,7 @@ pub struct RatingCriteria {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum Score {
     Single(u64),
-    Weighted(Vec<RatingCriteria>),
+    Weighted(Vec<AttributeScore>),
 }
 
 #[hdk_entry_helper]
