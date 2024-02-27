@@ -26,7 +26,7 @@ export async function sampleEvaluationTemplate(cell: CallableCell, partialEvalua
     return {
         ...{
 	  qualitative_json_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-	  quantitative_rating: { type: 'Single' },
+	  score: { type: 'Single' },
         },
         ...partialEvaluationTemplate
     };
@@ -113,7 +113,7 @@ export async function sampleEvaluation(cell: CallableCell, partialEvaluation = {
           application: (await createApplication(cell)).signed_action.hashed.hash,
 	  json_data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-	  quantitative_rating: { type: 'Single' },
+	  score: { type: 'Single' },
         },
         ...partialEvaluation
     };

@@ -9,7 +9,7 @@
 		DnaHash
 	} from '@holochain/client';
 	import { clientContext } from '../../contexts';
-	import type { Evaluation, QuantitativeRating } from './types';
+	import type { Evaluation, Score } from './types';
 	import '@material/mwc-button';
 	import '@material/mwc-snackbar';
 	import type { Snackbar } from '@material/mwc-snackbar';
@@ -23,13 +23,13 @@
 
 	export let jsonData!: string;
 
-	export let quantitativeRating!: QuantitativeRating;
+	export let score!: Score;
 
 	let comments: string = '';
 
 	let errorSnackbar: Snackbar;
 
-	$: application, jsonData, comments, quantitativeRating;
+	$: application, jsonData, comments, score;
 	$: isEvaluationValid = true && comments !== '';
 
 	onMount(() => {
@@ -39,8 +39,8 @@
 		if (jsonData === undefined) {
 			throw new Error(`The jsonData input is required for the CreateEvaluation element`);
 		}
-		if (quantitativeRating === undefined) {
-			throw new Error(`The quantitativeRating input is required for the CreateEvaluation element`);
+		if (score === undefined) {
+			throw new Error(`The score input is required for the CreateEvaluation element`);
 		}
 	});
 
@@ -49,7 +49,7 @@
 			application: application!,
 			json_data: jsonData!,
 			comments: comments!,
-			quantitative_rating: quantitativeRating!
+			score: score!
 		};
 
 		try {

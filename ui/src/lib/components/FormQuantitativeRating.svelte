@@ -1,49 +1,43 @@
 <script lang="ts">
 	import {
-		QuantitativeRatingType,
-		type QuantitativeRating,
-		type QuantitativeRatingTemplate,
+		ScoreType,
+		type Score,
+		type ScoreTemplate,
 		type RatingCriteria
 	} from '../../grant_pools/grants/types';
 	import { Range, Label, Input } from 'flowbite-svelte';
 	import InputWeightedCriteria from '$lib/components/InputWeightedCriteria.svelte';
 
-	export let quantitativeRatingTemplate: QuantitativeRatingTemplate;
-	export let value: QuantitativeRating | undefined = undefined;
+	export let scoreTemplate: ScoreTemplate;
+	export let value: Score | undefined = undefined;
 
 	let singleRating: number = 0;
 	let weightedRating: RatingCriteria[] = [];
 
 	$: {
 		value = {
-			type: quantitativeRatingTemplate.type,
-			content:
-				quantitativeRatingTemplate.type === QuantitativeRatingType.Single
-					? singleRating
-					: weightedRating
+			type: scoreTemplate.type,
+			content: scoreTemplate.type === ScoreType.Single ? singleRating : weightedRating
 		};
 	}
 </script>
 
 <div class="w-full px-2">
-	{#if quantitativeRatingTemplate.type === QuantitativeRatingType.Single}
+	{#if scoreTemplate.type === ScoreType.Single}
 		<Label for="rating">Rating</Label>
 		<div class="flex items-center justify-start space-x-2">
 			<div class="flex-grow">
 				<Range
 					id="rating"
 					size="sm"
-					min={quantitativeRatingTemplate.content.min}
-					max={quantitativeRatingTemplate.content.max}
+					min={scoreTemplate.content.min}
+					max={scoreTemplate.content.max}
 					bind:value={singleRating}
 				/>
 			</div>
 			<Input size="sm" bind:value={singleRating} class="w-14" />
 		</div>
-	{:else if quantitativeRatingTemplate.type === QuantitativeRatingType.Weighted}
-		<InputWeightedCriteria
-			bind:value={weightedRating}
-			template={quantitativeRatingTemplate.content}
-		/>
+	{:else if scoreTemplate.type === ScoreType.Weighted}
+		<InputWeightedCriteria bind:value={weightedRating} template={scoreTemplate.content} />
 	{/if}
 </div>

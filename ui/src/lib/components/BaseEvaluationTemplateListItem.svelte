@@ -5,7 +5,7 @@
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import BaseFormBuilder from './BaseFormBuilder.svelte';
 	import { Card, Label } from 'flowbite-svelte';
-	import FormQuantitativeRating from '$lib/components/FormQuantitativeRating.svelte';
+	import FormScore from '$lib/components/FormScore.svelte';
 
 	export let evaluationTemplate: EvaluationTemplate;
 	export let record: Record;
@@ -50,7 +50,7 @@
 				/>
 			</div>
 
-			<FormQuantitativeRating quantitativeRatingTemplate={evaluationTemplate.quantitative_rating} />
+			<FormScore scoreTemplate={evaluationTemplate.score} />
 		</Card>
 	</div>
 {/if}

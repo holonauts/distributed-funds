@@ -2,23 +2,23 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Record } from '@holochain/client';
 	import {
-		QuantitativeRatingType,
+		ScoreType,
 		type EvaluationTemplate,
-		type QuantitativeRatingTemplate
+		type ScoreTemplate
 	} from '../../../grant_pools/grants/types';
 	import { Button, Label, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseFormBuilder from '$lib/components/BaseFormBuilder.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { type BuilderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
-	import InputQuantitativeRatingTemplate from './InputQuantitativeRatingTemplate.svelte';
+	import InputScoreTemplate from './InputScoreTemplate.svelte';
 
 	const dispatch = createEventDispatcher();
 
 	export let qualitativeJsonSchema: string = '';
 	export let name: string = '';
-	export let quantitativeRating: QuantitativeRatingTemplate = {
-		type: QuantitativeRatingType.Single,
+	export let score: ScoreTemplate = {
+		type: ScoreType.Single,
 		content: { min: 0, max: 10 }
 	};
 
@@ -33,7 +33,7 @@
 		const evaluationTemplateEntry: EvaluationTemplate = {
 			name,
 			qualitative_json_schema: qualitativeJsonSchema,
-			quantitative_rating: quantitativeRating
+			score: score
 		};
 
 		console.log('evaluationTemplateEntry', evaluationTemplateEntry);
@@ -68,7 +68,7 @@
 
 	<div class="mb-8">
 		<Label class="mb-2">Quantitative Rating Template</Label>
-		<InputQuantitativeRatingTemplate bind:value={quantitativeRating} />
+		<InputScoreTemplate bind:value={score} />
 	</div>
 
 	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>

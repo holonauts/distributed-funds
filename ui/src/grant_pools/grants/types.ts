@@ -69,13 +69,13 @@ export interface WeightedCriteria {
 	weight: number,
 }
 
-export enum QuantitativeRatingType {
+export enum ScoreType {
 	Single = 'Single',
 	Weighted = 'Weighted'
 }
 
-export interface QuantitativeRatingTemplate {
-	type: QuantitativeRatingType;
+export interface ScoreTemplate {
+	type: ScoreType;
 	content: NumberRange | NumberRangeWeightedCriteria;
 }
 
@@ -84,7 +84,7 @@ export interface EvaluationTemplate {
 	
 	qualitative_json_schema: string;
 
-	quantitative_rating: QuantitativeRatingTemplate;
+	score: ScoreTemplate;
 }
 
 export interface TimePeriod {
@@ -126,8 +126,8 @@ export interface RatingCriteria {
     value: number,
 }
 
-export interface QuantitativeRating {
-	type: QuantitativeRatingType
+export interface Score {
+	type: ScoreType
 	content: number | RatingCriteria[]
 }
 
@@ -138,7 +138,7 @@ export interface Evaluation {
 
 	comments: string;
 
-	quantitative_rating: QuantitativeRating;
+	score: Score;
 }
 
 export interface GrantPoolOutcome {

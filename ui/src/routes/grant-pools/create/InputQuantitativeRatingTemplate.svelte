@@ -2,27 +2,27 @@
 	import { Card, Input, Label, TabItem, Tabs } from 'flowbite-svelte';
 	import type {
 		NumberRange,
-		QuantitativeRatingTemplate,
+		ScoreTemplate,
 		NumberRangeWeightedCriteria,
 		WeightedCriteria
 	} from '../../../grant_pools/grants/types';
-	import { QuantitativeRatingType } from '../../../grant_pools/grants/types';
+	import { ScoreType } from '../../../grant_pools/grants/types';
 	import InputList from '$lib/components/InputList.svelte';
 	import InputNumberRange from '$lib/components/InputNumberRange.svelte';
 
-	let type: QuantitativeRatingType = QuantitativeRatingType.Single;
+	let type: ScoreType = ScoreType.Single;
 	let numberRange: NumberRange;
 	let weightedCriteria: WeightedCriteria[] = [];
 	let addCriteriaLabel: string;
 	let addCriteriaWeight: string;
 
-	export let value: QuantitativeRatingTemplate;
+	export let value: ScoreTemplate;
 
 	$: {
 		value = {
 			type,
 			content:
-				type === QuantitativeRatingType.Single
+				type === ScoreType.Single
 					? numberRange
 					: { range: numberRange, weighted_criteria: weightedCriteria }
 		};
@@ -38,23 +38,23 @@
 		defaultClass="!p-2 text-xs"
 		title="Single Score"
 		class="w-full"
-		open={type === QuantitativeRatingType.Single}
-		on:click={() => (type = QuantitativeRatingType.Single)}
+		open={type === ScoreType.Single}
+		on:click={() => (type = ScoreType.Single)}
 	/>
 	<TabItem
 		defaultClass="!p-2 text-xs"
 		title="Weighted Criteria"
 		class="w-full"
-		open={type === QuantitativeRatingType.Weighted}
-		on:click={() => (type = QuantitativeRatingType.Weighted)}
+		open={type === ScoreType.Weighted}
+		on:click={() => (type = ScoreType.Weighted)}
 	/>
 </Tabs>
 
 <Card size="xl">
-	{#if type === QuantitativeRatingType.Single}
+	{#if type === ScoreType.Single}
 		<Label>Allowed Range</Label>
 		<InputNumberRange bind:value={numberRange} />
-	{:else if type === QuantitativeRatingType.Weighted}
+	{:else if type === ScoreType.Weighted}
 		<div class="mb-2">
 			<Label>Allowed Range</Label>
 			<InputNumberRange bind:value={numberRange} />

@@ -21,7 +21,7 @@ pub struct WeightedCriteria {
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(tag = "type", content = "content")]
-pub enum QuantitativeRatingTemplate {
+pub enum ScoreTemplate {
     Single(NumberRange),
     Weighted(NumberRangeWeighted),
 }
@@ -31,7 +31,7 @@ pub enum QuantitativeRatingTemplate {
 pub struct EvaluationTemplate {
     pub name: String,
     pub qualitative_json_schema: String,
-    pub quantitative_rating: QuantitativeRatingTemplate,
+    pub score: ScoreTemplate,
 }
 pub fn validate_create_evaluation_template(
     _action: EntryCreationAction,
@@ -44,15 +44,15 @@ pub fn validate_create_evaluation_template(
             "Schema not valid json".to_string(),
         ));
     }
-    match evaluation_template.quantitative_rating {
-        QuantitativeRatingTemplate::Single(range) => {
+    match evaluation_template.score {
+        ScoreTemplate::Single(range) => {
             if range.max < range.min {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Max must be greater than min".to_string(),
                 ));
             }
         }
-        QuantitativeRatingTemplate::Weighted(number_range_weighted) => {
+        ScoreTemplate::Weighted(number_range_weighted) => {
             if number_range_weighted.weighted_criteria.len() < 2 {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Must have more than one weighted criteria".to_string(),
