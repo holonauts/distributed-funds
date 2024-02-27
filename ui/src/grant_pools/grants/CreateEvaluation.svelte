@@ -21,7 +21,7 @@
 
 	export let application!: ActionHash;
 
-	export let jsonData!: string;
+	export let formContent!: string;
 
 	export let score!: Score;
 
@@ -29,15 +29,15 @@
 
 	let errorSnackbar: Snackbar;
 
-	$: application, jsonData, comments, score;
+	$: application, formContent, comments, score;
 	$: isEvaluationValid = true && comments !== '';
 
 	onMount(() => {
 		if (application === undefined) {
 			throw new Error(`The application input is required for the CreateEvaluation element`);
 		}
-		if (jsonData === undefined) {
-			throw new Error(`The jsonData input is required for the CreateEvaluation element`);
+		if (formContent === undefined) {
+			throw new Error(`The formContent input is required for the CreateEvaluation element`);
 		}
 		if (score === undefined) {
 			throw new Error(`The score input is required for the CreateEvaluation element`);
@@ -47,7 +47,7 @@
 	async function createEvaluation() {
 		const evaluationEntry: Evaluation = {
 			application: application!,
-			json_data: jsonData!,
+			form_content: formContent!,
 			comments: comments!,
 			score: score!
 		};

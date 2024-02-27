@@ -22,7 +22,7 @@ pub enum Score {
 #[derive(Clone, PartialEq)]
 pub struct Evaluation {
     pub application: ActionHash,
-    pub content: String,
+    pub form_content: String,
     pub comments: String,
     pub score: Score,
     pub status: EvaluationStatus,

@@ -20,13 +20,13 @@
 
 	export let applicationTemplate!: ActionHash;
 
-	export let jsonData!: string;
+	export let formContent!: string;
 
 	export let status!: Status;
 
 	let errorSnackbar: Snackbar;
 
-	$: applicationTemplate, jsonData, status;
+	$: applicationTemplate, formContent, status;
 	$: isApplicationValid = true;
 
 	onMount(() => {
@@ -35,8 +35,8 @@
 				`The applicationTemplate input is required for the CreateApplication element`
 			);
 		}
-		if (jsonData === undefined) {
-			throw new Error(`The jsonData input is required for the CreateApplication element`);
+		if (formContent === undefined) {
+			throw new Error(`The formContent input is required for the CreateApplication element`);
 		}
 		if (status === undefined) {
 			throw new Error(`The status input is required for the CreateApplication element`);
@@ -46,7 +46,7 @@
 	async function createApplication() {
 		const applicationEntry: Application = {
 			application_template: applicationTemplate!,
-			json_data: jsonData!,
+			form_content: formContent!,
 			status: status!
 		};
 

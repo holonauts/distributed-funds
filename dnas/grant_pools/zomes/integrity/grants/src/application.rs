@@ -33,7 +33,7 @@ impl ApplicationStatus {
 #[derive(Clone, Eq, PartialEq)]
 pub struct Application {
     pub application_template: ActionHash,
-    pub content: String,
+    pub form_content: String,
     pub amount: U256,
     pub status: ApplicationStatus,
 }

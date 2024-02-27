@@ -113,7 +113,7 @@ export interface Status {
 export interface Application {
 	application_template: ActionHash;
 
-	json_data: string;
+	form_content: string;
 
 	status: Status;
 }
@@ -131,7 +131,7 @@ export interface Score {
 export interface Evaluation {
 	application: ActionHash;
 
-	json_data: string;
+	form_content: string;
 
 	comments: string;
 

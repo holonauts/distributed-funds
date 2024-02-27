@@ -90,7 +90,7 @@ export async function sampleApplication(cell: CallableCell, partialApplication =
     return {
         ...{
 	  application_template: (await fakeActionHash()),
-	  json_data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  status: { type: 'Draft' },
         },
         ...partialApplication
@@ -111,7 +111,7 @@ export async function sampleEvaluation(cell: CallableCell, partialEvaluation = {
     return {
         ...{
           application: (await createApplication(cell)).signed_action.hashed.hash,
-	  json_data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  score: { type: 'Single' },
         },
