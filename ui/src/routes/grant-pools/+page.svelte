@@ -10,7 +10,7 @@
 <div class="flex justify-end">
 	<Button href="/grant-pools/create">
 		<PlusSolid class="mr-2 h-4 w-4" />
-		Crate Grant Pool
+		Create Grant Pool
 	</Button>
 </div>
 
