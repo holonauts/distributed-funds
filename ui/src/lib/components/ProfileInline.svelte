@@ -6,6 +6,7 @@
 	export let agentPubKey: AgentPubKey;
 
 	$: ({ profiles } = $holochainClient.profilesStore);
+	$: profile = profiles.get(agentPubKey);
 
 	function formatAgentPubKeyShort(key: AgentPubKey) {
 		let keyB64 = encodeHashToBase64(key);
@@ -15,5 +16,5 @@
 
 <div class="flex items-center justify-start space-x-2">
 	<agent-avatar {agentPubKey}></agent-avatar>
-	<div>{profiles.get(agentPubKey)?.name || formatAgentPubKeyShort(agentPubKey)}</div>
+	<div>{$profile?.value?.entry?.nickname || formatAgentPubKeyShort(agentPubKey)}</div>
 </div>
