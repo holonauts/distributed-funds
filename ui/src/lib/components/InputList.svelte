@@ -34,7 +34,7 @@
 {/if}
 
 {#if showCreate}
-	<div class="rounded-lg bg-black/15 p-4">
+	<div class="mt-2 rounded-lg bg-black/15 p-4">
 		<div class="mb-4">
 			<slot name="create" />
 		</div>

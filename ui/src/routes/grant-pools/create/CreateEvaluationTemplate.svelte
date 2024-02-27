@@ -26,8 +26,7 @@
 
 	let builderApi: typeof BuilderAPI | undefined = undefined;
 
-	$: isEvaluationTemplateValid =
-		name.length > 0 && score !== undefined && scoreRange !== undefined && formSchema.length > 0;
+	$: isEvaluationTemplateValid = name.length > 0 && score !== undefined && scoreRange !== undefined;
 
 	async function createEvaluationTemplate() {
 		if (!builderApi) return;
@@ -72,7 +71,7 @@
 
 	<div class="mb-8">
 		<Label class="mb-2">Score Template</Label>
-		<InputScoreTemplate bind:score bind:scoreRange />
+		<InputScoreTemplate bind:value={score} />
 	</div>
 
 	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>

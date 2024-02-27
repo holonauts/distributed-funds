@@ -41,7 +41,7 @@
 {#if loading}
 	<div class="h-8 w-full animate-pulse rounded-md"></div>
 {:else if record === undefined || timePeriod === undefined}
-	<div>Application template not found</div>
+	<div>Time period not found</div>
 {:else}
 	<Card size="xl">
 		<BaseTimePeriodListItem {record} {timePeriod} />
