@@ -22,7 +22,35 @@ function holochainClientStore() {
       const res = await AppAgentWebsocket.connect(url, happId);
       client.set(res);
       profilesStore.set(new ProfilesStore(new ProfilesClient(res, 'grant_pools'), {
-        avatarMode: 'avatar-optional'
+        avatarMode: 'avatar-optional',
+        additionalFields: [
+          {
+            label: 'About Me',
+            name: 'bio',
+            required: true,
+          },
+          {
+            label: 'Email',
+            name: 'email',
+            required: false,
+          },
+          {
+            label: 'Website',
+            name: 'website',
+            required: false,
+          },
+          {
+            label: 'LinkedIn',
+            name: 'linkedin',
+            required: false,
+          },
+          {
+            label: 'X',
+            name: 'x',
+            required: false,
+          },
+
+        ]
       }));
     } catch(e) {
       toasts.error(`Failed to connect to holochain client: ${e as string}`);
