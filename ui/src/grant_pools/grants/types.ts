@@ -54,14 +54,32 @@ export interface ApplicationTemplate {
 	name: string;
 }
 
-export interface QuantitativeRating {
-	type: 'Single' | 'Weighted';
+export interface NumberRange {
+	min: number;
+	max: number;
+}
+
+export interface WeightedCriteria {
+	label: string,
+	weight: number,
+}
+
+export enum QuantitativeRatingType {
+	Single = 'Single',
+	Weighted = 'Weighted'
+}
+
+export interface QuantitativeRatingTemplate {
+	type: QuantitativeRatingType;
+	content: NumberRange | WeightedCriteria[];
 }
 
 export interface EvaluationTemplate {
+	name: string;
+	
 	qualitative_json_schema: string;
 
-	quantitative_rating: QuantitativeRating;
+	quantitative_rating: QuantitativeRatingTemplate;
 }
 
 export interface TimePeriod {
@@ -98,8 +116,14 @@ export interface Application {
 	status: Status;
 }
 
+export interface RatingCriteria {
+    label: string,
+    value: number,
+}
+
 export interface QuantitativeRating {
-	type: 'Single' | 'Weighted';
+	type: QuantitativeRatingType
+	content: number | RatingCriteria[]
 }
 
 export interface Evaluation {

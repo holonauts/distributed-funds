@@ -4,7 +4,8 @@
 	import type { GrantPool } from '../../../grant_pools/grants/types';
 	import { Label, Textarea, Button, Helper, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
-	import SelectApplicationTemplate from './SelectApplicationTemplate.svelte';
+	import InputApplicationTemplate from './InputApplicationTemplate.svelte';
+	import InputEvaluationTemplate from './InputEvaluationTemplate.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
 
@@ -87,13 +88,11 @@
 	</div>
 
 	<div class="mb-8 w-full">
-		<SelectApplicationTemplate bind:value={applicationTemplate} />
+		<InputApplicationTemplate bind:value={applicationTemplate} />
 	</div>
 
 	<div class="mb-8">
-		<Label class="mb-2">Evaluation Template</Label>
-		<!-- <InputEvaluationTemplate bind:evaluationTemplate /> -->
-		<Helper>The evaluation form to use for evaluating an application.</Helper>
+		<InputEvaluationTemplate bind:value={evaluationTemplate} />
 	</div>
 
 	<div class="mb-8">
