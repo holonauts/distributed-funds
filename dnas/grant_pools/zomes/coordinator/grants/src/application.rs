@@ -1,14 +1,11 @@
-use hdk::prelude::*;
 use grants_integrity::*;
+use hdk::prelude::*;
 #[hdk_extern]
 pub fn create_application(application: Application) -> ExternResult<Record> {
     let application_hash = create_entry(&EntryTypes::Application(application.clone()))?;
-    let record = get(application_hash.clone(), GetOptions::default())?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Could not find the newly created Application"))
-            ),
-        )?;
+    let record = get(application_hash.clone(), GetOptions::default())?.ok_or(wasm_error!(
+        WasmErrorInner::Guest(String::from("Could not find the newly created Application"))
+    ))?;
     let path = Path::from("all_applications");
     create_link(
         path.path_entry_hash()?,
@@ -42,11 +39,9 @@ pub fn get_latest_application(
             link.target
                 .clone()
                 .into_action_hash()
-                .ok_or(
-                    wasm_error!(
-                        WasmErrorInner::Guest(String::from("No action hash associated with link"))
-                    ),
-                )?
+                .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                    "No action hash associated with link"
+                ))))?
         }
         None => original_application_hash.clone(),
     };
@@ -56,28 +51,21 @@ pub fn get_latest_application(
 pub fn get_original_application(
     original_application_hash: ActionHash,
 ) -> ExternResult<Option<Record>> {
-    let Some(details) = get_details(original_application_hash, GetOptions::default())?
-    else {
+    let Some(details) = get_details(original_application_hash, GetOptions::default())? else {
         return Ok(None);
     };
     match details {
         Details::Record(details) => Ok(Some(details.record)),
-        _ => {
-            Err(
-                wasm_error!(
-                    WasmErrorInner::Guest(String::from("Malformed get details response"))
-                ),
-            )
-        }
+        _ => Err(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Malformed get details response"
+        )))),
     }
 }
 #[hdk_extern]
 pub fn get_all_revisions_for_application(
     original_application_hash: ActionHash,
 ) -> ExternResult<Vec<Record>> {
-    let Some(original_record) = get_original_application(
-        original_application_hash.clone(),
-    )? else {
+    let Some(original_record) = get_original_application(original_application_hash.clone())? else {
         return Ok(vec![]);
     };
     let links = get_links(
@@ -87,23 +75,20 @@ pub fn get_all_revisions_for_application(
     )?;
     let get_input: Vec<GetInput> = links
         .into_iter()
-        .map(|link| Ok(
-            GetInput::new(
-                link
-                    .target
+        .map(|link| {
+            Ok(GetInput::new(
+                link.target
                     .into_action_hash()
-                    .ok_or(
-                        wasm_error!(
-                            WasmErrorInner::Guest(String::from("No action hash associated with link"))
-                        ),
-                    )?
+                    .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                        "No action hash associated with link"
+                    ))))?
                     .into(),
                 GetOptions::default(),
-            ),
-        ))
+            ))
+        })
         .collect::<ExternResult<Vec<GetInput>>>()?;
     let records = HDK.with(|hdk| hdk.borrow().get(get_input))?;
-    let mut records: Vec<Record> = records.into_iter().filter_map(|r| r).collect();
+    let mut records: Vec<Record> = records.into_iter().flatten().collect();
     records.insert(0, original_record);
     Ok(records)
 }
@@ -125,11 +110,9 @@ pub fn update_application(input: UpdateApplicationInput) -> ExternResult<Record>
         LinkTypes::ApplicationUpdates,
         (),
     )?;
-    let record = get(updated_application_hash.clone(), GetOptions::default())?
-        .ok_or(
-            wasm_error!(
-                WasmErrorInner::Guest(String::from("Could not find the newly updated Application"))
-            ),
-        )?;
+    let record =
+        get(updated_application_hash.clone(), GetOptions::default())?.ok_or(wasm_error!(
+            WasmErrorInner::Guest(String::from("Could not find the newly updated Application"))
+        ))?;
     Ok(record)
 }

@@ -17,28 +17,15 @@ pub enum ApplicationStatus {
 }
 impl ApplicationStatus {
     fn is_draft(&self) -> bool {
-        match self {
-            ApplicationStatus::Draft => true,
-            _ => false,
-        }
+        matches!(self, ApplicationStatus::Draft)
     }
+
     fn is_submitted(&self) -> bool {
-        match self {
-            ApplicationStatus::Submitted(_) => true,
-            _ => false,
-        }
+        matches!(self, ApplicationStatus::Submitted(_))
     }
+
     fn is_evaluated(&self) -> bool {
-        match self {
-            ApplicationStatus::Evaluated(_) => true,
-            _ => false,
-        }
-    }
-    fn _is_claimed(&self) -> bool {
-        match self {
-            ApplicationStatus::Claimed(_) => true,
-            _ => false,
-        }
+        matches!(self, ApplicationStatus::Evaluated(_))
     }
 }
 
