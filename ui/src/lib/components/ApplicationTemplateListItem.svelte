@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { decode } from '@msgpack/msgpack';
 	import { type Record, type ActionHash } from '@holochain/client';
 	import type { ApplicationTemplate } from '../../grant_pools/grants/types';

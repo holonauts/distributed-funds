@@ -1,4 +1,9 @@
 <script lang="ts">
+	import '@holochain-open-dev/profiles/dist/elements/profiles-context.js';
+	import '@holochain-open-dev/profiles/dist/elements/create-profile.js';
+	import '@holochain-open-dev/profiles/dist/elements/update-profile.js';
+	import '@holochain-open-dev/profiles/dist/elements/profile-detail.js';
+	import '@shoelace-style/shoelace/dist/themes/light.css';
 	import '../app.pcss';
 	import { onMount, setContext } from 'svelte';
 	import { DarkMode, Spinner } from 'flowbite-svelte';
@@ -6,8 +11,6 @@
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import BaseToastsList from '$lib/components/BaseToastsList.svelte';
 	import BaseNavbar from '$lib/components/BaseNavbar.svelte';
-	import { ProfilesClient, ProfilesStore } from '@holochain-open-dev/profiles';
-	import '@holochain-open-dev/profiles/dist/elements/profiles-context.js';
 
 	onMount(async () => {
 		await holochainClient.connect(new URL('ws://unused'), 'grant-funding');

@@ -11,7 +11,7 @@
 
 	export let scoreRange: NumberRange;
 	export let scoreTemplate: ScoreTemplate;
-	export let value: Score;
+	export let value: Score = { type: ScoreType.Single, content: scoreRange.min };
 
 	let singleScore: number = 0;
 	let attributeScores: AttributeScore[] = [];

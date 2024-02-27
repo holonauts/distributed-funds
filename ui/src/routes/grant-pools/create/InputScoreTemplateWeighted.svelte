@@ -3,10 +3,8 @@
 	import type { AttributeScoreTemplate } from '../../../grant_pools/grants/types';
 	import InputList from '$lib/components/InputList.svelte';
 
-	const DEFAULT_ATTRIBUTE_SCORE_TEMPLATE = { label: '', weight: '' };
-
 	export let value: AttributeScoreTemplate[] = [];
-	let createAttributeScoreTemplate = DEFAULT_ATTRIBUTE_SCORE_TEMPLATE;
+	let createAttributeScoreTemplate = { label: '', weight: '' };
 
 	function add() {
 		value = [
@@ -17,11 +15,11 @@
 			}
 		];
 
-		resetCreateForm();
+		reset();
 	}
 
-	function resetCreateForm() {
-		createAttributeScoreTemplate = DEFAULT_ATTRIBUTE_SCORE_TEMPLATE;
+	function reset() {
+		createAttributeScoreTemplate = { label: '', weight: '' };
 	}
 </script>
 

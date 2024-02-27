@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { holochainClient } from '$lib/stores/holochainClient';
-	import '@holochain-open-dev/profiles/dist/elements/create-profile.js';
-	import '@holochain-open-dev/profiles/dist/elements/update-profile.js';
-	import '@holochain-open-dev/profiles/dist/elements/profile-detail.js';
-	import '@shoelace-style/shoelace/dist/themes/light.css';
 	import { decodeHashFromBase64 } from '@holochain/client';
 	import { isEqual } from 'lodash';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
@@ -14,7 +10,7 @@
 	$: ({ myProfile } = $holochainClient.profilesStore);
 </script>
 
-<BaseBreadcrumbs title="Agent Profile" />
+<BaseBreadcrumbs title="Profile" />
 
 <div class="flex justify-center">
 	<div>
