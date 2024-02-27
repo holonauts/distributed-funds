@@ -6,7 +6,7 @@ import { NewEntryAction, ActionHash, Record, AppBundleSource, fakeActionHash, fa
 export async function sampleApplicationTemplate(cell: CallableCell, partialApplicationTemplate = {}) {
     return {
         ...{
-	  json_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
         ...partialApplicationTemplate
     };
@@ -25,7 +25,7 @@ export async function createApplicationTemplate(cell: CallableCell, applicationT
 export async function sampleEvaluationTemplate(cell: CallableCell, partialEvaluationTemplate = {}) {
     return {
         ...{
-	  qualitative_json_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  score: { type: 'Single' },
         },
         ...partialEvaluationTemplate

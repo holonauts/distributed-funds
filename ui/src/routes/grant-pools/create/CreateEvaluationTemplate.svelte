@@ -16,7 +16,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let qualitativeJsonSchema: string = '';
+	export let formSchema: string = '';
 	export let name: string = '';
 	export let scoreRange: NumberRange = { min: 0, max: 10 };
 	export let score: ScoreTemplate = {
@@ -27,18 +27,15 @@
 	let builderApi: typeof BuilderAPI | undefined = undefined;
 
 	$: isEvaluationTemplateValid =
-		name.length > 0 &&
-		score !== undefined &&
-		scoreRange !== undefined &&
-		qualitativeJsonSchema.length > 0;
+		name.length > 0 && score !== undefined && scoreRange !== undefined && formSchema.length > 0;
 
 	async function createEvaluationTemplate() {
 		if (!builderApi) return;
-		qualitativeJsonSchema = await builderApi.getDefinitionData();
+		formSchema = await builderApi.getDefinitionData();
 
 		const evaluationTemplateEntry: EvaluationTemplate = {
 			name,
-			qualitative_json_schema: qualitativeJsonSchema,
+			form_schema: formSchema,
 			score_range: scoreRange,
 			score
 		};

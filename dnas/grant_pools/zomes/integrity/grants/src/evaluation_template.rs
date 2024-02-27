@@ -24,7 +24,7 @@ pub enum ScoreTemplate {
 #[derive(Clone)]
 pub struct EvaluationTemplate {
     pub name: String,
-    pub qualitative_json_schema: String,
+    pub form_schema: String,
     pub score_range: NumberRange,
     pub score: ScoreTemplate,
 }
@@ -33,7 +33,7 @@ pub fn validate_create_evaluation_template(
     evaluation_template: EvaluationTemplate,
 ) -> ExternResult<ValidateCallbackResult> {
     let valid_json: Result<Value, serde_json::Error> =
-        serde_json::from_str(&evaluation_template.qualitative_json_schema);
+        serde_json::from_str(&evaluation_template.form_schema);
     if valid_json.is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Schema not valid json".to_string(),

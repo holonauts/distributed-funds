@@ -46,7 +46,7 @@
 			<div class="mb-2">
 				<BaseFormBuilder
 					view="render"
-					formDefinition={JSON.parse(evaluationTemplate.qualitative_json_schema).formDefinition}
+					formDefinition={JSON.parse(evaluationTemplate.form_schema).formDefinition}
 				/>
 			</div>
 

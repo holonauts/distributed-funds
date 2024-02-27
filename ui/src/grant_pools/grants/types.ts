@@ -50,7 +50,7 @@ export type EntryTypes =
 	| ({ type: 'ApplicationTemplate' } & ApplicationTemplate);
 
 export interface ApplicationTemplate {
-	json_schema: string;
+	form_schema: string;
 	name: string;
 }
 
@@ -77,7 +77,7 @@ export interface ScoreTemplate {
 export interface EvaluationTemplate {
 	name: string;
 	
-	qualitative_json_schema: string;
+	form_schema: string;
 
 	score_range: NumberRange,
 	
