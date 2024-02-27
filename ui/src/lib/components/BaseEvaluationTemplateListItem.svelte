@@ -51,7 +51,10 @@
 				/>
 			</div>
 
-			<InputScore scoreTemplate={evaluationTemplate.score} />
+			<InputScore
+				scoreTemplate={evaluationTemplate.score}
+				scoreRange={evaluationTemplate.score_range}
+			/>
 		</Card>
 	</div>
 {/if}
