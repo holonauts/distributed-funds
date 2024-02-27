@@ -1,26 +1,26 @@
 <script lang="ts">
 	import { Badge, Label, Range } from 'flowbite-svelte';
 	import type {
-		WeightedCriteria,
+		AttributeScoreTemplate,
 		AttributeScore,
 		NumberRange
 	} from '../../grant_pools/grants/types';
 	import { onMount } from 'svelte';
 
 	export let scoreRange: NumberRange;
-	export let weightedCriteria: WeightedCriteria[] = [];
+	export let attributeScoreTemplate: AttributeScoreTemplate[] = [];
 	export let value: AttributeScore[] = [];
 
 	onMount(() => {
-		value = weightedCriteria.map((c) => ({
+		value = attributeScoreTemplate.map((c) => ({
 			label: c.label,
 			value: scoreRange.min
 		}));
 	});
 </script>
 
-{#if value.length === weightedCriteria.length}
-	{#each weightedCriteria as criteria, i}
+{#if value.length === attributeScoreTemplate.length}
+	{#each attributeScoreTemplate as criteria, i}
 		<div class="mb-2">
 			<Label for="rating">{criteria.label} <span>(Weight {criteria.weight})</span></Label>
 			<div class="flex-grow">

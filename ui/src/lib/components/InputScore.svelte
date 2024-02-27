@@ -31,7 +31,7 @@
 		<InputScoreWeighted
 			bind:value={attributeScores}
 			{scoreRange}
-			weightedCriteria={scoreTemplate.content}
+			attributeScoreTemplate={scoreTemplate.content}
 		/>
 	{/if}
 </div>

@@ -59,7 +59,7 @@ export interface NumberRange {
 	max: number;
 }
 
-export interface WeightedCriteria {
+export interface AttributeScoreTemplate {
 	label: string,
 	weight: number,
 }
@@ -71,7 +71,7 @@ export enum ScoreType {
 
 export interface ScoreTemplate {
 	type: ScoreType;
-	content: undefined | WeightedCriteria[];
+	content: undefined | AttributeScoreTemplate[];
 }
 
 export interface EvaluationTemplate {

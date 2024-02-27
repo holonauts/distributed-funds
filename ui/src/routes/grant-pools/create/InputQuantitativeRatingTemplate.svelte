@@ -3,7 +3,7 @@
 	import type {
 		NumberRange,
 		ScoreTemplate,
-		WeightedCriteria
+		AttributeScoreTemplate
 	} from '../../../grant_pools/grants/types';
 	import { ScoreType } from '../../../grant_pools/grants/types';
 	import InputList from '$lib/components/InputList.svelte';
@@ -11,7 +11,7 @@
 
 	let type: ScoreType = ScoreType.Single;
 	let numberRange: NumberRange;
-	let weightedCriteria: WeightedCriteria[] = [];
+	let attributeScoreTemplate: AttributeScoreTemplate[] = [];
 	let addCriteriaLabel: string;
 	let addCriteriaWeight: string;
 
@@ -23,7 +23,7 @@
 			content:
 				type === ScoreType.Single
 					? numberRange
-					: { range: numberRange, weighted_criteria: weightedCriteria }
+					: { range: numberRange, attribute_score_template: attributeScoreTemplate }
 		};
 	}
 </script>
@@ -61,13 +61,13 @@
 		<div class="mb-2">
 			<Label>Ranking Criteria</Label>
 			<InputList
-				bind:items={weightedCriteria}
+				bind:items={attributeScoreTemplate}
 				createIsValid={addCriteriaLabel !== undefined &&
 					addCriteriaLabel.length > 0 &&
 					addCriteriaWeight !== undefined}
 				on:add={() => {
-					weightedCriteria = [
-						...weightedCriteria,
+					attributeScoreTemplate = [
+						...attributeScoreTemplate,
 						{ label: addCriteriaLabel, weight: parseInt(addCriteriaWeight) }
 					];
 					addCriteriaLabel = '';

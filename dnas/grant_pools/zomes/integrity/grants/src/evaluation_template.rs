@@ -8,7 +8,7 @@ pub struct NumberRange {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
-pub struct WeightedCriteria {
+pub struct AttributeScoreTemplate {
     label: String,
     weight: u32,
 }
@@ -17,7 +17,7 @@ pub struct WeightedCriteria {
 #[serde(tag = "type", content = "content")]
 pub enum ScoreTemplate {
     Single,
-    Weighted(Vec<WeightedCriteria>),
+    Weighted(Vec<AttributeScoreTemplate>),
 }
 
 #[hdk_entry_helper]
