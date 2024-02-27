@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Card, Radio } from 'flowbite-svelte';
+	import { Radio } from 'flowbite-svelte';
 	import { decode } from '@msgpack/msgpack';
 	import { type Record, type ActionHash, encodeHashToBase64 } from '@holochain/client';
 	import type { ApplicationTemplate } from '../../../grant_pools/grants/types';

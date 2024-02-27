@@ -4,8 +4,7 @@
 	import type { ApplicationTemplate } from '../../grant_pools/grants/types';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import BaseFormBuilder from './BaseFormBuilder.svelte';
-	import { view } from '@pragmatic-engineering/svelte-form-builder-community/Utils/store';
-	import { Label } from 'flowbite-svelte';
+	import { Card, Label } from 'flowbite-svelte';
 
 	export let applicationTemplate: ApplicationTemplate;
 	export let record: Record;
@@ -41,11 +40,13 @@
 
 {#if showSchema}
 	<div class="mt-4">
-		<Label class="mb-2">Preview Application Template</Label>
+		<Label class="mb-2">Template Preview</Label>
 
-		<BaseFormBuilder
-			view="render"
-			formDefinition={JSON.parse(applicationTemplate.json_schema).formDefinition}
-		/>
+		<Card size="xl">
+			<BaseFormBuilder
+				view="render"
+				formDefinition={JSON.parse(applicationTemplate.json_schema).formDefinition}
+			/>
+		</Card>
 	</div>
 {/if}

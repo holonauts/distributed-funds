@@ -1,9 +1,16 @@
 use hdi::prelude::*;
+use serde_json::Value;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct NumberRange {
     min: u32,
     max: u32,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+pub struct NumberRangeWeighted {
+    range: NumberRange,
+    weighted_criteria: Vec<WeightedCriteria>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
@@ -16,12 +23,13 @@ pub struct WeightedCriteria {
 #[serde(tag = "type", content = "content")]
 pub enum QuantitativeRatingTemplate {
     Single(NumberRange),
-    Weighted(Vec<WeightedCriteria>),
+    Weighted(NumberRangeWeighted),
 }
 
 #[hdk_entry_helper]
 #[derive(Clone)]
 pub struct EvaluationTemplate {
+    pub name: String,
     pub qualitative_json_schema: String,
     pub quantitative_rating: QuantitativeRatingTemplate,
 }
@@ -29,7 +37,7 @@ pub fn validate_create_evaluation_template(
     _action: EntryCreationAction,
     evaluation_template: EvaluationTemplate,
 ) -> ExternResult<ValidateCallbackResult> {
-    let valid_json: Result<String, serde_json::Error> =
+    let valid_json: Result<Value, serde_json::Error> =
         serde_json::from_str(&evaluation_template.qualitative_json_schema);
     if valid_json.is_err() {
         return Ok(ValidateCallbackResult::Invalid(
@@ -44,13 +52,13 @@ pub fn validate_create_evaluation_template(
                 ));
             }
         }
-        QuantitativeRatingTemplate::Weighted(weighted_criteria) => {
-            if weighted_criteria.len() < 2 {
+        QuantitativeRatingTemplate::Weighted(number_range_weighted) => {
+            if number_range_weighted.weighted_criteria.len() < 2 {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Must have more than one weighted criteria".to_string(),
                 ));
             }
-            for criteria in weighted_criteria {
+            for criteria in number_range_weighted.weighted_criteria {
                 if criteria.label.is_empty() {
                     return Ok(ValidateCallbackResult::Invalid(
                         "Label can't be empty".to_string(),

@@ -4,7 +4,7 @@
 	import type { EvaluationTemplate } from '../../grant_pools/grants/types';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import BaseFormBuilder from './BaseFormBuilder.svelte';
-	import { Label } from 'flowbite-svelte';
+	import { Card, Label } from 'flowbite-svelte';
 	import FormQuantitativeRating from '$lib/components/FormQuantitativeRating.svelte';
 
 	export let evaluationTemplate: EvaluationTemplate;
@@ -41,13 +41,16 @@
 
 {#if showDetails}
 	<div class="mt-4">
-		<Label class="mb-2">Preview Evaluation Template</Label>
-		<BaseFormBuilder
-			view="render"
-			formDefinition={JSON.parse(evaluationTemplate.qualitative_json_schema).formDefinition}
-		/>
+		<Label class="mb-2">Template Preview</Label>
+		<Card size="xl">
+			<div class="mb-2">
+				<BaseFormBuilder
+					view="render"
+					formDefinition={JSON.parse(evaluationTemplate.qualitative_json_schema).formDefinition}
+				/>
+			</div>
 
-		<Label class="mb-2">Preview Quantitative Rating Template</Label>
-		<FormQuantitativeRating quantitativeRatingTemplate={evaluationTemplate.quantitative_rating} />
+			<FormQuantitativeRating quantitativeRatingTemplate={evaluationTemplate.quantitative_rating} />
+		</Card>
 	</div>
 {/if}

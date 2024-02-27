@@ -36,6 +36,8 @@
 			quantitative_rating: quantitativeRating
 		};
 
+		console.log('evaluationTemplateEntry', evaluationTemplateEntry);
+
 		try {
 			const record: Record = await $holochainClient.client.callZome({
 				cap_secret: null,

@@ -59,6 +59,11 @@ export interface NumberRange {
 	max: number;
 }
 
+export interface NumberRangeWeightedCriteria {
+	range: NumberRange;
+	weighted_criteria: WeightedCriteria[];
+}
+
 export interface WeightedCriteria {
 	label: string,
 	weight: number,
@@ -71,7 +76,7 @@ export enum QuantitativeRatingType {
 
 export interface QuantitativeRatingTemplate {
 	type: QuantitativeRatingType;
-	content: NumberRange | WeightedCriteria[];
+	content: NumberRange | NumberRangeWeightedCriteria;
 }
 
 export interface EvaluationTemplate {

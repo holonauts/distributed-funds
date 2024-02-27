@@ -14,4 +14,6 @@
 	</Button>
 </div>
 
-<AllGrantPools />
+<div class="h-full w-full">
+	<AllGrantPools />
+</div>

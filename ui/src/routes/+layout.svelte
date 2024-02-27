@@ -28,7 +28,7 @@
 		<BaseNavbar />
 
 		<main class="flex h-full w-full grow justify-center overflow-x-auto">
-			<div class="w-full max-w-screen-md py-8">
+			<div class="h-full w-full max-w-screen-md py-8">
 				<slot />
 			</div>
 		</main>

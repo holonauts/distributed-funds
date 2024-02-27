@@ -7,7 +7,6 @@
 		FormDefinition,
 		views
 	} from '@pragmatic-engineering/svelte-form-builder-community/Utils/types';
-	import { Card } from 'flowbite-svelte';
 
 	export let builderApi: typeof BuilderAPI | undefined = undefined;
 	export let formDefinition: FormDefinition[] = [];
@@ -15,40 +14,38 @@
 </script>
 
 <div class="form-builder-wrapper w-full">
-	<Card size="xl">
-		<FormBuilder
-			bind:builderAPI={builderApi}
-			options={{
-				allowHtmlLabels: false,
-				editOnAdd: true,
-				enableTabs: false,
-				disabledViews: {
-					settings: true,
-					conditions: true,
-					tools: true
-				},
-				disableComponents: [
-					'Audio',
-					'Button',
-					'Canvas',
-					'Color',
-					'Week',
-					'Stars',
-					'Password',
-					'Month',
-					'Meter',
-					'Hidden',
-					'Progress',
-					'Time',
-					'DateTime',
-					'Video'
-				],
-				view,
-				formDefinition
-			}}
-			{...$$props}
-		/>
-	</Card>
+	<FormBuilder
+		bind:builderAPI={builderApi}
+		options={{
+			allowHtmlLabels: false,
+			editOnAdd: true,
+			enableTabs: false,
+			disabledViews: {
+				settings: true,
+				conditions: true,
+				tools: true
+			},
+			disableComponents: [
+				'Audio',
+				'Button',
+				'Canvas',
+				'Color',
+				'Week',
+				'Stars',
+				'Password',
+				'Month',
+				'Meter',
+				'Hidden',
+				'Progress',
+				'Time',
+				'DateTime',
+				'Video'
+			],
+			view,
+			formDefinition
+		}}
+		{...$$props}
+	/>
 </div>
 
 <style>

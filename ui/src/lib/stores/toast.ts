@@ -33,8 +33,10 @@ function useToastsStore() {
     });
 
     // Only auto hide non-error toasts
-    if(payload.message_type !== ToastMessageType.Error) {
-      deleteAfterDelay(id);
+    deleteAfterDelay(id);
+
+    if(payload.message_type === ToastMessageType.Error) {
+      console.error(payload);
     }
   }
 

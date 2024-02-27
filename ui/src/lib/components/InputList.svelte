@@ -15,9 +15,7 @@
 	}
 </script>
 
-{#if items.length === 0}
-	<p>None</p>
-{:else}
+{#if items.length > 0}
 	<Listgroup>
 		{#each items as item, index}
 			<ListgroupItem class="w-full py-1">
@@ -36,7 +34,7 @@
 {/if}
 
 {#if showCreate}
-	<div class="mt-8 rounded-lg bg-black/15 p-4">
+	<div class="rounded-lg bg-black/15 p-4">
 		<div class="mb-4">
 			<slot name="create" />
 		</div>
@@ -52,14 +50,16 @@
 				on:click={() => {
 					dispatch('add');
 					showCreate = false;
-				}}>Save</Button
+				}}
 			>
+				<PlusOutline class="mr-2 h-4 w-4" /> Add to list
+			</Button>
 		</div>
 	</div>
 {:else}
 	<div class="mt-4 flex justify-end">
 		<Button size="xs" class="p-2" color="green" on:click={() => (showCreate = true)}>
-			<PlusOutline class="mr-2 h-4 w-4" /> New
+			<PlusOutline class="mr-2 h-4 w-4" /> Add to list
 		</Button>
 	</div>
 {/if}
