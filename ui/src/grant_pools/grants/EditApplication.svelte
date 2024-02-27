@@ -45,7 +45,7 @@
 	async function updateApplication() {
 		const application: Application = {
 			application_template: currentApplication.application_template,
-			json_data: currentApplication.json_data,
+			form_schema: currentApplication.form_schema,
 			status: currentApplication.status
 		};
 

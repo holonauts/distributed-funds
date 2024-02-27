@@ -104,7 +104,7 @@
 	</div>
 
 	<div class="mb-8">
-		<SelectTimePeriod bind:value={amountRange} />
+		<SelectTimePeriod bind:value={timePeriod} />
 	</div>
 
 	<div class="mb-8">

@@ -7,24 +7,24 @@ pub enum EvaluationStatus {
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-pub struct RatingCriteria {
+pub struct AttributeScore {
     label: String,
     value: u64,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-pub enum QuantitativeRating {
+pub enum Score {
     Single(u64),
-    Weighted(Vec<RatingCriteria>),
+    Weighted(Vec<AttributeScore>),
 }
 
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct Evaluation {
     pub application: ActionHash,
-    pub content: String,
+    pub form_content: String,
     pub comments: String,
-    pub quantitative_rating: QuantitativeRating,
+    pub score: Score,
     pub status: EvaluationStatus,
 }
 pub fn validate_create_evaluation(

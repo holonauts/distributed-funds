@@ -2,38 +2,41 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Record } from '@holochain/client';
 	import {
-		QuantitativeRatingType,
+		ScoreType,
 		type EvaluationTemplate,
-		type QuantitativeRatingTemplate
+		type ScoreTemplate,
+		type NumberRange
 	} from '../../../grant_pools/grants/types';
 	import { Button, Label, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseFormBuilder from '$lib/components/BaseFormBuilder.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { type BuilderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
-	import InputQuantitativeRatingTemplate from './InputQuantitativeRatingTemplate.svelte';
+	import InputScoreTemplate from './InputScoreTemplate.svelte';
 
 	const dispatch = createEventDispatcher();
 
-	export let qualitativeJsonSchema: string = '';
+	export let formSchema: string = '';
 	export let name: string = '';
-	export let quantitativeRating: QuantitativeRatingTemplate = {
-		type: QuantitativeRatingType.Single,
-		content: { min: 0, max: 10 }
+	export let scoreRange: NumberRange = { min: 0, max: 10 };
+	export let score: ScoreTemplate = {
+		type: ScoreType.Single,
+		content: undefined
 	};
 
 	let builderApi: typeof BuilderAPI | undefined = undefined;
 
-	$: isEvaluationTemplateValid = name.length > 0;
+	$: isEvaluationTemplateValid = name.length > 0 && score !== undefined && scoreRange !== undefined;
 
 	async function createEvaluationTemplate() {
 		if (!builderApi) return;
-		qualitativeJsonSchema = await builderApi.getDefinitionData();
+		formSchema = await builderApi.getDefinitionData();
 
 		const evaluationTemplateEntry: EvaluationTemplate = {
 			name,
-			qualitative_json_schema: qualitativeJsonSchema,
-			quantitative_rating: quantitativeRating
+			form_schema: formSchema,
+			score_range: scoreRange,
+			score
 		};
 
 		console.log('evaluationTemplateEntry', evaluationTemplateEntry);
@@ -62,13 +65,13 @@
 	</div>
 
 	<div class="mb-8">
-		<Label>Qualitative Evaluation Template</Label>
+		<Label>Evaluation Template</Label>
 		<BaseFormBuilder bind:builderApi />
 	</div>
 
 	<div class="mb-8">
-		<Label class="mb-2">Quantitative Rating Template</Label>
-		<InputQuantitativeRatingTemplate bind:value={quantitativeRating} />
+		<Label class="mb-2">Score Template</Label>
+		<InputScoreTemplate bind:value={score} />
 	</div>
 
 	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>

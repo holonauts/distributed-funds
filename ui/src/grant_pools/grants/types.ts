@@ -50,7 +50,7 @@ export type EntryTypes =
 	| ({ type: 'ApplicationTemplate' } & ApplicationTemplate);
 
 export interface ApplicationTemplate {
-	json_schema: string;
+	form_schema: string;
 	name: string;
 }
 
@@ -59,32 +59,29 @@ export interface NumberRange {
 	max: number;
 }
 
-export interface NumberRangeWeightedCriteria {
-	range: NumberRange;
-	weighted_criteria: WeightedCriteria[];
-}
-
-export interface WeightedCriteria {
+export interface AttributeScoreTemplate {
 	label: string,
 	weight: number,
 }
 
-export enum QuantitativeRatingType {
+export enum ScoreType {
 	Single = 'Single',
 	Weighted = 'Weighted'
 }
 
-export interface QuantitativeRatingTemplate {
-	type: QuantitativeRatingType;
-	content: NumberRange | NumberRangeWeightedCriteria;
+export interface ScoreTemplate {
+	type: ScoreType;
+	content: undefined | AttributeScoreTemplate[];
 }
 
 export interface EvaluationTemplate {
 	name: string;
 	
-	qualitative_json_schema: string;
+	form_schema: string;
 
-	quantitative_rating: QuantitativeRatingTemplate;
+	score_range: NumberRange,
+	
+	score: ScoreTemplate;
 }
 
 export interface TimePeriod {
@@ -116,29 +113,29 @@ export interface Status {
 export interface Application {
 	application_template: ActionHash;
 
-	json_data: string;
+	form_content: string;
 
 	status: Status;
 }
 
-export interface RatingCriteria {
+export interface AttributeScore {
     label: string,
     value: number,
 }
 
-export interface QuantitativeRating {
-	type: QuantitativeRatingType
-	content: number | RatingCriteria[]
+export interface Score {
+	type: ScoreType
+	content: number | AttributeScore[]
 }
 
 export interface Evaluation {
 	application: ActionHash;
 
-	json_data: string;
+	form_content: string;
 
 	comments: string;
 
-	quantitative_rating: QuantitativeRating;
+	score: Score;
 }
 
 export interface GrantPoolOutcome {

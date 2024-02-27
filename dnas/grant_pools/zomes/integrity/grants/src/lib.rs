@@ -884,15 +884,13 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         ));
                     }
                 };
-                let link_type = match LinkTypes::from_type(
-                    create_link.zome_index,
-                    create_link.link_type,
-                )? {
-                    Some(lt) => lt,
-                    None => {
-                        return Ok(ValidateCallbackResult::Valid);
-                    }
-                };
+                let link_type =
+                    match LinkTypes::from_type(create_link.zome_index, create_link.link_type)? {
+                        Some(lt) => lt,
+                        None => {
+                            return Ok(ValidateCallbackResult::Valid);
+                        }
+                    };
                 match link_type {
                     LinkTypes::AllApplicationTemplates => {
                         validate_delete_link_all_application_templates(

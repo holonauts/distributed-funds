@@ -4,7 +4,7 @@ use serde_json::Value;
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct ApplicationTemplate {
-    pub json_schema: String,
+    pub form_schema: String,
     pub name: String,
 }
 pub fn validate_create_application_template(
@@ -12,7 +12,7 @@ pub fn validate_create_application_template(
     application_template: ApplicationTemplate,
 ) -> ExternResult<ValidateCallbackResult> {
     let valid_json: Result<Value, serde_json::Error> =
-        serde_json::from_str(&application_template.json_schema);
+        serde_json::from_str(&application_template.form_schema);
     if valid_json.is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Schema not valid json".to_string(),

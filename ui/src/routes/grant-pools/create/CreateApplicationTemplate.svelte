@@ -10,7 +10,7 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let jsonSchema: string = '';
+	export let formSchema: string = '';
 	export let name: string = '';
 
 	$: isApplicationTemplateValid = name.length > 0;
@@ -19,10 +19,10 @@
 
 	async function createApplicationTemplate() {
 		if (!builderApi) return;
-		jsonSchema = await builderApi.getDefinitionData();
+		formSchema = await builderApi.getDefinitionData();
 
 		const applicationTemplateEntry: ApplicationTemplate = {
-			json_schema: jsonSchema,
+			form_schema: formSchema,
 			name
 		};
 
@@ -43,8 +43,8 @@
 	}
 
 	onMount(() => {
-		if (jsonSchema === undefined) {
-			throw new Error(`The jsonSchema input is required for the CreateApplicationTemplate element`);
+		if (formSchema === undefined) {
+			throw new Error(`The formSchema input is required for the CreateApplicationTemplate element`);
 		}
 	});
 </script>

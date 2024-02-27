@@ -6,7 +6,7 @@ import { NewEntryAction, ActionHash, Record, AppBundleSource, fakeActionHash, fa
 export async function sampleApplicationTemplate(cell: CallableCell, partialApplicationTemplate = {}) {
     return {
         ...{
-	  json_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         },
         ...partialApplicationTemplate
     };
@@ -25,8 +25,8 @@ export async function createApplicationTemplate(cell: CallableCell, applicationT
 export async function sampleEvaluationTemplate(cell: CallableCell, partialEvaluationTemplate = {}) {
     return {
         ...{
-	  qualitative_json_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-	  quantitative_rating: { type: 'Single' },
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  score: { type: 'Single' },
         },
         ...partialEvaluationTemplate
     };
@@ -90,7 +90,7 @@ export async function sampleApplication(cell: CallableCell, partialApplication =
     return {
         ...{
 	  application_template: (await fakeActionHash()),
-	  json_data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  status: { type: 'Draft' },
         },
         ...partialApplication
@@ -111,9 +111,9 @@ export async function sampleEvaluation(cell: CallableCell, partialEvaluation = {
     return {
         ...{
           application: (await createApplication(cell)).signed_action.hashed.hash,
-	  json_data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	  form_schema: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	  comments: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-	  quantitative_rating: { type: 'Single' },
+	  score: { type: 'Single' },
         },
         ...partialEvaluation
     };

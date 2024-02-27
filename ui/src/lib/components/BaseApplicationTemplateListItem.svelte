@@ -45,7 +45,7 @@
 		<Card size="xl">
 			<BaseFormBuilder
 				view="render"
-				formDefinition={JSON.parse(applicationTemplate.json_schema).formDefinition}
+				formDefinition={JSON.parse(applicationTemplate.form_schema).formDefinition}
 			/>
 		</Card>
 	</div>

@@ -9,7 +9,7 @@
 		DnaHash
 	} from '@holochain/client';
 	import { clientContext } from '../../contexts';
-	import type { Evaluation, QuantitativeRating } from './types';
+	import type { Evaluation, Score } from './types';
 	import '@material/mwc-button';
 	import '@material/mwc-snackbar';
 	import type { Snackbar } from '@material/mwc-snackbar';
@@ -21,35 +21,35 @@
 
 	export let application!: ActionHash;
 
-	export let jsonData!: string;
+	export let formContent!: string;
 
-	export let quantitativeRating!: QuantitativeRating;
+	export let score!: Score;
 
 	let comments: string = '';
 
 	let errorSnackbar: Snackbar;
 
-	$: application, jsonData, comments, quantitativeRating;
+	$: application, formContent, comments, score;
 	$: isEvaluationValid = true && comments !== '';
 
 	onMount(() => {
 		if (application === undefined) {
 			throw new Error(`The application input is required for the CreateEvaluation element`);
 		}
-		if (jsonData === undefined) {
-			throw new Error(`The jsonData input is required for the CreateEvaluation element`);
+		if (formContent === undefined) {
+			throw new Error(`The formContent input is required for the CreateEvaluation element`);
 		}
-		if (quantitativeRating === undefined) {
-			throw new Error(`The quantitativeRating input is required for the CreateEvaluation element`);
+		if (score === undefined) {
+			throw new Error(`The score input is required for the CreateEvaluation element`);
 		}
 	});
 
 	async function createEvaluation() {
 		const evaluationEntry: Evaluation = {
 			application: application!,
-			json_data: jsonData!,
+			form_content: formContent!,
 			comments: comments!,
-			quantitative_rating: quantitativeRating!
+			score: score!
 		};
 
 		try {

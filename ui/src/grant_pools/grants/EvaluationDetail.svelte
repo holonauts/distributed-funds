@@ -11,7 +11,7 @@
 		DnaHash
 	} from '@holochain/client';
 	import { clientContext } from '../../contexts';
-	import type { Evaluation, QuantitativeRating } from './types';
+	import type { Evaluation, Score } from './types';
 	import { Spinner } from 'flowbite-svelte';
 	import type { Snackbar } from '@material/mwc-snackbar';
 	import '@material/mwc-snackbar';

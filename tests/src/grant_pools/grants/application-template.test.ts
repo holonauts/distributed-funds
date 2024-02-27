@@ -26,7 +26,7 @@ test('create ApplicationTemplate', async () => {
     // Alice creates a ApplicationTemplate
     const record: Record = await createApplicationTemplate(alice.cells[0], {
       name: "My template",
-      json_schema: "{\"example\": 123}",
+      form_schema: "{\"example\": 123}",
     });
     assert.ok(record);
   });

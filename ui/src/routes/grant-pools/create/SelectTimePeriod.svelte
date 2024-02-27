@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { decodeHashFromBase64, type ActionHash, encodeHashToBase64 } from '@holochain/client';
+	import { decodeHashFromBase64, type ActionHash } from '@holochain/client';
 	import { onMount } from 'svelte';
 	import type { GrantsSignal } from '../../../grant_pools/grants/types';
 	import RadioTimePeriodListItem from './RadioTimePeriodListItem.svelte';

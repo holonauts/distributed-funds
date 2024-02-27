@@ -33,7 +33,7 @@ impl ApplicationStatus {
 #[derive(Clone, Eq, PartialEq)]
 pub struct Application {
     pub application_template: ActionHash,
-    pub content: String,
+    pub form_content: String,
     pub amount: U256,
     pub status: ApplicationStatus,
 }
@@ -41,7 +41,7 @@ pub fn validate_create_application(
     _action: EntryCreationAction,
     application: Application,
 ) -> ExternResult<ValidateCallbackResult> {
-    if application.content.is_empty() {
+    if application.form_content.is_empty() {
         return Ok(ValidateCallbackResult::Invalid(
             "Content cannot be empty".to_string(),
         ));
@@ -80,7 +80,7 @@ pub fn validate_update_application(
         ));
     }
     if !&original_status.is_draft() {
-        if original_application.content != application.content {
+        if original_application.form_content != application.form_content {
             return Ok(ValidateCallbackResult::Invalid(
                 "Content can only be changed in draft".to_string(),
             ));
