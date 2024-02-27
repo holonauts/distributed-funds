@@ -1,13 +1,16 @@
 import { derived, get, writable } from 'svelte/store';
 import { AppAgentWebsocket } from '@holochain/client';
 import { toasts } from './toast';
+import { ProfilesClient, ProfilesStore } from '@holochain-open-dev/profiles';
 
 function holochainClientStore() {
   const isConnecting = writable(true);
   const client = writable<AppAgentWebsocket>();
+  const profilesStore = writable<ProfilesStore>();
 
-  const { subscribe } = derived([isConnecting, client], ([$isConnecting, $client]) => ({
+  const { subscribe } = derived([isConnecting, client, profilesStore], ([$isConnecting, $client, $profilesStore]) => ({
     client: $client,
+    profilesStore: $profilesStore,
     isConnecting: $isConnecting,
   }));
   
@@ -18,6 +21,9 @@ function holochainClientStore() {
     try {      
       const res = await AppAgentWebsocket.connect(url, happId);
       client.set(res);
+      profilesStore.set(new ProfilesStore(new ProfilesClient(res, 'grant_pools'), {
+        avatarMode: 'avatar-optional'
+      }));
     } catch(e) {
       toasts.error(`Failed to connect to holochain client: ${e as string}`);
     }
