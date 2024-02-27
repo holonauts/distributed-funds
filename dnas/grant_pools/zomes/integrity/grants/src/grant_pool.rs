@@ -69,6 +69,7 @@ pub fn validate_create_grant_pool(
         ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
+
 pub fn validate_update_grant_pool(
     _action: Update,
     _grant_pool: GrantPool,
@@ -88,6 +89,7 @@ pub fn validate_delete_grant_pool(
         "Grant Pools cannot be deleted",
     )))
 }
+
 pub fn validate_create_link_time_period_to_grant_pools(
     _action: CreateLink,
     base_address: AnyLinkableHash,
