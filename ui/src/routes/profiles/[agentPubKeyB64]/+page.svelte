@@ -14,7 +14,7 @@
 	$: ({ myProfile } = $holochainClient.profilesStore);
 </script>
 
-<BaseBreadcrumbs title="Agent Profile" />
+<BaseBreadcrumbs title="Profile" />
 
 <div class="flex justify-center">
 	<div>

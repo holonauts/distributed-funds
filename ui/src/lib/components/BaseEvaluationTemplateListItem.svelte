@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { formatRecordTimestampHumanized } from '$lib/utils/date';
-	import { encodeHashToBase64, type Record } from '@holochain/client';
+	import { type Record } from '@holochain/client';
 	import type { EvaluationTemplate } from '../../grant_pools/grants/types';
 	import { AngleDownOutline } from 'flowbite-svelte-icons';
 	import BaseFormBuilder from './BaseFormBuilder.svelte';
 	import { Card, Label } from 'flowbite-svelte';
 	import InputScore from '$lib/components/InputScore.svelte';
+	import ProfileInline from '$lib/components/ProfileInline.svelte';
 
 	export let evaluationTemplate: EvaluationTemplate;
 	export let record: Record;
@@ -19,7 +20,7 @@
 			<div>
 				<div class="text-xs dark:text-white">
 					<div class="mb-1 text-xs text-gray-700 dark:text-gray-400">Author</div>
-					{encodeHashToBase64(record.signed_action.hashed.content.author)}
+					<ProfileInline agentPubKey={record.signed_action.hashed.content.author} />
 				</div>
 			</div>
 			<div>
