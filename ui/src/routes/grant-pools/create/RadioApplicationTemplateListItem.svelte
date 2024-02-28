@@ -1,18 +1,21 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { Radio } from 'flowbite-svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
+	import { Button, Radio } from 'flowbite-svelte';
 	import { decode } from '@msgpack/msgpack';
 	import { type Record, type ActionHash, encodeHashToBase64 } from '@holochain/client';
 	import type { ApplicationTemplate } from '../../../grant_pools/grants/types';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import ApplicationTemplateListItem from '$lib/components/ApplicationTemplateListItem.svelte';
+	const dispatch = createEventDispatcher<{
+		clone: ApplicationTemplate;
+	}>();
 
 	export let applicationTemplateHash: ActionHash;
 	export let group: string;
 
 	let loading = true;
 	let record: Record | undefined;
-	let applicationTemplate: ApplicationTemplate | undefined;
+	let applicationTemplate: ApplicationTemplate;
 
 	onMount(async () => {
 		if (applicationTemplateHash === undefined) {
@@ -26,7 +29,6 @@
 	async function fetchApplicationTemplate() {
 		loading = true;
 		record = undefined;
-		applicationTemplate = undefined;
 
 		try {
 			record = await $holochainClient.client.callZome({
@@ -52,10 +54,11 @@
 {:else if record === undefined || applicationTemplate === undefined}
 	<div>Application template not found</div>
 {:else}
-	<div class="flex w-full items-start justify-start">
-		<div class="p-4">
-			<Radio bind:group name="hash" value={encodeHashToBase64(applicationTemplateHash)} />
-		</div>
+	<div class="flex w-full items-start justify-start space-x-4">
+		<Radio bind:group name="hash" value={encodeHashToBase64(applicationTemplateHash)} />
 		<ApplicationTemplateListItem {applicationTemplateHash} />
+		<Button size="xs" color="alternative" on:click={() => dispatch('clone', applicationTemplate)}
+			>Clone</Button
+		>
 	</div>
 {/if}

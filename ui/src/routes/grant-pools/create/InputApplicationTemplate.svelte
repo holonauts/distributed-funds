@@ -18,6 +18,8 @@
 	let showCreateModal = false;
 	let showSelectModal = false;
 	let valueBase64: string = '';
+	let name = '';
+	let formSchema = '';
 
 	$: {
 		if (valueBase64 !== '') {
@@ -53,6 +55,13 @@
 		}
 		loading = false;
 	}
+
+	function reset() {
+		name = '';
+		formSchema = '';
+		showCreateModal = false;
+		showSelectModal = false;
+	}
 </script>
 
 <div class="flex w-full items-center justify-between">
@@ -84,8 +93,16 @@
 </div>
 <Helper>The application form that grant applicants will be required to submit.</Helper>
 
-<Modal size="xl" outsideclose title="Create Application Template" bind:open={showCreateModal}>
+<Modal
+	size="xl"
+	outsideclose
+	title="Create Application Template"
+	bind:open={showCreateModal}
+	on:close={reset}
+>
 	<CreateApplicationTemplate
+		{name}
+		{formSchema}
 		on:application-template-created={(e) => {
 			valueBase64 = encodeHashToBase64(e.detail.applicationTemplateHash);
 			value = e.detail.applicationTemplateHash;
@@ -94,10 +111,19 @@
 	/>
 </Modal>
 
-<Modal size="xl" outsideclose title="Select Application Template" bind:open={showSelectModal}>
+<Modal size="lg" outsideclose title="Select Application Template" bind:open={showSelectModal}>
 	<BaseListHashes {loading} {hashes}>
 		<svelte:fragment let:hash>
-			<RadioApplicationTemplateListItem applicationTemplateHash={hash} bind:group={valueBase64} />
+			<RadioApplicationTemplateListItem
+				applicationTemplateHash={hash}
+				bind:group={valueBase64}
+				on:clone={(e) => {
+					name = e.detail.name;
+					formSchema = e.detail.form_schema;
+					showSelectModal = false;
+					showCreateModal = true;
+				}}
+			/>
 		</svelte:fragment>
 	</BaseListHashes>
 </Modal>

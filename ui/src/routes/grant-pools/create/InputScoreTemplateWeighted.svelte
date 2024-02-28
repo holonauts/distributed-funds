@@ -4,34 +4,27 @@
 	import InputList from '$lib/components/InputList.svelte';
 
 	export let value: AttributeScoreTemplate[] = [];
-	let createAttributeScoreTemplate = { label: '', weight: '' };
+	let createAttributeScoreTemplate = { label: '', weight: 1 };
+
+	$: createIsValid =
+		createAttributeScoreTemplate !== undefined &&
+		createAttributeScoreTemplate.label.length > 0 &&
+		createAttributeScoreTemplate.weight;
 
 	function add() {
-		value = [
-			...value,
-			{
-				label: createAttributeScoreTemplate.label,
-				weight: parseInt(createAttributeScoreTemplate.weight)
-			}
-		];
+		value = [...value, createAttributeScoreTemplate];
 
 		reset();
 	}
 
 	function reset() {
-		createAttributeScoreTemplate = { label: '', weight: '' };
+		createAttributeScoreTemplate = { label: '', weight: 1 };
 	}
 </script>
 
 <div class="mb-2">
 	<Label>Weighted Attributes</Label>
-	<InputList
-		bind:items={value}
-		createIsValid={createAttributeScoreTemplate !== undefined &&
-			createAttributeScoreTemplate.label.length > 0 &&
-			createAttributeScoreTemplate.weight.length > 0}
-		on:add={add}
-	>
+	<InputList bind:items={value} {createIsValid} on:add={add}>
 		<svelte:fragment slot="item" let:item>
 			<div class="flex items-center justify-start">
 				<div class="flex-grow">
@@ -53,7 +46,13 @@
 				</div>
 				<div class="w-32">
 					<Label for="weight">Weight</Label>
-					<Input id="weight" bind:value={createAttributeScoreTemplate.weight} placeholder="1" />
+					<input
+						type="number"
+						id="weight"
+						bind:value={createAttributeScoreTemplate.weight}
+						placeholder="1"
+						class="focus:border-primary-500 focus:ring-primary-500 dark:focus:border-primary-500 dark:focus:ring-primary-500 block w-full rounded-lg border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 disabled:cursor-not-allowed disabled:opacity-50 rtl:text-right dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400"
+					/>
 				</div>
 			</div>
 		</svelte:fragment>

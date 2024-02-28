@@ -16,8 +16,8 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let formSchema: string = '';
 	export let name: string = '';
+	export let formSchema: string = '';
 	export let scoreRange: NumberRange = { min: 0, max: 10 };
 	export let score: ScoreTemplate = {
 		type: ScoreType.Single,
@@ -71,7 +71,7 @@
 
 	<div class="mb-8">
 		<Label class="mb-2">Score Template</Label>
-		<InputScoreTemplate bind:value={score} />
+		<InputScoreTemplate bind:score bind:scoreRange />
 	</div>
 
 	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>

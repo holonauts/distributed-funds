@@ -10,8 +10,8 @@
 
 	const dispatch = createEventDispatcher();
 
-	export let formSchema: string = '';
 	export let name: string = '';
+	export let formSchema: string = '';
 
 	$: isApplicationTemplateValid = name.length > 0;
 
