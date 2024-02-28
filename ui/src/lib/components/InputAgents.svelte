@@ -18,6 +18,8 @@
 
 <div class="input-agents-wrapper">
 	<search-agent
+		class="relative -top-4"
+		field-label=" "
 		clear-on-select
 		include-myself={false}
 		on:agent-selected={(e) => add(e.detail.agentPubKey)}

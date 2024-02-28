@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type ActionHash } from '@holochain/client';
-	import RecordListItem from '$lib/components/RecordListItem.svelte';
+	import RecordDetail from '$lib/components/RecordDetail.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import BaseTemplateListItem from './BaseTemplateListItem.svelte';
 	const dispatch = createEventDispatcher();
@@ -10,7 +10,7 @@
 	let showDetails = false;
 </script>
 
-<RecordListItem
+<RecordDetail
 	callZomeRequest={{
 		cap_secret: null,
 		role_name: 'grant_pools',
@@ -30,4 +30,4 @@
 			on:clone={() => dispatch('clone', entry)}
 		/>
 	</svelte:fragment>
-</RecordListItem>
+</RecordDetail>

@@ -5,7 +5,6 @@
 	import { onMount } from 'svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import Alert from 'flowbite-svelte/Alert.svelte';
-	import { Spinner } from 'flowbite-svelte';
 
 	export let entryType: string;
 	export let callZomeRequest: AppAgentCallZomeRequest;
@@ -48,7 +47,7 @@
 {:else}
 	<div class="flex flex-col">
 		{#each hashes as hash}
-			<div class="mb-8">
+			<div class="mb-4">
 				<slot {hash} />
 			</div>
 		{/each}

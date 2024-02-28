@@ -11,10 +11,12 @@
 	import { toasts } from '$lib/stores/toast';
 	import BaseListHashes from '$lib/components/BaseListHashes.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
-	import { Button, Helper, Label, Modal } from 'flowbite-svelte';
+	import { Button, Card, Helper, Label, Modal } from 'flowbite-svelte';
 	import CreateEvaluationTemplate from './CreateEvaluationTemplate.svelte';
 	import { FileSolid, PlusSolid } from 'flowbite-svelte-icons';
 	import EvaluationTemplateListItem from './EvaluationTemplateListItem.svelte';
+	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
+	import BaseHelper from '$lib/components/BaseHelper.svelte';
 
 	export let value: ActionHash | undefined;
 
@@ -74,7 +76,7 @@
 </script>
 
 <div class="flex w-full items-center justify-between">
-	<Label>Evaluation Template</Label>
+	<BaseLabelContent label="Evaluation Template" />
 	<div class="mb-2 flex items-center space-x-4">
 		<Button on:click={() => (showSelectModal = true)} size="xs" class="mt-1 px-2 py-1" color="blue">
 			<FileSolid class="mr-2 h-4 w-4" />
@@ -95,12 +97,18 @@
 
 <div class="mb-2">
 	{#if value !== undefined}
-		<EvaluationTemplateListItem evaluationTemplateHash={value} />
+		<Card size="xl">
+			<EvaluationTemplateListItem evaluationTemplateHash={value} />
+		</Card>
 	{:else}
-		<p class="dark:text-700 text-sm dark:text-gray-400">No template selected</p>
+		<div
+			class="dark:text-700 rounded-lg border-[1px] border-solid border-gray-400 p-4 text-sm dark:border-gray-400 dark:text-gray-400"
+		>
+			No template selected
+		</div>
 	{/if}
 </div>
-<Helper>The evaluation form that grant applicants will be required to submit.</Helper>
+<BaseHelper>The evaluation form that grant applicants will be required to submit.</BaseHelper>
 
 <Modal
 	size="lg"
