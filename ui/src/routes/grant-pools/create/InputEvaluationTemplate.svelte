@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { decodeHashFromBase64, type ActionHash, encodeHashToBase64 } from '@holochain/client';
 	import { onMount } from 'svelte';
-	import type { GrantsSignal } from '../../../grant_pools/grants/types';
+	import {
+		ScoreType,
+		type GrantsSignal,
+		type NumberRange,
+		type ScoreTemplate
+	} from '../../../grant_pools/grants/types';
 	import RadioEvaluationTemplateListItem from './RadioEvaluationTemplateListItem.svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseListHashes from '$lib/components/BaseListHashes.svelte';
@@ -18,6 +23,10 @@
 	let showCreateModal = false;
 	let showSelectModal = false;
 	let valueBase64: string = '';
+	let name: string;
+	let formSchema: string;
+	let score: ScoreTemplate;
+	let scoreRange: NumberRange;
 
 	$: {
 		if (valueBase64 !== '') {
@@ -53,6 +62,15 @@
 		}
 		loading = false;
 	}
+
+	function reset() {
+		name = '';
+		formSchema = '';
+		score = { type: ScoreType.Single, content: undefined };
+		scoreRange = { min: 0, max: 10 };
+		showCreateModal = false;
+		showSelectModal = false;
+	}
 </script>
 
 <div class="flex w-full items-center justify-between">
@@ -84,8 +102,18 @@
 </div>
 <Helper>The evaluation form that grant applicants will be required to submit.</Helper>
 
-<Modal size="lg" outsideclose title="Create Evaluation Template" bind:open={showCreateModal}>
+<Modal
+	size="lg"
+	outsideclose
+	title="Create Evaluation Template"
+	bind:open={showCreateModal}
+	on:close={reset}
+>
 	<CreateEvaluationTemplate
+		{name}
+		{formSchema}
+		{score}
+		{scoreRange}
 		on:evaluation-template-created={(e) => {
 			valueBase64 = encodeHashToBase64(e.detail.evaluationTemplateHash);
 			value = e.detail.evaluationTemplateHash;
@@ -97,7 +125,19 @@
 <Modal size="lg" outsideclose title="Select Evaluation Template" bind:open={showSelectModal}>
 	<BaseListHashes {loading} {hashes}>
 		<svelte:fragment let:hash>
-			<RadioEvaluationTemplateListItem evaluationTemplateHash={hash} bind:group={valueBase64} />
+			<RadioEvaluationTemplateListItem
+				evaluationTemplateHash={hash}
+				bind:group={valueBase64}
+				on:clone={(e) => {
+					console.log('e detail', e.detail);
+					name = e.detail.name;
+					formSchema = e.detail.form_schema;
+					score = e.detail.score;
+					scoreRange = e.detail.score_range;
+					showSelectModal = false;
+					showCreateModal = true;
+				}}
+			/>
 		</svelte:fragment>
 	</BaseListHashes>
 </Modal>
