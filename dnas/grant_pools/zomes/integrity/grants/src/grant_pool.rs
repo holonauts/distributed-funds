@@ -1,10 +1,15 @@
-use alloy_primitives::U256;
+use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, SerializedBytes)]
 pub struct AmountRange {
     min: U256,
     max: U256,
+}
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub struct AllowedERC20 {
+    token: Address,
+    decimals: u8,
 }
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
@@ -16,6 +21,7 @@ pub struct GrantPool {
     pub application_template: ActionHash,
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
+    pub allowed_erc20: AllowedERC20,
     pub evaluators: Vec<AgentPubKey>,
 }
 pub fn validate_create_grant_pool(
@@ -42,7 +48,6 @@ pub fn validate_create_grant_pool(
             "Evaluators cannot be empty".to_string(),
         ));
     }
-
     let record = must_get_valid_record(grant_pool.time_period.clone())?;
     let _time_period: crate::TimePeriod = record
         .entry()
@@ -69,7 +74,6 @@ pub fn validate_create_grant_pool(
         ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
-
 pub fn validate_update_grant_pool(
     _action: Update,
     _grant_pool: GrantPool,
@@ -89,7 +93,6 @@ pub fn validate_delete_grant_pool(
         "Grant Pools cannot be deleted",
     )))
 }
-
 pub fn validate_create_link_time_period_to_grant_pools(
     _action: CreateLink,
     base_address: AnyLinkableHash,

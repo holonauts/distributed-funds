@@ -1,4 +1,4 @@
-use alloy_primitives::U256;
+use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
 use serde_json::Value;
 
@@ -14,12 +14,10 @@ impl ApplicationStatus {
     fn is_draft(&self) -> bool {
         matches!(self, ApplicationStatus::Draft)
     }
-
     fn is_submitted(&self) -> bool {
         matches!(self, ApplicationStatus::Submitted)
     }
 }
-
 #[hdk_entry_helper]
 #[derive(Clone, Eq, PartialEq)]
 pub struct Application {
@@ -59,7 +57,7 @@ pub fn validate_create_application(
             "Dependant action must be accompanied by an entry"
         ))))?;
 
-    // TODO action timestamp must be  within grant pool time range
+    // TODO action timestamp must be  within the GrantPool's TimePeriod
 
     Ok(ValidateCallbackResult::Valid)
 }
@@ -92,7 +90,6 @@ pub fn validate_update_application(
             ));
         }
     }
-
     match application.status {
         ApplicationStatus::Draft => {
             if !&original_status.is_draft() {
@@ -118,7 +115,6 @@ pub fn validate_update_application(
     };
     Ok(ValidateCallbackResult::Valid)
 }
-
 pub fn validate_delete_application(
     _action: Delete,
     _original_action: EntryCreationAction,
