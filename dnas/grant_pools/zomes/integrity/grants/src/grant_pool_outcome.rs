@@ -1,12 +1,21 @@
+use alloy_primitives::U256;
 use hdi::prelude::*;
 use std::collections::BTreeMap;
 
+use crate::Evaluation;
+
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+pub struct AbsoluteScore {
+    pub application: ActionHash,
+    pub score: u64,
+}
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPoolOutcome {
     pub grant_pool: ActionHash,
-    // K: ActionHash of Application, V: ActionHash of Evaluations
+    pub deposits: BTreeMap<AgentPubKey, U256>,
     pub evaluations: BTreeMap<ActionHash, Vec<ActionHash>>,
+    pub ranked_list: Vec<AbsoluteScore>,
     pub coupon: Vec<u32>,
 }
 pub fn validate_create_grant_pool_outcome(
@@ -21,22 +30,24 @@ pub fn validate_create_grant_pool_outcome(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
-
     if record.signed_action.action().author() != action.author() {
         return Ok(ValidateCallbackResult::Invalid(
             "Only grant pool author can create an outcome".to_string(),
         ));
     }
-
     for (application, evaluations) in grant_pool_outcome.evaluations.clone() {
         must_get_valid_record(application.clone())?;
-        for evaluation in evaluations {
-            must_get_valid_record(evaluation.clone())?;
+        for evaluation_action_hash in evaluations {
+            let record = must_get_valid_record(evaluation_action_hash.clone())?;
+            let evaluation: Evaluation = record
+                .entry()
+                .to_app_option()
+                .map_err(|e| wasm_error!(e))?
+                .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+                    "Dependant action must be accompanied by an entry"
+                ))))?;
         }
     }
-
-    // TODO: tallying of funding is accurate and sums to expected amount using evm native types
-
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_grant_pool_outcome(

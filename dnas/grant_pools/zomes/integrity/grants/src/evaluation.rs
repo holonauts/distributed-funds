@@ -1,15 +1,10 @@
 use hdi::prelude::*;
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
-#[serde(tag = "type")]
-pub enum EvaluationStatus {
-    Draft,
-    Submitted,
-}
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub struct AttributeScore {
-    label: String,
-    value: u64,
+    pub label: String,
+    pub value: u64,
+    pub weight: u64,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
@@ -17,7 +12,6 @@ pub enum Score {
     Single(u64),
     Weighted(Vec<AttributeScore>),
 }
-
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct Evaluation {
@@ -25,7 +19,6 @@ pub struct Evaluation {
     pub form_content: String,
     pub comments: String,
     pub score: Score,
-    pub status: EvaluationStatus,
 }
 pub fn validate_create_evaluation(
     _action: EntryCreationAction,

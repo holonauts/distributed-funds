@@ -1,34 +1,29 @@
-use alloy_primitives::U256;
+use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct ApplicationOutcome {
-    approved: bool,
-    grant_pool: ActionHash,
+    pub approved: bool,
+    pub grant_pool: ActionHash,
 }
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type")]
 pub enum ApplicationStatus {
     Draft,
-    // GrantPool ActionHash
     Submitted(ActionHash),
     Evaluated(ApplicationOutcome),
-    // EVM claim Transaction Hash
     Claimed(U256),
 }
 impl ApplicationStatus {
     fn is_draft(&self) -> bool {
         matches!(self, ApplicationStatus::Draft)
     }
-
     fn is_submitted(&self) -> bool {
         matches!(self, ApplicationStatus::Submitted(_))
     }
-
     fn is_evaluated(&self) -> bool {
         matches!(self, ApplicationStatus::Evaluated(_))
     }
 }
-
 #[hdk_entry_helper]
 #[derive(Clone, Eq, PartialEq)]
 pub struct Application {
@@ -59,7 +54,6 @@ pub fn validate_create_application(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
-
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application(
@@ -91,7 +85,6 @@ pub fn validate_update_application(
             ));
         }
     }
-
     match application.status {
         ApplicationStatus::Draft => {
             if !&original_status.is_draft() {
@@ -124,7 +117,6 @@ pub fn validate_update_application(
     };
     Ok(ValidateCallbackResult::Valid)
 }
-
 pub fn validate_delete_application(
     _action: Delete,
     _original_action: EntryCreationAction,
