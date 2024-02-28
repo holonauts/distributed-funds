@@ -17,6 +17,7 @@
 		</NavBrand>
 		<NavUl {hidden} {activeUrl} class="flex items-center">
 			<div class="flex items-center space-x-8">
+				<NavLi href="/time-periods">Time Periods</NavLi>
 				<NavLi href="/grant-pools">Grant Pools</NavLi>
 				<NavLi>My Applications</NavLi>
 				<NavLi>My Evaluations</NavLi>

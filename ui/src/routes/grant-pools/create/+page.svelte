@@ -1,16 +1,18 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import type { Record, ActionHash, AgentPubKey } from '@holochain/client';
-	import type { GrantPool, NumberRange } from '../../../grant_pools/grants/types';
+	import type { AmountRangeBigInt, GrantPool } from '../../../grant_pools/grants/types';
 	import { Label, Textarea, Button, Helper, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
 	import InputApplicationTemplate from './InputApplicationTemplate.svelte';
 	import InputEvaluationTemplate from './InputEvaluationTemplate.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
-	import InputNumberRange from '$lib/components/InputNumberRange.svelte';
 	import SelectTimePeriod from './SelectTimePeriod.svelte';
 	import InputAgents from '$lib/components/InputAgents.svelte';
+	import InputTokenAmountRange from '$lib/components/InputTokenAmountRange.svelte';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../../config';
+	import { bigintToU256 } from '$lib/utils/u256';
 
 	const dispatch = createEventDispatcher();
 
@@ -18,18 +20,20 @@
 	export let purposeDescription: string = '';
 	export let rulesDescription: string = '';
 	export let timePeriod: ActionHash | undefined = undefined;
-	export let amountRange: NumberRange | undefined = undefined;
+	export let amountRange: AmountRangeBigInt | undefined = undefined;
 	export let applicationTemplate: ActionHash | undefined = undefined;
 	export let evaluationTemplate: ActionHash | undefined = undefined;
 	export let evaluators: AgentPubKey[] = [];
 
-	$: name,
-		purposeDescription,
-		rulesDescription,
-		timePeriod,
-		applicationTemplate,
-		evaluationTemplate;
-	$: isGrantPoolValid = true && name !== '' && purposeDescription !== '' && rulesDescription !== '';
+	$: isGrantPoolValid =
+		name !== '' &&
+		purposeDescription !== '' &&
+		rulesDescription !== '' &&
+		timePeriod !== undefined &&
+		amountRange !== undefined &&
+		applicationTemplate !== undefined &&
+		evaluationTemplate !== undefined &&
+		evaluators.length > 0;
 
 	async function createGrantPool() {
 		const grantPoolEntry: GrantPool = {
@@ -39,6 +43,10 @@
 			time_period: timePeriod!,
 			application_template: applicationTemplate!,
 			evaluation_template: evaluationTemplate!,
+			amount_range: {
+				min: bigintToU256(amountRange!.min),
+				max: bigintToU256(amountRange!.max)
+			},
 			evaluators: evaluators!
 		};
 
@@ -52,7 +60,7 @@
 			});
 			dispatch('grant-pool-created', { grantPoolHash: record.signed_action.hashed.hash });
 		} catch (e) {
-			toasts.error(`Error creating the grant pool: ${e.data.data}`);
+			toasts.error(`Error creating the grant pool: ${e}`);
 		}
 	}
 </script>
@@ -62,7 +70,7 @@
 <div class="flex h-full flex-col">
 	<div class="mb-8">
 		<Label for="name" class="mb-2">Title</Label>
-		<Input id="name" bind:name required placeholder="Coral Reef Renewal" />
+		<Input id="name" bind:value={name} required placeholder="Coral Reef Renewal" />
 	</div>
 
 	<div class="mb-8">
@@ -70,7 +78,7 @@
 		<Textarea
 			id="purpose-description"
 			class="h-48"
-			bind:purposeDescription
+			bind:value={purposeDescription}
 			required
 			placeholder="To support projects that are effectively improving the health of coral reefs in the south pacific."
 		/>
@@ -84,7 +92,7 @@
 		<Textarea
 			id="rules-description"
 			class="h-48"
-			bind:rulesDescription
+			bind:value={rulesDescription}
 			required
 			placeholder="All projects must be based in the east. Have no more than 500K revenue per year."
 		/>
@@ -99,8 +107,8 @@
 	</div>
 
 	<div class="mb-8">
-		<Label>Allowed Grant Amount (USDC)</Label>
-		<InputNumberRange bind:value={amountRange} />
+		<Label>Allowed Grant Amount ({ACCEPTED_TOKEN_SYMBOL})</Label>
+		<InputTokenAmountRange decimals={ACCEPTED_TOKEN_DECIMALS} bind:value={amountRange} />
 		<Helper class="mt-2">How much funding can be awarded in a single grant?</Helper>
 	</div>
 
