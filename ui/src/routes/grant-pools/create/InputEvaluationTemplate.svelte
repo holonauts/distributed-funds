@@ -129,7 +129,6 @@
 				evaluationTemplateHash={hash}
 				bind:group={valueBase64}
 				on:clone={(e) => {
-					console.log('e detail', e.detail);
 					name = e.detail.name;
 					formSchema = e.detail.form_schema;
 					score = e.detail.score;

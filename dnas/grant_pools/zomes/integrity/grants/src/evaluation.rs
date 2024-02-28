@@ -1,18 +1,18 @@
 use hdi::prelude::*;
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 #[serde(tag = "type")]
 pub enum EvaluationStatus {
     Draft,
     Submitted,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub struct AttributeScore {
     label: String,
     value: u64,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub enum Score {
     Single(u64),
     Weighted(Vec<AttributeScore>),

@@ -1,51 +1,27 @@
 <script lang="ts">
-	import { createEventDispatcher, onMount, getContext } from 'svelte';
-	import { Spinner } from 'flowbite-svelte';
+	import { onMount } from 'svelte';
 	import { decode } from '@msgpack/msgpack';
-	import type {
-		Record,
-		ActionHash,
-		AppAgentClient,
-		EntryHash,
-		AgentPubKey,
-		DnaHash
-	} from '@holochain/client';
-	import { clientContext } from '../../contexts';
+	import type { Record, ActionHash } from '@holochain/client';
 	import type { TimePeriod } from './types';
 	import { Spinner } from 'flowbite-svelte';
-	import type { Snackbar } from '@material/mwc-snackbar';
-	import '@material/mwc-snackbar';
-	import '@material/mwc-icon-button';
-
-	const dispatch = createEventDispatcher();
+	import { toasts } from '$lib/stores/toast';
+	import { holochainClient } from '$lib/stores/holochainClient';
 
 	export let timePeriodHash: ActionHash;
 
-	let client: AppAgentClient = (getContext(clientContext) as any).getClient();
-
 	let loading = true;
-	let error: any = undefined;
-
 	let record: Record | undefined;
-	let timePeriod: TimePeriod | undefined;
-
-	$: error, loading, record, timePeriod;
+	let timePeriod: TimePeriod;
 
 	onMount(async () => {
-		if (timePeriodHash === undefined) {
-			throw new Error(`The timePeriodHash input is required for the TimePeriodDetail element`);
-		}
 		await fetchTimePeriod();
 	});
 
 	async function fetchTimePeriod() {
 		loading = true;
-		error = undefined;
-		record = undefined;
-		timePeriod = undefined;
 
 		try {
-			record = await client.callZome({
+			record = await $holochainClient.client.callZome({
 				cap_secret: null,
 				role_name: 'grant_pools',
 				zome_name: 'grants',
@@ -56,7 +32,7 @@
 				timePeriod = decode((record.entry as any).Present.entry) as TimePeriod;
 			}
 		} catch (e) {
-			error = e;
+			toasts.error(e);
 		}
 
 		loading = false;
@@ -64,11 +40,9 @@
 </script>
 
 {#if loading}
-	<div style="display: flex; flex: 1; align-items: center; justify-content: center">
+	<div class="flex items-center justify-center">
 		<Spinner class="h-4 w-4" />
 	</div>
-{:else if error}
-	<span>Error fetching the time period: {error.data.data}</span>
 {:else}
 	<div style="display: flex; flex-direction: column">
 		<div style="display: flex; flex-direction: row">
