@@ -1,7 +1,8 @@
 <script lang="ts">
 	import {
 		type BuilderAPI,
-		FormBuilder
+		FormBuilder,
+		type RenderAPI
 	} from '@pragmatic-engineering/svelte-form-builder-community';
 	import type {
 		FormDefinition,
@@ -9,6 +10,7 @@
 	} from '@pragmatic-engineering/svelte-form-builder-community/Utils/types';
 
 	export let builderApi: typeof BuilderAPI | undefined = undefined;
+	export let renderApi: typeof RenderAPI | undefined = undefined;
 	export let formDefinition: FormDefinition[] = [];
 	export let view: views = 'build';
 </script>
@@ -16,6 +18,7 @@
 <div class="form-builder-wrapper w-full">
 	<FormBuilder
 		bind:builderAPI={builderApi}
+		bind:renderAPI={renderApi}
 		options={{
 			allowHtmlLabels: false,
 			editOnAdd: true,

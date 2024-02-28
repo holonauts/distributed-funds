@@ -7,7 +7,6 @@
 
 	export let symbol: string | undefined = undefined;
 	export let decimals: number = 0;
-	export let minValue: number = 0;
 	export let maxValue: bigint | undefined = undefined;
 	export let showMaxButton = true;
 	export let placeholder = '';

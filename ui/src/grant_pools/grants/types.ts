@@ -119,14 +119,29 @@ export interface GrantPool {
 	evaluators: AgentPubKey[];
 }
 
+export enum StatusType {
+	Draft = 'Draft',
+	Submitted = 'Submitted',
+	Evaluated = 'Evaluated',
+	Claimed = 'Claimed',
+}
+
+export interface ApplicationOutcome {
+	approved: boolean;
+	grant_pool: ActionHash;
+}
+
 export interface Status {
-	type: 'Draft' | 'Submitted' | 'Evaluated' | 'Claimed';
+	type: StatusType;
+	content: ActionHash | ApplicationOutcome | Uint8Array;
 }
 
 export interface Application {
-	application_template: ActionHash;
+	grant_pool: ActionHash;
 
 	form_content: string;
+
+	amount: Uint8Array;
 
 	status: Status;
 }

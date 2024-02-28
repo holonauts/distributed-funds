@@ -4,8 +4,9 @@
 	import { generateBreadcrumbs } from '$lib/utils/breadcrumbs';
 
 	export let title: string;
+	export let replacements: { [name: string]: string } = {};
 
-	$: breadcrumbs = generateBreadcrumbs($page.url.pathname);
+	$: breadcrumbs = generateBreadcrumbs($page.url.pathname, replacements);
 </script>
 
 <div class="mb-14 flex justify-start">

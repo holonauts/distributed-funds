@@ -35,7 +35,7 @@
 	}
 </script>
 
-<div class="z-50 min-h-72 overflow-visible">
+<div class="flex flex-col">
 	<Label class="mb-1 text-lg">Application Period</Label>
 
 	<div class="flex items-center justify-start space-x-8">
