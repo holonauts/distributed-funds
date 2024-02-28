@@ -1,10 +1,5 @@
 use hdi::prelude::*;
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-#[serde(tag = "type")]
-pub enum EvaluationStatus {
-    Draft,
-    Submitted,
-}
+
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct AttributeScore {
     pub label: String,
@@ -23,7 +18,6 @@ pub struct Evaluation {
     pub form_content: String,
     pub comments: String,
     pub score: Score,
-    pub status: EvaluationStatus,
 }
 pub fn validate_create_evaluation(
     _action: EntryCreationAction,

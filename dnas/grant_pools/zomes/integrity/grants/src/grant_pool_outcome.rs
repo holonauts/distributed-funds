@@ -2,7 +2,8 @@ use alloy_primitives::U256;
 use hdi::prelude::*;
 use std::collections::BTreeMap;
 
-use crate::{Evaluation, EvaluationStatus};
+use crate::Evaluation;
+
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct AbsoluteScore {
     pub application: ActionHash,
@@ -45,11 +46,6 @@ pub fn validate_create_grant_pool_outcome(
                 .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
                     "Dependant action must be accompanied by an entry"
                 ))))?;
-            if evaluation.status != EvaluationStatus::Submitted {
-                return Ok(ValidateCallbackResult::Invalid(
-                    "All evaluations must have been submitted".to_string(),
-                ));
-            }
         }
     }
     Ok(ValidateCallbackResult::Valid)

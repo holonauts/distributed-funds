@@ -36,7 +36,7 @@ pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
     match evaluation.score {
         Score::Single(score) => score,
         Score::Weighted(vec) => {
-            let total: u64 = vec.iter().map(|score| score.value).sum();
+            let total: u64 = vec.iter().map(|score| score.value * score.weight).sum();
             let weights: u64 = vec.iter().map(|score| score.weight).sum();
             total / weights
         }
