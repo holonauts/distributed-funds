@@ -7,13 +7,11 @@
 
 <BaseBreadcrumbs title="Grant Pools" />
 
-<div class="flex justify-end">
-	<Button href="/grant-pools/create">
+<div class="mb-4 flex justify-end">
+	<Button href="/grant-pools/create" color="green">
 		<PlusSolid class="mr-2 h-4 w-4" />
 		Create Grant Pool
 	</Button>
 </div>
 
-<div class="h-full w-full">
-	<AllGrantPools />
-</div>
+<AllGrantPools />

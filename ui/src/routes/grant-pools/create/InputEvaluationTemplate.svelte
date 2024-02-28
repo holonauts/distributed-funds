@@ -7,14 +7,14 @@
 		type NumberRange,
 		type ScoreTemplate
 	} from '../../../grant_pools/grants/types';
-	import RadioEvaluationTemplateListItem from './RadioEvaluationTemplateListItem.svelte';
+	import RadioEvaluationTemplateListItem from './RadioEvaluationTemplate.svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseListHashes from '$lib/components/BaseListHashes.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { Button, Helper, Label, Modal } from 'flowbite-svelte';
 	import CreateEvaluationTemplate from './CreateEvaluationTemplate.svelte';
 	import { FileSolid, PlusSolid } from 'flowbite-svelte-icons';
-	import EvaluationTemplateListItem from '$lib/components/EvaluationTemplateListItem.svelte';
+	import EvaluationTemplateListItem from './EvaluationTemplateListItem.svelte';
 
 	export let value: ActionHash | undefined;
 

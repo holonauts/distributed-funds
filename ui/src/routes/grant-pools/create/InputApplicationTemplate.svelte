@@ -2,14 +2,14 @@
 	import { decodeHashFromBase64, type ActionHash, encodeHashToBase64 } from '@holochain/client';
 	import { onMount } from 'svelte';
 	import type { GrantsSignal } from '../../../grant_pools/grants/types';
-	import RadioApplicationTemplateListItem from './RadioApplicationTemplateListItem.svelte';
+	import RadioApplicationTemplateListItem from './RadioApplicationTemplate.svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseListHashes from '$lib/components/BaseListHashes.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { Button, Helper, Label, Modal } from 'flowbite-svelte';
 	import CreateApplicationTemplate from './CreateApplicationTemplate.svelte';
 	import { FileSolid, PlusSolid } from 'flowbite-svelte-icons';
-	import ApplicationTemplateListItem from '$lib/components/ApplicationTemplateListItem.svelte';
+	import ApplicationTemplateListItem from './ApplicationTemplateListItem.svelte';
 
 	export let value: ActionHash | undefined;
 
