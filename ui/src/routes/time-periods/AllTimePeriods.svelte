@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { ActionHash } from '@holochain/client';
-	import TimePeriodDetail from '../../grant_pools/grants/TimePeriodDetail.svelte';
+	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import type { GrantsSignal } from '../../grant_pools/grants/types';
 	import { toasts } from '$lib/stores/toast';
 	import { holochainClient } from '$lib/stores/holochainClient';
@@ -40,6 +40,6 @@
 
 <BaseListHashes {loading} {hashes}>
 	<svelte:fragment let:hash>
-		<TimePeriodDetail timePeriodHash={hash} on:time-period-deleted={() => fetchTimePeriods()} />
+		<TimePeriodListItem timePeriodHash={hash} on:time-period-deleted={() => fetchTimePeriods()} />
 	</svelte:fragment>
 </BaseListHashes>
