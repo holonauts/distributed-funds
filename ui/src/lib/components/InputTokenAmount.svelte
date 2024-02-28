@@ -10,8 +10,8 @@
 	export let maxValue: bigint | undefined = undefined;
 	export let showMaxButton = true;
 	export let placeholder = '';
-	let valueRaw: string = '';
 	export let value: bigint;
+	let valueRaw: string = value ? formatUnits(value, decimals) : '';
 
 	$: maskOptions = {
 		mask: Number,

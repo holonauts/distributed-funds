@@ -99,7 +99,7 @@
 			<svelte:fragment let:entry={applicationTemplate}>
 				<BaseBreadcrumbs title="Apply" replacements={{ [actionHashB64]: entry.name }} />
 
-				<BaseHeading class="mb-8">Apply for {entry.name}</BaseHeading>
+				<BaseHeading class="mb-8"><slot /></BaseHeading>
 
 				<div class="mb-8">
 					<BaseFormBuilder
@@ -110,6 +110,7 @@
 				</div>
 
 				<BaseLabelContent label="Funding Amount" class="mb-8">
+					{amount}
 					<InputTokenAmount
 						decimals={ACCEPTED_TOKEN_DECIMALS}
 						symbol={ACCEPTED_TOKEN_SYMBOL}
@@ -119,7 +120,6 @@
 					/>
 				</BaseLabelContent>
 
-				{isValid}
 				<div class="flex items-center justify-end space-x-8">
 					<Button color="alternative" on:click={saveDraft}>Save Draft</Button>
 					<Button color="green" on:click={submit} disabled={!isValid}>Submit</Button>
