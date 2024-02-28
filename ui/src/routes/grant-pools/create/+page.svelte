@@ -11,7 +11,7 @@
 	import SelectTimePeriod from './InputTimePeriod.svelte';
 	import InputAgents from '$lib/components/InputAgents.svelte';
 	import InputTokenAmountRange from '$lib/components/InputTokenAmountRange.svelte';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../../config';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 	import { bigintToU256 } from '$lib/utils/u256';
 	import { goto } from '$app/navigation';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
@@ -125,4 +125,6 @@
 	<BaseHelper>The people invited to evaluate and score grant applications.</BaseHelper>
 </div>
 
-<Button disabled={!isGrantPoolValid} on:click={createGrantPool}>Create</Button>
+<div class="flex justify-end">
+	<Button disabled={!isGrantPoolValid} on:click={createGrantPool} color="green">Create</Button>
+</div>

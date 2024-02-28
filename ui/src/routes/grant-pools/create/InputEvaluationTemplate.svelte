@@ -17,6 +17,7 @@
 	import EvaluationTemplateListItem from './EvaluationTemplateListItem.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 	import BaseHelper from '$lib/components/BaseHelper.svelte';
+	import BaseBordered from '$lib/components/BaseBordered.svelte';
 
 	export let value: ActionHash | undefined;
 
@@ -101,11 +102,7 @@
 			<EvaluationTemplateListItem evaluationTemplateHash={value} />
 		</Card>
 	{:else}
-		<div
-			class="dark:text-700 rounded-lg border-[1px] border-solid border-gray-400 p-4 text-sm dark:border-gray-400 dark:text-gray-400"
-		>
-			No template selected
-		</div>
+		<BaseBordered>No template selected</BaseBordered>
 	{/if}
 </div>
 <BaseHelper>The evaluation form that grant applicants will be required to submit.</BaseHelper>

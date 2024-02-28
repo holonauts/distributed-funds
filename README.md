@@ -1,4 +1,4 @@
-# Grant Funding
+# Distributed Funds
 
 ## Environment Setup
 

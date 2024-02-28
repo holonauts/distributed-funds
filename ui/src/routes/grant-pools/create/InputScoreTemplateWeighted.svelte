@@ -9,7 +9,7 @@
 	$: createIsValid =
 		createAttributeScoreTemplate !== undefined &&
 		createAttributeScoreTemplate.label.length > 0 &&
-		createAttributeScoreTemplate.weight;
+		createAttributeScoreTemplate.weight > 0;
 
 	function add() {
 		value = [...value, createAttributeScoreTemplate];

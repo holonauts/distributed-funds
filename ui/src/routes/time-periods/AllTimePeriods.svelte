@@ -1,6 +1,7 @@
 <script lang="ts">
 	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import RecordList from '$lib/components/RecordList.svelte';
+	import BaseBordered from '$lib/components/BaseBordered.svelte';
 </script>
 
 <RecordList
@@ -14,6 +15,6 @@
 	}}
 >
 	<svelte:fragment let:hash>
-		<TimePeriodListItem timePeriodHash={hash} />
+		<BaseBordered><TimePeriodListItem timePeriodHash={hash} /></BaseBordered>
 	</svelte:fragment>
 </RecordList>

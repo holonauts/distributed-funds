@@ -1,16 +1,13 @@
 use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
+use serde_json::Value;
+
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
-pub struct ApplicationOutcome {
-    pub approved: bool,
-    pub grant_pool: ActionHash,
-}
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
-#[serde(tag = "type")]
+#[serde(tag = "type", content = "content")]
 pub enum ApplicationStatus {
     Draft,
-    Submitted(ActionHash),
-    Evaluated(ApplicationOutcome),
+    Submitted,
+    // EVM claim Transaction Hash
     Claimed(U256),
 }
 impl ApplicationStatus {
@@ -18,16 +15,13 @@ impl ApplicationStatus {
         matches!(self, ApplicationStatus::Draft)
     }
     fn is_submitted(&self) -> bool {
-        matches!(self, ApplicationStatus::Submitted(_))
-    }
-    fn is_evaluated(&self) -> bool {
-        matches!(self, ApplicationStatus::Evaluated(_))
+        matches!(self, ApplicationStatus::Submitted)
     }
 }
 #[hdk_entry_helper]
 #[derive(Clone, Eq, PartialEq)]
 pub struct Application {
-    pub application_template: ActionHash,
+    pub grant_pool: ActionHash,
     pub form_content: String,
     pub amount: U256,
     pub status: ApplicationStatus,
@@ -41,19 +35,30 @@ pub fn validate_create_application(
             "Content cannot be empty".to_string(),
         ));
     }
+    let valid_json: Result<Value, serde_json::Error> =
+        serde_json::from_str(&application.form_content);
+    if valid_json.is_err() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Schema not valid json".to_string(),
+        ));
+    }
+
     if application.amount == U256::from(0) {
         return Ok(ValidateCallbackResult::Invalid(
             "Amount cannot be zero".to_string(),
         ));
     }
-    let record = must_get_valid_record(application.application_template.clone())?;
-    let _application_template: crate::ApplicationTemplate = record
+    let record = must_get_valid_record(application.grant_pool.clone())?;
+    let _grant_pool: crate::GrantPool = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
+
+    // TODO action timestamp must be  within the GrantPool's TimePeriod
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application(
@@ -68,9 +73,9 @@ pub fn validate_update_application(
             "Only original author can update".to_string(),
         ));
     }
-    if original_application.application_template != application.application_template {
+    if original_application.grant_pool != application.grant_pool {
         return Ok(ValidateCallbackResult::Invalid(
-            "Application template action hash must be the same".to_string(),
+            "Grant Pool action hash must be the same".to_string(),
         ));
     }
     if !&original_status.is_draft() {
@@ -93,22 +98,15 @@ pub fn validate_update_application(
                 ));
             }
         }
-        ApplicationStatus::Submitted(_) => {
+        ApplicationStatus::Submitted => {
             if !&original_status.is_draft() {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Status cannot be reverted".to_string(),
                 ));
             }
         }
-        ApplicationStatus::Evaluated(_) => {
-            if !&original_status.is_submitted() {
-                return Ok(ValidateCallbackResult::Invalid(
-                    "Status cannot be reverted".to_string(),
-                ));
-            }
-        }
         ApplicationStatus::Claimed(_) => {
-            if !&original_status.is_evaluated() {
+            if !&original_status.is_submitted() {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Status cannot be reverted".to_string(),
                 ));

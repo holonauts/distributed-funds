@@ -7,7 +7,7 @@
 
 	export let score: ScoreTemplate = {
 		type: ScoreType.Single,
-		content: undefined
+		content: []
 	};
 	export let scoreRange: NumberRange;
 </script>
@@ -22,14 +22,14 @@
 		title="Single Score"
 		class="w-full"
 		open={score.type === ScoreType.Single}
-		on:click={() => (score.type = ScoreType.Single)}
+		on:click={() => (score = { type: ScoreType.Single, content: undefined })}
 	/>
 	<TabItem
 		defaultClass="!p-2 text-xs"
 		title="Weighted Attributes Score"
 		class="w-full"
 		open={score.type === ScoreType.Weighted}
-		on:click={() => (score.type = ScoreType.Weighted)}
+		on:click={() => (score = { type: ScoreType.Weighted, content: [] })}
 	/>
 </Tabs>
 
