@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type ActionHash } from '@holochain/client';
-	import RecordListItem from '$lib/components/RecordListItem.svelte';
+	import RecordDetail from '$lib/components/RecordDetail.svelte';
 	import InputScore from '$lib/components/InputScore.svelte';
 	import BaseTemplateListItem from './BaseTemplateListItem.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -11,7 +11,7 @@
 	let showDetails = false;
 </script>
 
-<RecordListItem
+<RecordDetail
 	callZomeRequest={{
 		cap_secret: null,
 		role_name: 'grant_pools',
@@ -33,4 +33,4 @@
 			<InputScore scoreTemplate={entry.score} scoreRange={entry.score_range} />
 		</BaseTemplateListItem>
 	</svelte:fragment>
-</RecordListItem>
+</RecordDetail>

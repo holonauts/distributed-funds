@@ -34,7 +34,5 @@
 {:else if record === undefined || entry === undefined}
 	<div>Not found</div>
 {:else}
-	<Card size="xl">
-		<slot {record} {entry} />
-	</Card>
+	<slot {record} {entry} />
 {/if}

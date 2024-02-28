@@ -1,7 +1,12 @@
 <script lang="ts">
-	import type { ActionHash } from '@holochain/client';
-	import RecordListItem from '$lib/components/RecordListItem.svelte';
-	import { Label } from 'flowbite-svelte';
+	import { encodeHashToBase64, type ActionHash } from '@holochain/client';
+	import RecordListItem from '$lib/components/RecordDetail.svelte';
+	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
+	import { Card, Label } from 'flowbite-svelte';
+	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
+	import { goto } from '$app/navigation';
+	import BaseTokenAmountRange from './BaseTokenAmountRange.svelte';
+
 	export let grantPoolHash: ActionHash;
 </script>
 
@@ -14,17 +19,20 @@
 		payload: grantPoolHash
 	}}
 >
-	<svelte:fragment let:entry>
-		<div class="mb-4 text-2xl">{entry.name}</div>
+	<svelte:fragment let:record let:entry>
+		<Card
+			size="xl"
+			on:click={() => goto(`grant-pools/${encodeHashToBase64(record.signed_action.hashed.hash)}`)}
+		>
+			<div class="mb-4 text-2xl">{entry.name}</div>
 
-		<div class="mb-2">
-			<Label>Purpose</Label>
-			<div>{entry.purpose_description}</div>
-		</div>
+			<BaseLabelContent label="Application Period">
+				<TimePeriodListItem timePeriodHash={entry.timePeriod} />
+			</BaseLabelContent>
 
-		<div class="mb-2">
-			<Label>Application Period</Label>
-			<div>{entry.purpose_description}</div>
-		</div>
+			<BaseLabelContent label="Grant Amounts">
+				<BaseTokenAmountRange amountRange={entry.amount_range} />
+			</BaseLabelContent>
+		</Card>
 	</svelte:fragment>
 </RecordListItem>

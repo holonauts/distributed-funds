@@ -11,8 +11,10 @@
 <div class="relative flex items-start justify-center">
 	<Navbar let:hidden>
 		<NavBrand href="/">
-			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-				Public Grant Manager
+			<span
+				class="font-stencil self-center whitespace-nowrap text-4xl font-semibold text-black dark:text-slate-300"
+			>
+				Distributed Funds
 			</span>
 		</NavBrand>
 		<NavUl {hidden} {activeUrl} class="flex items-center">
@@ -26,7 +28,8 @@
 					size="xs"
 					href={`/profiles/${encodeHashToBase64($holochainClient.client.myPubKey)}`}
 				>
-					<agent-avatar agentPubKey={$holochainClient.client.myPubKey}></agent-avatar>
+					<agent-avatar disable-copy disable-tooltip agentPubKey={$holochainClient.client.myPubKey}
+					></agent-avatar>
 				</Button>
 			</div>
 		</NavUl>

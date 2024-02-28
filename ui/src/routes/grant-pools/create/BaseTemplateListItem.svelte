@@ -20,7 +20,9 @@
 <div class="relative">
 	{#if showCloneButton}
 		<div class="absolute right-0 top-0">
-			<Button size="xs" color="alternative" on:click={() => dispatch('clone')}>Clone</Button>
+			<Button size="xs" class="p-1" color="alternative" on:click={() => dispatch('clone')}
+				>Clone</Button
+			>
 		</div>
 	{/if}
 
