@@ -6,7 +6,7 @@ pub fn create_evaluation(evaluation: Evaluation) -> ExternResult<Record> {
     create_link(
         evaluation.application.clone(),
         evaluation_hash.clone(),
-        LinkTypes::ApplicationToEvaluations,
+        LinkTypes::ApplicationToEvaluation,
         (),
     )?;
     let record = get(evaluation_hash.clone(), GetOptions::default())?.ok_or(wasm_error!(
@@ -28,5 +28,5 @@ pub fn get_evaluation(evaluation_hash: ActionHash) -> ExternResult<Option<Record
 }
 #[hdk_extern]
 pub fn get_evaluations_for_application(application_hash: ActionHash) -> ExternResult<Vec<Link>> {
-    get_links(application_hash, LinkTypes::ApplicationToEvaluations, None)
+    get_links(application_hash, LinkTypes::ApplicationToEvaluation, None)
 }

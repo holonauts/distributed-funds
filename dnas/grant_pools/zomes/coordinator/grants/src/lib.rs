@@ -1,5 +1,6 @@
-pub mod sponsor_to_grant_pools;
+pub mod grant_pool_to_applications;
 
+pub mod sponsor_to_grant_pools;
 pub mod agent_to_evm_wallet;
 pub mod all_application_templates;
 pub mod all_applications;
