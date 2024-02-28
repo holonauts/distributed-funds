@@ -1,3 +1,5 @@
+pub mod sponsor_to_grant_pools;
+pub use sponsor_to_grant_pools::*;
 pub mod agent_to_evm_wallet;
 pub use agent_to_evm_wallet::*;
 pub mod grant_pool_outcome;
@@ -44,6 +46,8 @@ pub enum LinkTypes {
     ApplicationToEvaluations,
     GrantPoolToGrantPoolOutcomes,
     AgentToEvmWallet,
+    SponsorToGrantPools,
+    GrantPoolToSponsors,
 }
 #[hdk_extern]
 pub fn genesis_self_check(_data: GenesisSelfCheckData) -> ExternResult<ValidateCallbackResult> {
@@ -313,6 +317,18 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
             LinkTypes::AgentToEvmWallet => {
                 validate_create_link_agent_to_evm_wallet(action, base_address, target_address, tag)
             }
+            LinkTypes::SponsorToGrantPools => validate_create_link_sponsor_to_grant_pools(
+                action,
+                base_address,
+                target_address,
+                tag,
+            ),
+            LinkTypes::GrantPoolToSponsors => validate_create_link_grant_pool_to_sponsors(
+                action,
+                base_address,
+                target_address,
+                tag,
+            ),
         },
         FlatOp::RegisterDeleteLink {
             link_type,
@@ -413,6 +429,20 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 )
             }
             LinkTypes::AgentToEvmWallet => validate_delete_link_agent_to_evm_wallet(
+                action,
+                original_action,
+                base_address,
+                target_address,
+                tag,
+            ),
+            LinkTypes::SponsorToGrantPools => validate_delete_link_sponsor_to_grant_pools(
+                action,
+                original_action,
+                base_address,
+                target_address,
+                tag,
+            ),
+            LinkTypes::GrantPoolToSponsors => validate_delete_link_grant_pool_to_sponsors(
                 action,
                 original_action,
                 base_address,
@@ -869,6 +899,18 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     target_address,
                     tag,
                 ),
+                LinkTypes::SponsorToGrantPools => validate_create_link_sponsor_to_grant_pools(
+                    action,
+                    base_address,
+                    target_address,
+                    tag,
+                ),
+                LinkTypes::GrantPoolToSponsors => validate_create_link_grant_pool_to_sponsors(
+                    action,
+                    base_address,
+                    target_address,
+                    tag,
+                ),
             },
             OpRecord::DeleteLink {
                 original_action_hash,
@@ -991,6 +1033,20 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         )
                     }
                     LinkTypes::AgentToEvmWallet => validate_delete_link_agent_to_evm_wallet(
+                        action,
+                        create_link.clone(),
+                        base_address,
+                        create_link.target_address,
+                        create_link.tag,
+                    ),
+                    LinkTypes::SponsorToGrantPools => validate_delete_link_sponsor_to_grant_pools(
+                        action,
+                        create_link.clone(),
+                        base_address,
+                        create_link.target_address,
+                        create_link.tag,
+                    ),
+                    LinkTypes::GrantPoolToSponsors => validate_delete_link_grant_pool_to_sponsors(
                         action,
                         create_link.clone(),
                         base_address,

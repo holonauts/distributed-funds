@@ -1,11 +1,9 @@
 use hdi::prelude::*;
 use std::collections::BTreeMap;
-
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPoolOutcome {
     pub grant_pool: ActionHash,
-    // K: ActionHash of Application, V: ActionHash of Evaluations
     pub evaluations: BTreeMap<ActionHash, Vec<ActionHash>>,
     pub coupon: Vec<u32>,
 }
@@ -21,22 +19,17 @@ pub fn validate_create_grant_pool_outcome(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
-
     if record.signed_action.action().author() != action.author() {
         return Ok(ValidateCallbackResult::Invalid(
             "Only grant pool author can create an outcome".to_string(),
         ));
     }
-
     for (application, evaluations) in grant_pool_outcome.evaluations.clone() {
         must_get_valid_record(application.clone())?;
         for evaluation in evaluations {
             must_get_valid_record(evaluation.clone())?;
         }
     }
-
-    // TODO: tallying of funding is accurate and sums to expected amount using evm native types
-
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_grant_pool_outcome(
