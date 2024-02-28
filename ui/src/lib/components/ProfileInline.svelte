@@ -16,5 +16,7 @@
 
 <div class="flex items-center justify-start space-x-2">
 	<agent-avatar {agentPubKey}></agent-avatar>
-	<div>{$profile?.value?.entry?.nickname || formatAgentPubKeyShort(agentPubKey)}</div>
+	<div class="block text-sm font-medium text-gray-900 rtl:text-right dark:text-gray-300">
+		{$profile?.value?.entry?.nickname || formatAgentPubKeyShort(agentPubKey)}
+	</div>
 </div>
