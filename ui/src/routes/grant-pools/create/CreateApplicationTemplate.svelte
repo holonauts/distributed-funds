@@ -7,6 +7,7 @@
 	import BaseFormBuilder from '$lib/components/BaseFormBuilder.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { type BuilderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
+	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -49,18 +50,16 @@
 	});
 </script>
 
-<div class="flex flex-col">
-	<div class="mb-8">
-		<Label for="name">Name</Label>
-		<Input id="name" bind:value={name} />
-	</div>
+<BaseLabelContent label="Name" class="mb-8">
+	<Input id="name" bind:value={name} />
+</BaseLabelContent>
 
-	<div class="mb-8">
-		<Label>Template</Label>
-		<BaseFormBuilder bind:builderApi />
-	</div>
+<BaseLabelContent label="Template" class="mb-8">
+	<BaseFormBuilder bind:builderApi />
+</BaseLabelContent>
 
-	<Button on:click={createApplicationTemplate} disabled={!isApplicationTemplateValid}>
+<div class="flex justify-end">
+	<Button color="green" on:click={createApplicationTemplate} disabled={!isApplicationTemplateValid}>
 		Create Application Template
 	</Button>
 </div>

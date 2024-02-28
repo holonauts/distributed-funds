@@ -1,13 +1,10 @@
 <script lang="ts">
 	import { type ActionHash } from '@holochain/client';
 	import RecordDetail from './RecordDetail.svelte';
-	import { Badge } from 'flowbite-svelte';
-	import dayjs from 'dayjs';
+	import BaseTimePeriodBadge from './BaseTimePeriodBadge.svelte';
 
 	export let timePeriodHash: ActionHash;
 	export let activeText = 'Active';
-
-	let now = dayjs().valueOf();
 </script>
 
 <RecordDetail
@@ -20,12 +17,6 @@
 	}}
 >
 	<svelte:fragment let:entry>
-		{#if now < entry.start_at}
-			<Badge large={true} color="blue">Upcoming</Badge>
-		{:else if now > entry.start_at && now < entry.end_at}
-			<Badge large={true} color="green">{activeText}</Badge>
-		{:else}
-			<Badge large={true} color="none">Completed</Badge>
-		{/if}
+		<BaseTimePeriodBadge timePeriod={entry} {activeText} />
 	</svelte:fragment>
 </RecordDetail>

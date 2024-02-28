@@ -13,6 +13,7 @@
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { type BuilderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
 	import InputScoreTemplate from './InputScoreTemplate.svelte';
+	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -56,23 +57,20 @@
 	}
 </script>
 
-<div class="flex flex-col">
-	<div class="mb-8">
-		<Label for="name">Name</Label>
-		<Input id="name" bind:value={name} />
-	</div>
+<BaseLabelContent label="Template Name" class="mb-8">
+	<Input id="name" bind:value={name} />
+</BaseLabelContent>
 
-	<div class="mb-8">
-		<Label>Evaluation Template</Label>
-		<BaseFormBuilder bind:builderApi />
-	</div>
+<BaseLabelContent label="Evaluation Form" class="mb-8">
+	<BaseFormBuilder bind:builderApi />
+</BaseLabelContent>
 
-	<div class="mb-8">
-		<Label class="mb-2">Score Template</Label>
-		<InputScoreTemplate bind:score bind:scoreRange />
-	</div>
+<BaseLabelContent label="Scoring System" class="!mb-8">
+	<InputScoreTemplate bind:score bind:scoreRange />
+</BaseLabelContent>
 
-	<Button on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>
+<div class="flex justify-end">
+	<Button color="green" on:click={createEvaluationTemplate} disabled={!isEvaluationTemplateValid}>
 		Create Evaluation Template
 	</Button>
 </div>

@@ -125,4 +125,6 @@
 	<BaseHelper>The people invited to evaluate and score grant applications.</BaseHelper>
 </div>
 
-<Button disabled={!isGrantPoolValid} on:click={createGrantPool}>Create</Button>
+<div class="flex justify-end">
+	<Button disabled={!isGrantPoolValid} on:click={createGrantPool} color="green">Create</Button>
+</div>

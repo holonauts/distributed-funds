@@ -7,7 +7,9 @@
 
 	export let symbol: string | undefined = undefined;
 	export let decimals: number = 0;
+	export let minValue: number = 0;
 	export let maxValue: bigint | undefined = undefined;
+	export let showMaxButton = true;
 	export let placeholder = '';
 	let valueRaw: string = '';
 	export let value: bigint;
@@ -52,7 +54,7 @@
 			on:complete={complete}
 		/>
 
-		{#if maxValue}
+		{#if maxValue && showMaxButton}
 			<div class="absolute right-[5.8rem] flex h-10 flex-col justify-center">
 				<Button color="blue" class="px-2 py-1" size="xs" pill on:click={fillMaxValue}>MAX</Button>
 			</div>

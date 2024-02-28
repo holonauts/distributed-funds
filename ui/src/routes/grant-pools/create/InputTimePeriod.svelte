@@ -11,6 +11,7 @@
 	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 	import BaseHelper from '$lib/components/BaseHelper.svelte';
+	import BaseBordered from '$lib/components/BaseBordered.svelte';
 
 	export let value: ActionHash | undefined;
 
@@ -68,11 +69,7 @@
 	{#if value !== undefined}
 		<TimePeriodListItem timePeriodHash={value} />
 	{:else}
-		<div
-			class="dark:text-700 rounded-lg border-[1px] border-solid border-gray-400 p-4 text-sm dark:border-gray-400 dark:text-gray-400"
-		>
-			No time period selected
-		</div>
+		<BaseBordered>No time period selected</BaseBordered>
 	{/if}
 </div>
 <BaseHelper>The time period allowed for application submissions.</BaseHelper>
