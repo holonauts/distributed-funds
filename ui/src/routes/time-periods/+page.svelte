@@ -10,16 +10,14 @@
 
 <BaseBreadcrumbs title="Time Periods" />
 
-<div class="flex justify-end">
+<div class="mb-4 flex justify-end">
 	<Button on:click={() => (showCreateModal = true)} color="green">
 		<PlusSolid class="mr-2 h-4 w-4" />
 		Create Time Period
 	</Button>
 </div>
 
-<div class="h-full w-full">
-	<AllTimePeriods />
-</div>
+<AllTimePeriods />
 
 <Modal
 	size="sm"

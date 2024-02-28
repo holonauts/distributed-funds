@@ -8,11 +8,12 @@
 	import InputEvaluationTemplate from './InputEvaluationTemplate.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
-	import SelectTimePeriod from './SelectTimePeriod.svelte';
+	import SelectTimePeriod from './InputTimePeriod.svelte';
 	import InputAgents from '$lib/components/InputAgents.svelte';
 	import InputTokenAmountRange from '$lib/components/InputTokenAmountRange.svelte';
 	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../../config';
 	import { bigintToU256 } from '$lib/utils/u256';
+	import { goto } from '$app/navigation';
 
 	const dispatch = createEventDispatcher();
 
@@ -59,6 +60,7 @@
 				payload: grantPoolEntry
 			});
 			dispatch('grant-pool-created', { grantPoolHash: record.signed_action.hashed.hash });
+			goto('/grant-pools/');
 		} catch (e) {
 			toasts.error(`Error creating the grant pool: ${e}`);
 		}

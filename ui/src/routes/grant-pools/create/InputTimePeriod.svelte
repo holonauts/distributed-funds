@@ -2,7 +2,7 @@
 	import { decodeHashFromBase64, type ActionHash } from '@holochain/client';
 	import { onMount } from 'svelte';
 	import type { GrantsSignal } from '../../../grant_pools/grants/types';
-	import RadioTimePeriodListItem from './RadioTimePeriodListItem.svelte';
+	import RadioTimePeriodListItem from './RadioTimePeriod.svelte';
 	import { toasts } from '$lib/stores/toast';
 	import BaseListHashes from '$lib/components/BaseListHashes.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
