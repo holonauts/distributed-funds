@@ -12,6 +12,7 @@
 	import BaseBadgeRecordTimestamp from '$lib/components/BaseBadgeRecordTimestamp.svelte';
 	import BaseHeading from '$lib/components/BaseHeading.svelte';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
+	import ProfileInline from '$lib/components/ProfileInline.svelte';
 
 	$: actionHash = decodeHashFromBase64($page.params.actionHashB64);
 	$: applicationActionHashB64 = decodeHashFromBase64($page.params.applicationActionHashB64);
@@ -68,6 +69,10 @@
 							</div>
 						</div>
 					</div>
+
+					<BaseLabelContent label="Applicant">
+						<ProfileInline agentPubKey={record.author} />
+					</BaseLabelContent>
 					<div class="mb-8">
 						{#each JSON.parse(entry.form_content) as field}
 							<BaseLabelContent label={field.name} class="mb-8">
