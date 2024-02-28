@@ -110,7 +110,6 @@
 				</div>
 
 				<BaseLabelContent label="Funding Amount" class="mb-8">
-					{amount}
 					<InputTokenAmount
 						decimals={ACCEPTED_TOKEN_DECIMALS}
 						symbol={ACCEPTED_TOKEN_SYMBOL}
