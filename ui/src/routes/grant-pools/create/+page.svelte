@@ -10,6 +10,7 @@
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
 	import InputNumberRange from '$lib/components/InputNumberRange.svelte';
 	import SelectTimePeriod from './SelectTimePeriod.svelte';
+	import InputAgents from '$lib/components/InputAgents.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -109,7 +110,7 @@
 
 	<div class="mb-8">
 		<Label class="mb-2">Evaluators</Label>
-		<!-- <InputEvaluators bind:evaluators /> -->
+		<InputAgents bind:value={evaluators} />
 		<Helper>The people who will evaluate and score grant applications.</Helper>
 	</div>
 

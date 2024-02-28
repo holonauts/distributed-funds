@@ -3,6 +3,7 @@
 	import '@holochain-open-dev/profiles/dist/elements/create-profile.js';
 	import '@holochain-open-dev/profiles/dist/elements/update-profile.js';
 	import '@holochain-open-dev/profiles/dist/elements/profile-detail.js';
+	import '@holochain-open-dev/profiles/dist/elements/search-agent.js';
 	import '@shoelace-style/shoelace/dist/themes/light.css';
 	import '../app.pcss';
 	import { onMount, setContext } from 'svelte';
@@ -43,7 +44,7 @@
 				<BaseToastsList />
 			</div>
 
-			<div class="fixed bottom-5 right-5">
+			<div class="fixed bottom-1 right-1">
 				<DarkMode
 					btnClass="rounded text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
 				/>
