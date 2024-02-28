@@ -1,11 +1,11 @@
 use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct ApplicationOutcome {
     pub approved: bool,
     pub grant_pool: ActionHash,
 }
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type")]
 pub enum ApplicationStatus {
     Draft,

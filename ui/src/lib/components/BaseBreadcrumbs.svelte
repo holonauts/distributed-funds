@@ -8,7 +8,7 @@
 	$: breadcrumbs = generateBreadcrumbs($page.url.pathname);
 </script>
 
-<div class="m-8 mt-4 flex justify-center">
+<div class="mb-14 flex justify-start">
 	<Breadcrumb
 		olClass="inline-flex items-center rtl:space-x-reverse"
 		aria-label="Default breadcrumb example"

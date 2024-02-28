@@ -39,8 +39,6 @@
 			score
 		};
 
-		console.log('evaluationTemplateEntry', evaluationTemplateEntry);
-
 		try {
 			const record: Record = await $holochainClient.client.callZome({
 				cap_secret: null,

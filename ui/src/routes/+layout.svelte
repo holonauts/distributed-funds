@@ -3,7 +3,9 @@
 	import '@holochain-open-dev/profiles/dist/elements/create-profile.js';
 	import '@holochain-open-dev/profiles/dist/elements/update-profile.js';
 	import '@holochain-open-dev/profiles/dist/elements/profile-detail.js';
+	import '@holochain-open-dev/profiles/dist/elements/search-agent.js';
 	import '@shoelace-style/shoelace/dist/themes/light.css';
+	import '@fontsource/saira-stencil-one';
 	import '../app.pcss';
 	import { onMount, setContext } from 'svelte';
 	import { DarkMode, Spinner } from 'flowbite-svelte';
@@ -22,9 +24,9 @@
 </script>
 
 <profiles-context store={$holochainClient.profilesStore}>
-	<div class="min-h-screen w-full bg-white dark:bg-gray-900">
+	<div class="flex min-h-screen w-full flex-col bg-white dark:bg-gray-900">
 		{#if $holochainClient.isConnecting}
-			<div class="flex min-h-screen w-full items-center justify-center">
+			<div class="flex h-screen w-full items-center justify-center">
 				<Spinner class="h-14 w-14" />
 
 				<!-- Include DarkMode component to ensure theme is fetched and applied during loading -->
@@ -33,8 +35,8 @@
 		{:else}
 			<BaseNavbar />
 
-			<main class="flex h-full w-full grow justify-center overflow-x-auto">
-				<div class="h-full w-full max-w-screen-md py-8">
+			<main class="flex w-full flex-grow grow justify-center overflow-x-auto">
+				<div class="h-full w-full max-w-screen-md pb-16">
 					<slot />
 				</div>
 			</main>
@@ -43,7 +45,7 @@
 				<BaseToastsList />
 			</div>
 
-			<div class="fixed bottom-5 right-5">
+			<div class="fixed bottom-1 right-1">
 				<DarkMode
 					btnClass="rounded text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
 				/>

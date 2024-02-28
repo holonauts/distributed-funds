@@ -54,6 +54,17 @@ export interface ApplicationTemplate {
 	name: string;
 }
 
+export interface AmountRange {
+	min: Uint8Array;
+	max: Uint8Array;
+};
+
+export interface AmountRangeBigInt {
+	min: bigint;
+	max: bigint;
+};
+
+
 export interface NumberRange {
 	min: number;
 	max: number;
@@ -102,6 +113,8 @@ export interface GrantPool {
 	application_template: ActionHash;
 
 	evaluation_template: ActionHash;
+
+	amount_range: AmountRange;
 
 	evaluators: AgentPubKey[];
 }

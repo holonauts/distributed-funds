@@ -1,19 +1,19 @@
 <script lang="ts">
-	import GrantPoolListItem from './GrantPoolListItem.svelte';
+	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import RecordList from '$lib/components/RecordList.svelte';
 </script>
 
 <RecordList
-	entryType="GrantPool"
+	entryType="TimePeriod"
 	callZomeRequest={{
 		cap_secret: null,
 		role_name: 'grant_pools',
 		zome_name: 'grants',
-		fn_name: 'get_all_grant_pools',
+		fn_name: 'get_all_time_periods',
 		payload: null
 	}}
 >
 	<svelte:fragment let:hash>
-		<GrantPoolListItem grantPoolHash={hash} />
+		<TimePeriodListItem timePeriodHash={hash} />
 	</svelte:fragment>
 </RecordList>

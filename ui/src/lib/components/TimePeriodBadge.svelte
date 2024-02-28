@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { type ActionHash } from '@holochain/client';
-	import { formatTimestampLocal } from '$lib/utils/date';
 	import RecordDetail from './RecordDetail.svelte';
+	import { Badge } from 'flowbite-svelte';
+	import dayjs from 'dayjs';
 
 	export let timePeriodHash: ActionHash;
+	export let activeText = 'Active';
+
+	let now = dayjs().valueOf();
 </script>
 
 <RecordDetail
@@ -16,13 +20,12 @@
 	}}
 >
 	<svelte:fragment let:entry>
-		<div class="flex w-full items-center justify-between">
-			<div class="w-full">
-				<div class="dark:text-white">
-					{formatTimestampLocal(entry.start_at)} -
-					{formatTimestampLocal(entry.end_at)}
-				</div>
-			</div>
-		</div>
+		{#if now < entry.start_at}
+			<Badge large={true} color="blue">Upcoming</Badge>
+		{:else if now > entry.start_at && now < entry.end_at}
+			<Badge large={true} color="green">{activeText}</Badge>
+		{:else}
+			<Badge large={true} color="none">Completed</Badge>
+		{/if}
 	</svelte:fragment>
 </RecordDetail>
