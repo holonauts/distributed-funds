@@ -1,17 +1,12 @@
 use alloy_primitives::U256;
 use hdi::prelude::*;
 use serde_json::Value;
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
-pub struct ApplicationOutcome {
-    approved: bool,
-    grant_pool: ActionHash,
-}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type", content = "content")]
 pub enum ApplicationStatus {
     Draft,
     Submitted,
-    Evaluated(ApplicationOutcome),
     // EVM claim Transaction Hash
     Claimed(U256),
 }
@@ -22,10 +17,6 @@ impl ApplicationStatus {
 
     fn is_submitted(&self) -> bool {
         matches!(self, ApplicationStatus::Submitted)
-    }
-
-    fn is_evaluated(&self) -> bool {
-        matches!(self, ApplicationStatus::Evaluated(_))
     }
 }
 
@@ -117,15 +108,8 @@ pub fn validate_update_application(
                 ));
             }
         }
-        ApplicationStatus::Evaluated(_) => {
-            if !&original_status.is_submitted() {
-                return Ok(ValidateCallbackResult::Invalid(
-                    "Status cannot be reverted".to_string(),
-                ));
-            }
-        }
         ApplicationStatus::Claimed(_) => {
-            if !&original_status.is_evaluated() {
+            if !&original_status.is_submitted() {
                 return Ok(ValidateCallbackResult::Invalid(
                     "Status cannot be reverted".to_string(),
                 ));

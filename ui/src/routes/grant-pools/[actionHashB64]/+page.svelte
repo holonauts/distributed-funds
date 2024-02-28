@@ -6,12 +6,12 @@
 	import { Button } from 'flowbite-svelte';
 	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
-	import BaseTokenAmountRange from '../BaseTokenAmountRange.svelte';
+	import BaseTokenAmountRange from '../../../lib/components/BaseTokenAmountRange.svelte';
 	import ProfilesInlineList from '$lib/components/ProfilesInlineList.svelte';
 	import BaseTimePeriodBadge from '$lib/components/BaseTimePeriodBadge.svelte';
 	import BaseHeading from '$lib/components/BaseHeading.svelte';
 	import dayjs from 'dayjs';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../../config';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 
 	let now = dayjs().valueOf();
 
@@ -40,9 +40,21 @@
 			<svelte:fragment let:entry={timePeriod}>
 				<BaseBreadcrumbs title={entry.name} />
 
-				<div class="mb-6 flex items-start justify-between">
-					<BaseHeading>{entry.name}</BaseHeading>
-					<BaseTimePeriodBadge {timePeriod} />
+				<div class="mb-10 flex items-start justify-between">
+					<div>
+						<BaseHeading>{entry.name}</BaseHeading>
+					</div>
+					<div>
+						<div class="flex justify-end"><BaseTimePeriodBadge {timePeriod} /></div>
+						<div class="mt-4 flex items-center justify-start space-x-4">
+							<Button
+								size="xs"
+								color="alternative"
+								class="px-2 py-1"
+								href={`${$page.url}/applications`}>Submitted Applications</Button
+							>
+						</div>
+					</div>
 				</div>
 
 				<BaseLabelContent label="Purpose" class="mb-8">

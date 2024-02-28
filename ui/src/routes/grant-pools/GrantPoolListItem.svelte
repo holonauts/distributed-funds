@@ -2,12 +2,12 @@
 	import { encodeHashToBase64, type ActionHash } from '@holochain/client';
 	import RecordListItem from '$lib/components/RecordDetail.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
-	import { Card, Label } from 'flowbite-svelte';
+	import { Card } from 'flowbite-svelte';
 	import TimePeriodListItem from '$lib/components/TimePeriodListItem.svelte';
 	import { goto } from '$app/navigation';
-	import BaseTokenAmountRange from './BaseTokenAmountRange.svelte';
+	import BaseTokenAmountRange from '../../lib/components/BaseTokenAmountRange.svelte';
 	import TimePeriodRecordBadge from '$lib/components/TimePeriodRecordBadge.svelte';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../config';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 
 	export let grantPoolHash: ActionHash;
 </script>

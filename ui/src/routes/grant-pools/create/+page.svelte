@@ -11,7 +11,7 @@
 	import SelectTimePeriod from './InputTimePeriod.svelte';
 	import InputAgents from '$lib/components/InputAgents.svelte';
 	import InputTokenAmountRange from '$lib/components/InputTokenAmountRange.svelte';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '../../../config';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 	import { bigintToU256 } from '$lib/utils/u256';
 	import { goto } from '$app/navigation';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';

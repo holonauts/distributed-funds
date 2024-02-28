@@ -122,7 +122,6 @@ export interface GrantPool {
 export enum StatusType {
 	Draft = 'Draft',
 	Submitted = 'Submitted',
-	Evaluated = 'Evaluated',
 	Claimed = 'Claimed',
 }
 
@@ -133,7 +132,7 @@ export interface ApplicationOutcome {
 
 export interface Status {
 	type: StatusType;
-	content: ActionHash | ApplicationOutcome | Uint8Array;
+	content: ActionHash | Uint8Array;
 }
 
 export interface Application {
