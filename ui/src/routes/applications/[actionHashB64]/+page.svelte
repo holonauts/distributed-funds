@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { decodeHashFromBase64, encodeHashToBase64 } from '@holochain/client';
+	import { encodeHashToBase64, decodeHashFromBase64 } from '@holochain/client';
 	import RecordDetail from '$lib/components/RecordDetail.svelte';
-	import { page } from '$app/stores';
 	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
 	import { StatusType } from '../../../grant_pools/grants/types';
 	import CreateApplication from '$lib/components/CreateApplication.svelte';
@@ -13,6 +12,9 @@
 	import BaseHeading from '$lib/components/BaseHeading.svelte';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
+	import { page } from '$app/stores';
+	import RecordList from '$lib/components/RecordList.svelte';
+	import EvaluationListItem from '$lib/components/EvaluationListItem.svelte';
 
 	$: actionHash = decodeHashFromBase64($page.params.actionHashB64);
 </script>
@@ -84,6 +86,22 @@
 						{formatUnits(u256ToBigint(entry.amount), ACCEPTED_TOKEN_DECIMALS)}
 					</BaseLabelContent>
 				{/if}
+
+				<BaseHeading class="mb-4">Evaluations</BaseHeading>
+				<RecordList
+					entryType="Evaluation"
+					callZomeRequest={{
+						cap_secret: null,
+						role_name: 'grant_pools',
+						zome_name: 'grants',
+						fn_name: 'get_evaluations_for_application',
+						payload: actionHash
+					}}
+				>
+					<svelte:fragment let:hash>
+						<EvaluationListItem evaluationHash={hash} />
+					</svelte:fragment>
+				</RecordList>
 			</svelte:fragment>
 		</RecordDetail>
 	</svelte:fragment>

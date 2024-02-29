@@ -6,6 +6,7 @@ pub struct AttributeScore {
     pub weight: u64,
 }
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
+#[serde(tag = "type", content = "content")]
 pub enum Score {
     Single(u64),
     Weighted(Vec<AttributeScore>),

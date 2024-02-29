@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EvaluationListItem from '$lib/components/EvaluationListItem.svelte';
+	import EvaluationAssignmentListItem from '$lib/components/EvaluationAssignmentListItem.svelte';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
 	import RecordList from '$lib/components/RecordList.svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
@@ -18,6 +18,6 @@
 	}}
 >
 	<svelte:fragment let:hash>
-		<EvaluationListItem applicationHash={hash} />
+		<EvaluationAssignmentListItem applicationHash={hash} />
 	</svelte:fragment>
 </RecordList>

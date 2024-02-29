@@ -148,6 +148,7 @@ export interface Application {
 export interface AttributeScore {
     label: string,
     value: number,
+		weight: number
 }
 
 export interface Score {

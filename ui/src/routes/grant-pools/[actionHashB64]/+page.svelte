@@ -51,8 +51,10 @@
 								size="xs"
 								color="alternative"
 								class="px-2 py-1"
-								href={`${$page.url}/applications`}>Applications</Button
+								href={`/grant-pools/${$page.params.actionHashB64}/applications`}
 							>
+								Applications
+							</Button>
 						</div>
 					</div>
 				</div>

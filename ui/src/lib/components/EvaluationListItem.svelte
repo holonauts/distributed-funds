@@ -1,18 +1,12 @@
 <script lang="ts">
-	import { encodeHashToBase64, type ActionHash } from '@holochain/client';
+	import { type ActionHash } from '@holochain/client';
 	import RecordListItem from '$lib/components/RecordDetail.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 	import { Card } from 'flowbite-svelte';
-	import { goto } from '$app/navigation';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
-	import BaseBadgeRecordTimestamp from '$lib/components/BaseBadgeRecordTimestamp.svelte';
-	import { formatUnits } from 'viem';
-	import { u256ToBigint } from '$lib/utils/u256';
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
-	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
-	import { page } from '$app/stores';
+	import BaseScore from '$lib/components/BaseScore.svelte';
 
-	export let applicationHash: ActionHash;
+	export let evaluationHash: ActionHash;
 </script>
 
 <RecordListItem
@@ -20,29 +14,21 @@
 		cap_secret: null,
 		role_name: 'grant_pools',
 		zome_name: 'grants',
-		fn_name: 'get_latest_application',
-		payload: applicationHash
+		fn_name: 'get_evaluation',
+		payload: evaluationHash
 	}}
 >
 	<svelte:fragment let:record let:entry>
-		<Card size="xl" on:click={() => goto(`/applications/${encodeHashToBase64(applicationHash)}`)}>
-			<div class="flex items-start justify-between">
+		<Card size="xl">
+			<BaseLabelContent label="Evaluator" class="mb-8">
 				<ProfileInline agentPubKey={record.signed_action.hashed.content.author} />
-
-				<div class="flex flex-col items-end justify-start">
-					<div>
-						<BaseStatusBadge status={entry.status} />
-					</div>
-					<div>
-						<BaseBadgeRecordTimestamp {record} />
-					</div>
-				</div>
-			</div>
-
-			<BaseLabelContent label="Requested Amount">
-				{formatUnits(u256ToBigint(entry.amount), ACCEPTED_TOKEN_DECIMALS)}
-				{ACCEPTED_TOKEN_SYMBOL}
 			</BaseLabelContent>
+
+			<BaseLabelContent label="Comments" class="mb-8">
+				{entry.comments}
+			</BaseLabelContent>
+
+			<BaseScore score={entry.score} />
 		</Card>
 	</svelte:fragment>
 </RecordListItem>
