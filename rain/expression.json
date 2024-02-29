@@ -1,0 +1,23 @@
+[
+    {
+        "dotrain": "./rain/src/nft-flow.rain",
+        "json": "./rain/src/snapshot.json",
+        "entrypoints": [
+            "snapshot"
+        ]
+    },
+    {
+        "dotrain": "./rain/src/nft-flow.rain",
+        "json": "./rain/src/mint.json",
+        "entrypoints": [
+            "mint"
+        ]
+    },
+    {
+        "dotrain": "./rain/src/nft-flow.rain",
+        "json": "./rain/src/claim.json",
+        "entrypoints": [
+            "claim"
+        ]
+    }
+]

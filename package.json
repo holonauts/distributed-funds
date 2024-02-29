@@ -26,5 +26,8 @@
   },
   "engines": {
     "npm": ">=7.0.0"
+  },
+  "dependencies": {
+    "@rainlanguage/dotrain": "^6.0.1-alpha.10"
   }
 }
