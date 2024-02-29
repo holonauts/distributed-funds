@@ -19,15 +19,18 @@ prev-amount: get(total-deposited-key),
 
 #claim
 /**
- * for claiming, users will use a signed coupon by the game master,
- * each coupon can only be used once.
+ * for claiming, users will use the signed coupon by the game master,
+ * each user calls with the same coupon
  * 
  * the coupon will be a signed message with the following fields:
- * [0] the address of the claimant
- * [1] amount
- * [2] the token address
- * [3] the address of this contract
- * 
+ * [0] coupon signer address
+ * [1] this contract address
+ *
+ * each subsequent field corresponds to an application's position in the leaderboard, and is an array of 2 elements:
+ * [2]
+ *      [0] application address 
+ *      [1] application amount 
+ *   ...
  */
 you: context<0 0>(),
 me: context<0 1>(),
@@ -43,16 +46,16 @@ contract: context<2 1>(),
 
 /* TODO - figure out how to loop over remaining context for all applicants, until amount sum > :get(total-deposited-key) 
     without knowing the number of applicants in advance */
-applicant-1-address: context<3 0>(),
-applicant-1-amount: context<3 1>(),
+application-1-address: context<3 0>(),
+application-1-amount: context<3 1>(),
 
 /* ensure applicant has not claimed yet */
-applicant-1-has-claimed: get(applicant-1-address),
+applicant-1-has-claimed: get(application-1-address),
 :ensure(eq(applicant-1-has-claimed 0)),
 
 /* transfer amount to applicant */
-:ensure(eq(applicant-1-address you)),
-_ _ _ _: payment-token you me applicant-1-amount,
+:ensure(eq(application-1-address you)),
+_ _ _ _: payment-token you me application-1-amount,
 
 /* mark that applicant has claimed */
-:set(applicant-1-address 1);
+:set(application-1-address 1);
