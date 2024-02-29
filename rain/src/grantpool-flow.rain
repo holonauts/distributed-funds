@@ -1,0 +1,61 @@
+/* constants */
+#notary-address 0x8d0F52e2A9d9fF7F4a6952C32552dEAd4f732DD5 /* replace with grant pool creator */
+#payment-token 0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359 /* polygon USDC */
+#total-deposited-key 0xa16a225b4597aeee50ccb789ad6a3269c8447d9822f8f8f9e06244b1930c02a4 /* keccack256('total-deposited') */
+
+
+#deposit
+you: context<0 0>(),
+me: context<0 1>(),
+payment-amount: context<1 0>(),
+
+/* deposit into contract */
+_ _ _ _: payment-token you me payment-amount,
+
+/* account that a deposit has been made */
+prev-amount: get(total-deposited-key),
+:set(total-deposited-key add(prev-amount payment-amount));
+
+
+#claim
+/**
+ * for claiming, users will use the signed coupon by the game master,
+ * each user calls with the same coupon
+ * 
+ * the coupon will be a signed message with the following fields:
+ * [0] coupon signer address
+ * [1] this contract address
+ *
+ * each subsequent field corresponds to an application's position in the leaderboard, and is an array of 2 elements:
+ * [2]
+ *      [0] application address 
+ *      [1] application amount 
+ *   ...
+ */
+you: context<0 0>(),
+me: context<0 1>(),
+
+coupon-signer: context<2 0>(),
+contract: context<2 1>(),
+
+/* ensure that the coupon is signed by the notary */
+:ensure(eq(coupon-signer notary-address)),
+
+/* ensure that the coupon is for this contract */
+:ensure(eq(contract me)),
+
+/* TODO - figure out how to loop over remaining context for all applicants, until amount sum > :get(total-deposited-key) 
+    without knowing the number of applicants in advance */
+application-1-address: context<3 0>(),
+application-1-amount: context<3 1>(),
+
+/* ensure applicant has not claimed yet */
+applicant-1-has-claimed: get(application-1-address),
+:ensure(eq(applicant-1-has-claimed 0)),
+
+/* transfer amount to applicant */
+:ensure(eq(application-1-address you)),
+_ _ _ _: payment-token you me application-1-amount,
+
+/* mark that applicant has claimed */
+:set(application-1-address 1);

@@ -1,0 +1,16 @@
+[
+    {
+        "dotrain": "./rain/src/grantpool-flow.rain",
+        "json": "./rain/src/deposit.json",
+        "entrypoints": [
+            "deposit"
+        ]
+    },
+    {
+        "dotrain": "./rain/src/grantpool-flow.rain",
+        "json": "./rain/src/claim.json",
+        "entrypoints": [
+            "claim"
+        ]
+    }
+]
