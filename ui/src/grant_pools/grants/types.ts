@@ -143,6 +143,8 @@ export interface Application {
 	amount: Uint8Array;
 
 	status: Status;
+
+	evm_wallet: `0x${string}`;
 }
 
 export interface AttributeScore {

@@ -1,4 +1,4 @@
-use alloy_primitives::U256;
+use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
 use serde_json::Value;
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
@@ -23,6 +23,7 @@ pub struct Application {
     pub form_content: String,
     pub amount: U256,
     pub status: ApplicationStatus,
+    pub evm_wallet: Address,
 }
 pub fn validate_create_application(
     _action: EntryCreationAction,

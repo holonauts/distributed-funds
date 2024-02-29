@@ -30,13 +30,16 @@
 		"@msgpack/msgpack": "^2.7.2",
 		"@pragmatic-engineering/svelte-form-builder-community": "^1.0.2",
 		"@vaadin/date-time-picker": "^23.2.8",
+		"@wagmi/connectors": "^4.1.14",
+		"@wagmi/core": "^2.6.5",
+		"@web3modal/wagmi": "^4.0.10",
 		"date-picker-svelte": "^2.11.0",
 		"dayjs": "^1.11.10",
 		"flowbite-svelte-icons": "^1.4.0",
 		"imask": "^7.4.0",
 		"lodash": "^4.17.21",
 		"uuid": "^9.0.1",
-		"viem": "^2.7.15"
+		"viem": "^2.7.16"
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",

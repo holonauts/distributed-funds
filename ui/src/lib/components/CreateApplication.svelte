@@ -14,6 +14,9 @@
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import { StatusType, type Application } from '../../grant_pools/grants/types';
 	import type { RenderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
+	import { config } from '$lib/utils/web3modal';
+	import { getAccount } from '@wagmi/core';
+	import { toBytes } from 'viem';
 
 	export let amount: bigint | undefined = undefined;
 	export let renderApi: typeof RenderAPI | undefined = undefined;
@@ -29,7 +32,8 @@
 			grant_pool: actionHash,
 			form_content: formContent!,
 			amount: bigintToU256(amount!),
-			status: { type: StatusType.Draft, content: undefined }
+			status: { type: StatusType.Draft, content: undefined },
+			evm_wallet: getAccount(config).address!
 		};
 
 		try {
@@ -48,11 +52,13 @@
 
 	async function submit() {
 		const formContent = await renderApi?.getData();
+
 		const applicationEntry: Application = {
 			grant_pool: actionHash,
 			form_content: formContent!,
 			amount: bigintToU256(amount!),
-			status: { type: StatusType.Submitted, content: undefined }
+			status: { type: StatusType.Submitted, content: undefined },
+			evm_wallet: getAccount(config).address!
 		};
 
 		try {
@@ -111,6 +117,14 @@
 						bind:value={amount}
 						showMaxButton={false}
 					/>
+				</BaseLabelContent>
+
+				<BaseLabelContent
+					label="Wallet"
+					helper="The wallet address that will recieve funds if grant is approved."
+					class="mb-8"
+				>
+					<w3m-button />
 				</BaseLabelContent>
 
 				<div class="flex items-center justify-end space-x-8">
