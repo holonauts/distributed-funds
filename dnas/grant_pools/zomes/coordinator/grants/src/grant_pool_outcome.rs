@@ -3,6 +3,7 @@ use alloy_primitives::U256;
 use grants_integrity::GrantPoolOutcome;
 use grants_integrity::*;
 use hdk::prelude::*;
+use rust_decimal::Decimal;
 use std::collections::BTreeMap;
 #[hdk_extern]
 pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> ExternResult<Record> {
@@ -32,16 +33,15 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
             None,
         )?;
 
-        let num_evals = links_for_evaluations.len() as f64;
-
         let mut evaluation_action_hashes: Vec<ActionHash> = Vec::new();
-        for eval_link in links_for_evaluations {
+        let mut evaluation_scores = Vec::new();
+        for eval_link in links_for_evaluations.clone() {
             let eval_action_hash = eval_link
                 .target
                 .into_action_hash()
                 .ok_or(wasm_error!("Error converting ActionHash"))?;
-            evaluation_action_hashes.push(action_hash.clone());
-            let record = get_evaluation(action_hash.clone())?.ok_or(wasm_error!(
+            evaluation_action_hashes.push(eval_action_hash.clone());
+            let record = get_evaluation(eval_action_hash.clone())?.ok_or(wasm_error!(
                 WasmErrorInner::Guest(String::from("Linked action must reference a record"))
             ))?;
             let evaluation: Evaluation = record
@@ -52,17 +52,13 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
                     "Record must contain an entry"
                 ))))?;
             let score = get_score_for_evaluation(evaluation.clone());
-            let absolute_score = AbsoluteScore {
-                application: action_hash,
-                score,
-            };
-            absolute_scores.push(absolute_score);
+            evaluation_scores.push(score);
         }
-        let raw_sum: f64 = raw_scores.iter().sum::<f64>() as f64;
 
         let absolute_score = AbsoluteScore {
             application: app_action_hash.clone(),
-            score: raw_sum / num_evals,
+            score: Decimal::from(evaluation_scores.iter().sum::<u64>())
+                / Decimal::from(links_for_evaluations.len()),
         };
 
         absolute_scores.push(absolute_score);
@@ -70,7 +66,7 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
     }
     absolute_scores.sort_by(|a, b| b.score.cmp(&a.score));
     let coupon = Vec::new();
-    let grant_pool_outomce = GrantPoolOutcome {
+    let grant_pool_outcome = GrantPoolOutcome {
         grant_pool,
         deposits,
         evaluations: grant_pool_evaluations,

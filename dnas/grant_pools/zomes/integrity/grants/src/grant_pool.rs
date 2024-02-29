@@ -1,4 +1,4 @@
-use alloy_primitives::{U256};
+use alloy_primitives::U256;
 use hdi::prelude::*;
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, SerializedBytes)]
 pub struct AmountRange {
@@ -15,7 +15,6 @@ pub struct GrantPool {
     pub application_template: ActionHash,
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
-    pub allowed_erc20: AllowedERC20,
     pub evaluators: BTreeSet<AgentPubKey>,
 }
 pub fn validate_create_grant_pool(

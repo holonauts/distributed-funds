@@ -1,11 +1,12 @@
 use crate::Evaluation;
 use alloy_primitives::U256;
 use hdi::prelude::*;
+use rust_decimal::Decimal;
 use std::collections::BTreeMap;
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
 pub struct AbsoluteScore {
     pub application: ActionHash,
-    pub score: f64,
+    pub score: Decimal,
 }
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
