@@ -31,7 +31,6 @@
 			amount: bigintToU256(amount!),
 			status: { type: StatusType.Draft, content: undefined }
 		};
-		console.log('applicationEntry', applicationEntry);
 
 		try {
 			const record: Record = await $holochainClient.client.callZome({
@@ -41,9 +40,7 @@
 				fn_name: 'create_application',
 				payload: applicationEntry
 			});
-			goto(
-				`/grant-pools/${actionHashB64}/applications/${encodeHashToBase64(record.signed_action.hashed.hash)}`
-			);
+			goto(`/applications/${encodeHashToBase64(record.signed_action.hashed.hash)}`);
 		} catch (e) {
 			toasts.error(`Error saving the application: ${e}`);
 		}
@@ -57,7 +54,6 @@
 			amount: bigintToU256(amount!),
 			status: { type: StatusType.Submitted, content: undefined }
 		};
-		console.log('applicationEntry', applicationEntry);
 
 		try {
 			//TODO this should be an update, if no prior exists, otherwise can be a create
@@ -68,9 +64,7 @@
 				fn_name: 'create_application',
 				payload: applicationEntry
 			});
-			goto(
-				`/grant-pools/${actionHashB64}/applications/${encodeHashToBase64(record.signed_action.hashed.hash)}`
-			);
+			goto(`/applications/${encodeHashToBase64(record.signed_action.hashed.hash)}`);
 		} catch (e) {
 			toasts.error(`Error creating the application: ${e}`);
 		}

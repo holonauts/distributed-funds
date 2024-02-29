@@ -1,7 +1,6 @@
 use alloy_primitives::Address;
 use grants_integrity::*;
 use hdk::prelude::*;
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AddEvmWalletForAgentInput {
     pub agent: AgentPubKey,
@@ -15,14 +14,11 @@ pub fn add_agent_to_evm_wallet_for_agent(input: AddEvmWalletForAgentInput) -> Ex
         LinkTypes::AgentToEvmWallet,
         input.evm_wallet.to_vec(),
     )?;
-
     Ok(())
 }
-
 #[hdk_extern]
 pub fn get_agent_to_evm_wallets_for_agent(agent: AgentPubKey) -> ExternResult<Vec<String>> {
     let links = get_links(agent, LinkTypes::AgentToEvmWallet, None)?;
-
     let agent_to_evm_wallet: Vec<String> = links
         .into_iter()
         .map(|link| {
@@ -34,6 +30,5 @@ pub fn get_agent_to_evm_wallets_for_agent(agent: AgentPubKey) -> ExternResult<Ve
             })
         })
         .collect::<ExternResult<Vec<String>>>()?;
-
     Ok(agent_to_evm_wallet)
 }

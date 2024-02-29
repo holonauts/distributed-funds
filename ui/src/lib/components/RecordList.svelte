@@ -8,6 +8,7 @@
 
 	export let entryType: string;
 	export let callZomeRequest: AppAgentCallZomeRequest;
+	export let displayNoneMessage = true;
 
 	let hashes: Array<ActionHash> = [];
 	let loading = true;
@@ -43,7 +44,9 @@
 		<div class="mb-2 h-12 w-full animate-pulse rounded-lg bg-gray-200 dark:bg-slate-800"></div>
 	{/each}
 {:else if hashes.length === 0}
-	<Alert class="my-8 text-center">None found.</Alert>
+	{#if displayNoneMessage}
+		<Alert class="my-8 text-center">None found.</Alert>
+	{/if}
 {:else}
 	<div class="flex flex-col">
 		{#each hashes as hash}

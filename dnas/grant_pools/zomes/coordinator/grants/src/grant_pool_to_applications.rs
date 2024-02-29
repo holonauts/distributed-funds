@@ -1,6 +1,5 @@
 use grants_integrity::*;
 use hdk::prelude::*;
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AddApplicationForGrantPoolInput {
     pub base_grant_pool_hash: ActionHash,
@@ -14,15 +13,12 @@ pub fn add_application_for_grant_pool(input: AddApplicationForGrantPoolInput) ->
         LinkTypes::GrantPoolToApplication,
         (),
     )?;
-
     Ok(())
 }
-
 #[hdk_extern]
 pub fn get_applications_for_grant_pool(grant_pool_hash: ActionHash) -> ExternResult<Vec<Link>> {
     get_links(grant_pool_hash, LinkTypes::GrantPoolToApplication, None)
 }
-
 #[hdk_extern]
 pub fn get_deleted_applications_for_grant_pool(
     grant_pool_hash: ActionHash,
@@ -31,10 +27,9 @@ pub fn get_deleted_applications_for_grant_pool(
     Ok(details
         .into_inner()
         .into_iter()
-        .filter(|(_link, deletes)| deletes.len() > 0)
+        .filter(|(_link, deletes)| !deletes.is_empty())
         .collect())
 }
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct RemoveApplicationForGrantPoolInput {
     pub base_grant_pool_hash: ActionHash,
@@ -49,7 +44,6 @@ pub fn remove_application_for_grant_pool(
         LinkTypes::GrantPoolToApplication,
         None,
     )?;
-
     for link in links {
         if link
             .target
@@ -63,6 +57,5 @@ pub fn remove_application_for_grant_pool(
             delete_link(link.create_link_hash)?;
         }
     }
-
     Ok(())
 }

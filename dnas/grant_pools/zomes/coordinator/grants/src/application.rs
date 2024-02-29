@@ -1,9 +1,9 @@
-use crate::grant_pool_to_applications::{
-    add_application_for_grant_pool, AddApplicationForGrantPoolInput,
+use crate::{
+    evaluator_to_applications::{add_application_for_evaluator, AddApplicationForEvaluatorInput},
+    grant_pool_to_applications::{add_application_for_grant_pool, AddApplicationForGrantPoolInput},
 };
 use grants_integrity::*;
 use hdk::prelude::*;
-
 #[hdk_extern]
 pub fn create_application(application: Application) -> ExternResult<Record> {
     let application_hash = create_entry(&EntryTypes::Application(application.clone()))?;
@@ -25,9 +25,26 @@ pub fn create_application(application: Application) -> ExternResult<Record> {
         (),
     )?;
     add_application_for_grant_pool(AddApplicationForGrantPoolInput {
-        base_grant_pool_hash: application.grant_pool,
+        base_grant_pool_hash: application.grant_pool.clone(),
         target_application_hash: record.action_address().clone(),
     })?;
+    let grant_pool_record = get(application.grant_pool, GetOptions::default())?.ok_or(
+        wasm_error!(WasmErrorInner::Guest("No grant pool found".into())),
+    )?;
+    let grant_pool: GrantPool = grant_pool_record
+        .entry()
+        .to_app_option()
+        .map_err(|e| wasm_error!(e))?
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Record must contain an entry"
+        ))))?;
+    for evaluator in grant_pool.evaluators {
+        add_application_for_evaluator(AddApplicationForEvaluatorInput {
+            base_evaluator: evaluator,
+            target_application_hash: application_hash.clone(),
+        })?;
+    }
+
     Ok(record)
 }
 #[hdk_extern]
