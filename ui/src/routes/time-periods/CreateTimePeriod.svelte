@@ -40,12 +40,12 @@
 
 	<div class="flex items-center justify-start space-x-8">
 		<div>
-			<DateInput bind:value={startAt} />
+			<DateInput min={new Date()} bind:value={startAt} />
 			<Label>Starts At</Label>
 		</div>
 
 		<div>
-			<DateInput bind:value={endAt} />
+			<DateInput min={startAt} bind:value={endAt} />
 			<Label>Ends At</Label>
 		</div>
 	</div>
