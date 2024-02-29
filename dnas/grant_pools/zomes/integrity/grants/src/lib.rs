@@ -412,7 +412,7 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     )
                 }
                 LinkTypes::ApplicationToEvaluation => {
-                    validate_create_link_application_to_evaluations(
+                    validate_create_link_application_to_evaluation(
                         action,
                         base_address,
                         target_address,
@@ -561,7 +561,7 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     )
                 }
                 LinkTypes::ApplicationToEvaluation => {
-                    validate_delete_link_application_to_evaluations(
+                    validate_delete_link_application_to_evaluation(
                         action,
                         original_action,
                         base_address,
@@ -1102,7 +1102,7 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                             )
                         }
                         LinkTypes::ApplicationToEvaluation => {
-                            validate_create_link_application_to_evaluations(
+                            validate_create_link_application_to_evaluation(
                                 action,
                                 base_address,
                                 target_address,
@@ -1265,7 +1265,7 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                             )
                         }
                         LinkTypes::ApplicationToEvaluation => {
-                            validate_delete_link_application_to_evaluations(
+                            validate_delete_link_application_to_evaluation(
                                 action,
                                 create_link.clone(),
                                 base_address,

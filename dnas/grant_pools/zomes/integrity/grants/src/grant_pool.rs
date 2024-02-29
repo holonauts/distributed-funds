@@ -17,7 +17,8 @@ pub struct GrantPool {
     pub application_template: ActionHash,
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
-    pub evaluators: Vec<AgentPubKey>,
+    pub allowed_erc20: AllowedERC20,
+    pub evaluators: BTreeSet<AgentPubKey>,
 }
 pub fn validate_create_grant_pool(
     _action: EntryCreationAction,
