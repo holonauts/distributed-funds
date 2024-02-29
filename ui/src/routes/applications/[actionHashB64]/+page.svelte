@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { decodeHashFromBase64 } from '@holochain/client';
+	import { decodeHashFromBase64, encodeHashToBase64 } from '@holochain/client';
 	import RecordDetail from '$lib/components/RecordDetail.svelte';
 	import { page } from '$app/stores';
 	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
-	import { StatusType } from '../../../../../grant_pools/grants/types';
+	import { StatusType } from '../../../grant_pools/grants/types';
 	import CreateApplication from '$lib/components/CreateApplication.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 	import { u256ToBigint } from '$lib/utils/u256';
@@ -15,7 +15,6 @@
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
 
 	$: actionHash = decodeHashFromBase64($page.params.actionHashB64);
-	$: applicationActionHash = decodeHashFromBase64($page.params.applicationActionHashB64);
 </script>
 
 <RecordDetail
@@ -24,7 +23,7 @@
 		role_name: 'grant_pools',
 		zome_name: 'grants',
 		fn_name: 'get_latest_application',
-		payload: applicationActionHash
+		payload: actionHash
 	}}
 >
 	<svelte:fragment let:entry let:record>
@@ -34,7 +33,7 @@
 				role_name: 'grant_pools',
 				zome_name: 'grants',
 				fn_name: 'get_grant_pool',
-				payload: actionHash
+				payload: entry.grant_pool
 			}}
 		>
 			<svelte:fragment let:entry={grantPool}>
@@ -55,7 +54,8 @@
 				{:else}
 					<BaseBreadcrumbs
 						title="Application"
-						replacements={{ [$page.params.actionHashB64]: grantPool.name }}
+						replacements={{ [encodeHashToBase64(entry.grant_pool)]: grantPool.name }}
+						disabled={['applications']}
 					/>
 
 					<div class="mb-6 flex items-start justify-between">

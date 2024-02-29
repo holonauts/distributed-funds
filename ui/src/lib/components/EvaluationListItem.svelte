@@ -10,6 +10,7 @@
 	import { u256ToBigint } from '$lib/utils/u256';
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
 	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
+	import { page } from '$app/stores';
 
 	export let applicationHash: ActionHash;
 </script>

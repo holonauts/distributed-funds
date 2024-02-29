@@ -24,7 +24,7 @@
 	<svelte:fragment let:record let:entry>
 		<Card
 			size="xl"
-			on:click={() => goto(`grant-pools/${encodeHashToBase64(record.signed_action.hashed.hash)}`)}
+			on:click={() => goto(`/grant-pools/${encodeHashToBase64(record.signed_action.hashed.hash)}`)}
 		>
 			<div class="flex items-start justify-between">
 				<div class="mb-4 text-xl">{entry.name}</div>
