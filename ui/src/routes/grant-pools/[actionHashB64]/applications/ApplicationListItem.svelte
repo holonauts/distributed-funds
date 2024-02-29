@@ -10,6 +10,7 @@
 	import { u256ToBigint } from '$lib/utils/u256';
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
 	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
+	import { page } from '$app/stores';
 
 	export let applicationHash: ActionHash;
 </script>
@@ -26,7 +27,10 @@
 	<svelte:fragment let:record let:entry>
 		<Card
 			size="xl"
-			on:click={() => goto(`/grant-pools/applications/${encodeHashToBase64(applicationHash)}`)}
+			on:click={() =>
+				goto(
+					`/grant-pools/${$page.params.actionHashB64}/applications/${encodeHashToBase64(applicationHash)}`
+				)}
 		>
 			<div class="flex items-start justify-between">
 				<ProfileInline agentPubKey={record.signed_action.hashed.content.author} />
@@ -41,8 +45,9 @@
 				</div>
 			</div>
 
-			<BaseLabelContent label="Funding Amount">
+			<BaseLabelContent label="Requested Amount">
 				{formatUnits(u256ToBigint(entry.amount), ACCEPTED_TOKEN_DECIMALS)}
+				{ACCEPTED_TOKEN_SYMBOL}
 			</BaseLabelContent>
 		</Card>
 	</svelte:fragment>
