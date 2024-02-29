@@ -1,4 +1,4 @@
-use alloy_primitives::{U256};
+use alloy_primitives::U256;
 use hdi::prelude::*;
 use serde_json::Value;
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]

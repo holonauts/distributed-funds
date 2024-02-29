@@ -39,7 +39,7 @@ pub fn create_application(application: Application) -> ExternResult<Record> {
             "Record must contain an entry"
         ))))?;
     for evaluator in grant_pool.evaluators {
-        let _ = add_application_for_evaluator(AddApplicationForEvaluatorInput {
+        add_application_for_evaluator(AddApplicationForEvaluatorInput {
             base_evaluator: evaluator,
             target_application_hash: application_hash.clone(),
         })?;
