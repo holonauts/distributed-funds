@@ -20,17 +20,33 @@ pub struct Evaluation {
     pub score: Score,
 }
 pub fn validate_create_evaluation(
-    _action: EntryCreationAction,
+    action: EntryCreationAction,
     evaluation: Evaluation,
 ) -> ExternResult<ValidateCallbackResult> {
     let record = must_get_valid_record(evaluation.application.clone())?;
-    let _application: crate::Application = record
+    let application: crate::Application = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
+
+    let record = must_get_valid_record(application.grant_pool)?;
+    let grant_pool: crate::GrantPool = record
+        .entry()
+        .to_app_option()
+        .map_err(|e| wasm_error!(e))?
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Dependant action must be accompanied by an entry"
+        ))))?;
+
+    if !grant_pool.evaluators.contains(action.author()) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Only the grant pool's evaluators can create evaluations".into(),
+        ));
+    }
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_evaluation(
