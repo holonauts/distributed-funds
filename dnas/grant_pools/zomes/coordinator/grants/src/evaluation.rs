@@ -32,7 +32,6 @@ pub fn get_evaluation(evaluation_hash: ActionHash) -> ExternResult<Option<Record
 pub fn get_evaluations_for_application(application_hash: ActionHash) -> ExternResult<Vec<Link>> {
     get_links(application_hash, LinkTypes::ApplicationToEvaluation, None)
 }
-
 pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
     match evaluation.score {
         Score::Single(score) => score,

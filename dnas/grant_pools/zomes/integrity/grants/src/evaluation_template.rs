@@ -1,25 +1,21 @@
 use hdi::prelude::*;
 use serde_json::Value;
-
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct NumberRange {
     min: u32,
     max: u32,
 }
-
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct AttributeScoreTemplate {
     label: String,
     weight: u32,
 }
-
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type", content = "content")]
 pub enum ScoreTemplate {
     Single,
     Weighted(Vec<AttributeScoreTemplate>),
 }
-
 #[hdk_entry_helper]
 #[derive(Clone)]
 pub struct EvaluationTemplate {
@@ -39,13 +35,11 @@ pub fn validate_create_evaluation_template(
             "Schema not valid json".to_string(),
         ));
     }
-
     if evaluation_template.score_range.max < evaluation_template.score_range.min {
         return Ok(ValidateCallbackResult::Invalid(
             "Max must be greater than min".to_string(),
         ));
     }
-
     if let ScoreTemplate::Weighted(number_range_weighted) = evaluation_template.score {
         if number_range_weighted.len() < 2 {
             return Ok(ValidateCallbackResult::Invalid(

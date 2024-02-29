@@ -1,12 +1,10 @@
 use hdi::prelude::*;
-
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub struct AttributeScore {
     pub label: String,
     pub value: u64,
     pub weight: u64,
 }
-
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub enum Score {
     Single(u64),

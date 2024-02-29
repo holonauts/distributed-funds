@@ -5,7 +5,6 @@ pub fn validate_create_link_agent_to_evm_wallet(
     _target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    // TODO: add the appropriate validation rules
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_agent_to_evm_wallet(
@@ -15,6 +14,5 @@ pub fn validate_delete_link_agent_to_evm_wallet(
     _target: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    // TODO: add the appropriate validation rules
     Ok(ValidateCallbackResult::Valid)
 }

@@ -1,6 +1,5 @@
 use hdi::prelude::*;
 use serde_json::Value;
-
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct ApplicationTemplate {
@@ -23,7 +22,6 @@ pub fn validate_create_application_template(
             "Name cannot be empty".to_string(),
         ));
     }
-
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application_template(

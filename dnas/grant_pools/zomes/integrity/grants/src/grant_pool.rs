@@ -1,12 +1,10 @@
-use alloy_primitives::{Address, U256};
+use alloy_primitives::{U256};
 use hdi::prelude::*;
-
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, SerializedBytes)]
 pub struct AmountRange {
     min: U256,
     max: U256,
 }
-
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPool {

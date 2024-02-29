@@ -1,11 +1,9 @@
+use crate::evaluation::{get_evaluation, get_score_for_evaluation};
 use alloy_primitives::U256;
 use grants_integrity::GrantPoolOutcome;
 use grants_integrity::*;
 use hdk::prelude::*;
 use std::collections::BTreeMap;
-
-use crate::evaluation::{get_evaluation, get_score_for_evaluation};
-
 #[hdk_extern]
 pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> ExternResult<Record> {
     let links_for_deposits = get_links(grant_pool.clone(), LinkTypes::GrantPoolToSponsor, None)?;
@@ -21,9 +19,7 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
     let links_for_applications =
         get_links(grant_pool.clone(), LinkTypes::GrantPoolToApplication, None)?;
     let mut grant_pool_evaluations: BTreeMap<ActionHash, Vec<ActionHash>> = BTreeMap::new();
-
     let mut absolute_scores: Vec<AbsoluteScore> = Vec::new();
-
     for app_link in links_for_applications {
         let app_action_hash = app_link
             .target
@@ -39,21 +35,15 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
         let num_evals = links_for_evaluations.len() as f64;
 
         let mut evaluation_action_hashes: Vec<ActionHash> = Vec::new();
-
-        let mut raw_scores = Vec::new();
-
         for eval_link in links_for_evaluations {
             let eval_action_hash = eval_link
                 .target
                 .into_action_hash()
                 .ok_or(wasm_error!("Error converting ActionHash"))?;
-
-            evaluation_action_hashes.push(eval_action_hash.clone());
-
-            let record = get_evaluation(eval_action_hash.clone())?.ok_or(wasm_error!(
+            evaluation_action_hashes.push(action_hash.clone());
+            let record = get_evaluation(action_hash.clone())?.ok_or(wasm_error!(
                 WasmErrorInner::Guest(String::from("Linked action must reference a record"))
             ))?;
-
             let evaluation: Evaluation = record
                 .entry()
                 .to_app_option()
@@ -61,9 +51,12 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
                 .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
                     "Record must contain an entry"
                 ))))?;
-
-            let raw_score = get_score_for_evaluation(evaluation.clone()) as f64;
-            raw_scores.push(raw_score);
+            let score = get_score_for_evaluation(evaluation.clone());
+            let absolute_score = AbsoluteScore {
+                application: action_hash,
+                score,
+            };
+            absolute_scores.push(absolute_score);
         }
         let raw_sum: f64 = raw_scores.iter().sum::<f64>() as f64;
 
@@ -75,14 +68,9 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
         absolute_scores.push(absolute_score);
         grant_pool_evaluations.insert(app_action_hash, evaluation_action_hashes);
     }
-
-    absolute_scores.sort_by(|a, b| b.score.total_cmp(&a.score));
-
-    // TODO:
+    absolute_scores.sort_by(|a, b| b.score.cmp(&a.score));
     let coupon = Vec::new();
-    //
-
-    let grant_pool_outcome = GrantPoolOutcome {
+    let grant_pool_outomce = GrantPoolOutcome {
         grant_pool,
         deposits,
         evaluations: grant_pool_evaluations,
@@ -91,7 +79,6 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
     };
     create_grant_pool_outcome(grant_pool_outcome)
 }
-
 #[hdk_extern]
 pub fn create_grant_pool_outcome(grant_pool_outcome: GrantPoolOutcome) -> ExternResult<Record> {
     let grant_pool_outcome_hash =

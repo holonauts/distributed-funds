@@ -1,13 +1,11 @@
-use alloy_primitives::{Address, U256};
+use alloy_primitives::{U256};
 use hdi::prelude::*;
 use serde_json::Value;
-
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type", content = "content")]
 pub enum ApplicationStatus {
     Draft,
     Submitted,
-    // EVM claim Transaction Hash
     Claimed(U256),
 }
 impl ApplicationStatus {
@@ -42,7 +40,6 @@ pub fn validate_create_application(
             "Schema not valid json".to_string(),
         ));
     }
-
     if application.amount == U256::from(0) {
         return Ok(ValidateCallbackResult::Invalid(
             "Amount cannot be zero".to_string(),
@@ -56,9 +53,6 @@ pub fn validate_create_application(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
-
-    // TODO action timestamp must be  within the GrantPool's TimePeriod
-
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application(
