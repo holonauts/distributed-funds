@@ -9,10 +9,11 @@
 	import dayjs from 'dayjs';
 	const dispatch = createEventDispatcher();
 
-	let startAt: Date;
+	let startAt: Date | undefined;
 	let endAt: Date;
 
-	$: isValid = startAt !== undefined && endAt !== undefined && endAt > startAt;
+	$: minEndAt = startAt ? startAt : new Date();
+	$: isValid = startAt && endAt && endAt > startAt;
 
 	async function createTimePeriod() {
 		const timePeriodEntry: TimePeriod = {
@@ -45,7 +46,7 @@
 		</div>
 
 		<div>
-			<DateInput min={startAt} bind:value={endAt} />
+			<DateInput min={minEndAt} bind:value={endAt} />
 			<Label>Ends At</Label>
 		</div>
 	</div>
