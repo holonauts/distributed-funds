@@ -21,8 +21,8 @@
 			<div class="flex items-center space-x-8">
 				<NavLi href="/time-periods">Time Periods</NavLi>
 				<NavLi href="/grant-pools">Grant Pools</NavLi>
-				<NavLi>My Applications</NavLi>
-				<NavLi>My Evaluations</NavLi>
+				<NavLi href="/my-applications">My Applications</NavLi>
+				<NavLi href="/my-evaluations">My Evaluations</NavLi>
 				<Button
 					color="alternative"
 					size="xs"
