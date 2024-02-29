@@ -1,4 +1,5 @@
 <script>
-</script>
+	import { goto } from '$app/navigation';
 
-Home page
+	goto('/grant-pools');
+</script>

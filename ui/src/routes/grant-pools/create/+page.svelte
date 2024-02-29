@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Record, ActionHash, AgentPubKey } from '@holochain/client';
 	import type { AmountRangeBigInt, GrantPool } from '../../../grant_pools/grants/types';
-	import { Label, Textarea, Button, Helper, Input } from 'flowbite-svelte';
+	import { Textarea, Button, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
 	import InputApplicationTemplate from './InputApplicationTemplate.svelte';
 	import InputEvaluationTemplate from './InputEvaluationTemplate.svelte';
@@ -11,12 +11,14 @@
 	import SelectTimePeriod from './InputTimePeriod.svelte';
 	import InputAgents from '$lib/components/InputAgents.svelte';
 	import InputTokenAmountRange from '$lib/components/InputTokenAmountRange.svelte';
-	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 	import { bigintToU256 } from '$lib/utils/u256';
 	import { goto } from '$app/navigation';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
 	import BaseHelper from '$lib/components/BaseHelper.svelte';
-
+	import { config } from '$lib/utils/web3modal';
+	import InputTokenAmount from '$lib/components/InputTokenAmount.svelte';
+	import { ACCEPTED_TOKEN_SYMBOL, CHAIN } from '$lib/config';
+	import { getAccount } from '@wagmi/core';
 	const dispatch = createEventDispatcher();
 
 	export let name: string = '';
@@ -27,6 +29,7 @@
 	export let applicationTemplate: ActionHash | undefined = undefined;
 	export let evaluationTemplate: ActionHash | undefined = undefined;
 	export let evaluators: AgentPubKey[] = [];
+	export let depositAmount: bigint = 0n;
 
 	$: isGrantPoolValid =
 		name !== '' &&
@@ -36,9 +39,32 @@
 		amountRange !== undefined &&
 		applicationTemplate !== undefined &&
 		evaluationTemplate !== undefined &&
-		evaluators.length > 0;
+		evaluators.length > 0 &&
+		depositAmount !== undefined &&
+		depositAmount > 0n;
 
 	async function createGrantPool() {
+		/*
+		@todo 
+
+		- Deploy flow contract
+			- load dotrain 
+			- set rebindings
+			- compose rain
+			- call parser to parse rain
+			- call CloneFactory to deploy flow contract with rainlang as config
+		- Call erc20 token to approve spending *by flow contract address*
+		- Call flow contract to deposit initial amount
+		*/
+
+		const flowEvmAddress: `0x${string}` = '0x123';
+		const notaryEvmWallet = getAccount(config).address;
+		if (notaryEvmWallet === undefined) {
+			toasts.error('Connect an EVM wallet');
+			return;
+		}
+
+		// create grant pool entry
 		const grantPoolEntry: GrantPool = {
 			name: name!,
 			purpose_description: purposeDescription!,
@@ -50,7 +76,9 @@
 				min: bigintToU256(amountRange!.min),
 				max: bigintToU256(amountRange!.max)
 			},
-			evaluators: evaluators!
+			evaluators: evaluators!,
+			notary_evm_wallet: notaryEvmWallet,
+			flow_evm_address: flowEvmAddress
 		};
 
 		try {
@@ -106,11 +134,7 @@
 </div>
 
 <BaseLabelContent label="Grant Funding Range" class="mb-8">
-	<InputTokenAmountRange
-		symbol={ACCEPTED_TOKEN_SYMBOL}
-		decimals={ACCEPTED_TOKEN_DECIMALS}
-		bind:value={amountRange}
-	/>
+	<InputTokenAmountRange bind:value={amountRange} />
 	<BaseHelper>The amount of funding that may be awarded in a single grant.</BaseHelper>
 </BaseLabelContent>
 
@@ -124,6 +148,22 @@
 	</BaseLabelContent>
 	<BaseHelper>The people invited to evaluate and score grant applications.</BaseHelper>
 </div>
+
+<BaseLabelContent
+	label="Initial Deposit"
+	helper={`The amount of ${ACCEPTED_TOKEN_SYMBOL} to deposit into the grant pool before creating. Additional funding can be contributed after grant pool is created.`}
+	class="mb-8"
+>
+	<InputTokenAmount bind:value={depositAmount} />
+</BaseLabelContent>
+
+<BaseLabelContent
+	label="Wallet"
+	helper={`The EVM wallet address that will manage the grant pool vault. Grant pool vaults are deployed to ${CHAIN.name} and must have sufficient ${CHAIN.nativeCurrency.name} to pay gas fees.`}
+	class="mb-8"
+>
+	<w3m-button />
+</BaseLabelContent>
 
 <div class="flex justify-end">
 	<Button disabled={!isGrantPoolValid} on:click={createGrantPool} color="green">Create</Button>

@@ -2,10 +2,11 @@
 	import type { AmountRangeBigInt } from '../../grant_pools/grants/types';
 	import InputTokenAmount from './InputTokenAmount.svelte';
 	import BaseHelper from './BaseHelper.svelte';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 
 	export let value: AmountRangeBigInt = { min: 0n, max: 0n };
-	export let decimals: number = 0;
-	export let symbol: string;
+	export let decimals: number = ACCEPTED_TOKEN_DECIMALS;
+	export let symbol: string = ACCEPTED_TOKEN_SYMBOL;
 </script>
 
 <div class="mb-2 flex items-center justify-start space-x-4">

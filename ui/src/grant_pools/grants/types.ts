@@ -117,6 +117,10 @@ export interface GrantPool {
 	amount_range: AmountRange;
 
 	evaluators: AgentPubKey[];
+	
+	notary_evm_wallet: string;
+
+	flow_evm_address: string;
 }
 
 export enum StatusType {
