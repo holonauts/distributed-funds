@@ -1,4 +1,6 @@
+use crate::{EvaluationTemplate, ScoreTemplate};
 use hdi::prelude::*;
+use std::iter::zip;
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub struct AttributeScore {
     pub label: String,
@@ -23,8 +25,8 @@ pub fn validate_create_evaluation(
     action: EntryCreationAction,
     evaluation: Evaluation,
 ) -> ExternResult<ValidateCallbackResult> {
-    let record = must_get_valid_record(evaluation.application.clone())?;
-    let application: crate::Application = record
+    let app_record = must_get_valid_record(evaluation.application.clone())?;
+    let application: crate::Application = app_record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
@@ -32,8 +34,8 @@ pub fn validate_create_evaluation(
             "Dependant action must be accompanied by an entry"
         ))))?;
 
-    let record = must_get_valid_record(application.grant_pool)?;
-    let grant_pool: crate::GrantPool = record
+    let pool_record = must_get_valid_record(application.grant_pool)?;
+    let grant_pool: crate::GrantPool = pool_record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
@@ -45,6 +47,54 @@ pub fn validate_create_evaluation(
         return Ok(ValidateCallbackResult::Invalid(
             "Only the grant pool's evaluators can create evaluations".into(),
         ));
+    }
+
+    let eval_template_record = must_get_valid_record(grant_pool.evaluation_template)?;
+    let evaluation_template: EvaluationTemplate = eval_template_record
+        .entry()
+        .to_app_option()
+        .map_err(|e| wasm_error!(e))?
+        .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            "Dependant action must be accompanied by an entry"
+        ))))?;
+
+    match evaluation.score {
+        Score::Single(_) => {
+            if evaluation_template.score != ScoreTemplate::Single {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Evaluation score must match template".into(),
+                ));
+            }
+        }
+        Score::Weighted(mut scores) => match evaluation_template.score {
+            ScoreTemplate::Single => {
+                return Ok(ValidateCallbackResult::Invalid(
+                    "Evaluation score must match template".into(),
+                ));
+            }
+            ScoreTemplate::Weighted(mut scores_template) => {
+                if scores.len() != scores_template.len() {
+                    return Ok(ValidateCallbackResult::Invalid(
+                        "Evaluation score must match template".into(),
+                    ));
+                }
+                scores.sort_by_key(|s| s.label.clone());
+                scores_template.sort_by_key(|s| s.label.clone());
+                let iter = zip(scores, scores_template);
+                for item in iter {
+                    if item.0.label != item.1.label {
+                        return Ok(ValidateCallbackResult::Invalid(
+                            "Evaluation score must match template".into(),
+                        ));
+                    }
+                    if item.0.weight != item.1.weight {
+                        return Ok(ValidateCallbackResult::Invalid(
+                            "Evaluation score must match template".into(),
+                        ));
+                    }
+                }
+            }
+        },
     }
 
     Ok(ValidateCallbackResult::Valid)

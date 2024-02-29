@@ -14,6 +14,7 @@ pub struct GrantPoolOutcome {
     pub grant_pool: ActionHash,
     pub deposits: BTreeMap<AgentPubKey, U256>,
     pub evaluations: BTreeMap<ActionHash, Vec<ActionHash>>,
+    // TODO: validate ranks match scores in evaluations
     pub ranked_list: Vec<AbsoluteScore>,
     pub coupon: Vec<u32>,
 }

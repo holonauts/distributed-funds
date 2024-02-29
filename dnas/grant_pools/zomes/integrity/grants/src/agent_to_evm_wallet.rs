@@ -5,6 +5,8 @@ pub fn validate_create_link_agent_to_evm_wallet(
     _target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
+    // TODO: validate agentpubkey and evm_wallet
+    // try constructing Address from target bytes
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_agent_to_evm_wallet(
