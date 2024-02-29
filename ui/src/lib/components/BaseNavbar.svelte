@@ -22,7 +22,7 @@
 				<NavLi href="/time-periods">Time Periods</NavLi>
 				<NavLi href="/grant-pools">Grant Pools</NavLi>
 				<NavLi href="/my-applications">My Applications</NavLi>
-				<NavLi href="/my-evaluations">My Evaluations</NavLi>
+				<NavLi href="/my-assigned-evaluations">My Evaluations</NavLi>
 				<Button
 					color="alternative"
 					size="xs"

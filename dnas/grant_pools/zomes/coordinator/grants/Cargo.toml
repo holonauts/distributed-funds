@@ -9,9 +9,7 @@ name = "grants"
 
 [dependencies]
 hdk = { workspace = true }
-
 serde = { workspace = true }
-
-grants_integrity = { workspace = true } 
-
+grants_integrity = { workspace = true }
 alloy-primitives = { workspace = true }
+rust_decimal = { workspace = true }

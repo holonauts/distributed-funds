@@ -32,7 +32,24 @@ pub fn get_evaluation(evaluation_hash: ActionHash) -> ExternResult<Option<Record
 pub fn get_evaluations_for_application(application_hash: ActionHash) -> ExternResult<Vec<Link>> {
     get_links(application_hash, LinkTypes::ApplicationToEvaluation, None)
 }
-
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub struct GetEvaluationsForApplicationByAgent {
+    application_hash: ActionHash,
+    agent: AgentPubKey,
+}
+#[hdk_extern]
+pub fn get_evaluations_for_application_by_agent(
+    input: GetEvaluationsForApplicationByAgent,
+) -> ExternResult<Vec<Link>> {
+    Ok(get_links(
+        input.application_hash,
+        LinkTypes::ApplicationToEvaluation,
+        None,
+    )?
+    .into_iter()
+    .filter(|l| l.author == input.agent)
+    .collect())
+}
 pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
     match evaluation.score {
         Score::Single(score) => score,

@@ -2,14 +2,14 @@
 	import { encodeHashToBase64, type ActionHash } from '@holochain/client';
 	import RecordListItem from '$lib/components/RecordDetail.svelte';
 	import BaseLabelContent from '$lib/components/BaseLabelContent.svelte';
-	import { Card } from 'flowbite-svelte';
+	import { Badge, Card } from 'flowbite-svelte';
 	import { goto } from '$app/navigation';
 	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
-	import BaseBadgeRecordTimestamp from '$lib/components/BaseBadgeRecordTimestamp.svelte';
 	import { formatUnits } from 'viem';
 	import { u256ToBigint } from '$lib/utils/u256';
 	import ProfileInline from '$lib/components/ProfileInline.svelte';
-	import BaseStatusBadge from '$lib/components/BaseStatusBadge.svelte';
+	import { holochainClient } from '$lib/stores/holochainClient';
+	import RecordList from './RecordList.svelte';
 
 	export let applicationHash: ActionHash;
 </script>
@@ -24,18 +24,33 @@
 	}}
 >
 	<svelte:fragment let:record let:entry>
-		<Card size="xl" on:click={() => goto(`/applications/${encodeHashToBase64(applicationHash)}`)}>
+		<Card
+			size="xl"
+			on:click={() => goto(`/applications/${encodeHashToBase64(applicationHash)}/evaluate`)}
+		>
 			<div class="flex items-start justify-between">
-				<ProfileInline agentPubKey={record.signed_action.hashed.content.author} />
-
-				<div class="flex flex-col items-end justify-start">
-					<div>
-						<BaseStatusBadge status={entry.status} />
-					</div>
-					<div>
-						<BaseBadgeRecordTimestamp {record} />
-					</div>
+				<div class="mb-4 flex items-start justify-between">
+					<ProfileInline agentPubKey={record.signed_action.hashed.content.author} />
 				</div>
+
+				<RecordList
+					displayNoneMessage={false}
+					entryType="Evaluation"
+					callZomeRequest={{
+						cap_secret: null,
+						role_name: 'grant_pools',
+						zome_name: 'grants',
+						fn_name: 'get_evaluations_for_application_by_agent',
+						payload: {
+							application_hash: applicationHash,
+							agent: $holochainClient.client.myPubKey
+						}
+					}}
+				>
+					<svelte:fragment let:hash>
+						<Badge color="green">Evaluated</Badge>
+					</svelte:fragment>
+				</RecordList>
 			</div>
 
 			<BaseLabelContent label="Requested Amount">
