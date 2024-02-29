@@ -53,7 +53,7 @@ pub fn validate_delete_evaluation(
         "Evaluations cannot be deleted",
     )))
 }
-pub fn validate_create_link_application_to_evaluations(
+pub fn validate_create_link_application_to_evaluation(
     _action: CreateLink,
     base_address: AnyLinkableHash,
     target_address: AnyLinkableHash,
@@ -88,7 +88,7 @@ pub fn validate_create_link_application_to_evaluations(
         ))))?;
     Ok(ValidateCallbackResult::Valid)
 }
-pub fn validate_delete_link_application_to_evaluations(
+pub fn validate_delete_link_application_to_evaluation(
     _action: DeleteLink,
     _original_action: CreateLink,
     _base: AnyLinkableHash,

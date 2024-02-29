@@ -2,12 +2,12 @@ use alloy_primitives::U256;
 use hdi::prelude::*;
 use std::collections::BTreeMap;
 
-use crate::Evaluation;
+// use crate::Evaluation;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct AbsoluteScore {
     pub application: ActionHash,
-    pub score: u64,
+    pub score: f64,
 }
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
@@ -38,14 +38,14 @@ pub fn validate_create_grant_pool_outcome(
     for (application, evaluations) in grant_pool_outcome.evaluations.clone() {
         must_get_valid_record(application.clone())?;
         for evaluation_action_hash in evaluations {
-            let record = must_get_valid_record(evaluation_action_hash.clone())?;
-            let evaluation: Evaluation = record
-                .entry()
-                .to_app_option()
-                .map_err(|e| wasm_error!(e))?
-                .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
-                    "Dependant action must be accompanied by an entry"
-                ))))?;
+            let _record = must_get_valid_record(evaluation_action_hash.clone())?;
+            // let evaluation: Evaluation = record
+            //     .entry()
+            //     .to_app_option()
+            //     .map_err(|e| wasm_error!(e))?
+            //     .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
+            //         "Dependant action must be accompanied by an entry"
+            //     ))))?;
         }
     }
     Ok(ValidateCallbackResult::Valid)

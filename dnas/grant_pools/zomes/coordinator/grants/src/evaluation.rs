@@ -1,5 +1,5 @@
+use grants_integrity::Score;
 use grants_integrity::*;
-use grants_integrity::{AttributeScore, Score};
 use hdk::prelude::*;
 #[hdk_extern]
 pub fn create_evaluation(evaluation: Evaluation) -> ExternResult<Record> {
@@ -27,6 +27,7 @@ pub fn get_evaluation(evaluation_hash: ActionHash) -> ExternResult<Option<Record
         )))),
     }
 }
+
 #[hdk_extern]
 pub fn get_evaluations_for_application(application_hash: ActionHash) -> ExternResult<Vec<Link>> {
     get_links(application_hash, LinkTypes::ApplicationToEvaluation, None)
@@ -37,8 +38,7 @@ pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
         Score::Single(score) => score,
         Score::Weighted(vec) => {
             let total: u64 = vec.iter().map(|score| score.value * score.weight).sum();
-            let weights: u64 = vec.iter().map(|score| score.weight).sum();
-            total / weights
+            total
         }
     }
 }
