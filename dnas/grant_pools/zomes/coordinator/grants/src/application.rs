@@ -1,5 +1,9 @@
+use crate::grant_pool_to_applications::{
+    add_application_for_grant_pool, AddApplicationForGrantPoolInput,
+};
 use grants_integrity::*;
 use hdk::prelude::*;
+
 #[hdk_extern]
 pub fn create_application(application: Application) -> ExternResult<Record> {
     let application_hash = create_entry(&EntryTypes::Application(application.clone()))?;
@@ -20,6 +24,10 @@ pub fn create_application(application: Application) -> ExternResult<Record> {
         LinkTypes::MyApplications,
         (),
     )?;
+    add_application_for_grant_pool(AddApplicationForGrantPoolInput {
+        base_grant_pool_hash: application.grant_pool,
+        target_application_hash: record.action_address().clone(),
+    })?;
     Ok(record)
 }
 #[hdk_extern]

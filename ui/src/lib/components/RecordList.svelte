@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { toasts } from '$lib/stores/toast';
 	import type { GrantsSignal } from '../../grant_pools/grants/types';
-	import type { ActionHash, AppAgentCallZomeRequest, Link } from '@holochain/client';
+	import type { ActionHash, AgentPubKey, AppAgentCallZomeRequest, Link } from '@holochain/client';
 	import { onMount } from 'svelte';
 	import { holochainClient } from '$lib/stores/holochainClient';
 	import Alert from 'flowbite-svelte/Alert.svelte';

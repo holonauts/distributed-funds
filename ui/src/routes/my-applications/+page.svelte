@@ -1,20 +1,20 @@
 <script lang="ts">
 	import ApplicationListItem from '$lib/components/ApplicationListItem.svelte';
+	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
 	import RecordList from '$lib/components/RecordList.svelte';
-	import { decodeHashFromBase64 } from '@holochain/client';
-	import { page } from '$app/stores';
-
-	$: actionHash = decodeHashFromBase64($page.params.actionHashB64);
+	import { holochainClient } from '$lib/stores/holochainClient';
 </script>
 
+<BaseBreadcrumbs title="My Applications" />
+
 <RecordList
-	entryType="Application"
+	entryType=" "
 	callZomeRequest={{
 		cap_secret: null,
 		role_name: 'grant_pools',
 		zome_name: 'grants',
-		fn_name: 'get_applications_for_grant_pool',
-		payload: actionHash
+		fn_name: 'get_my_applications',
+		payload: $holochainClient.client.myPubKey
 	}}
 >
 	<svelte:fragment let:hash>

@@ -6,11 +6,7 @@ pub struct AmountRange {
     min: U256,
     max: U256,
 }
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-pub struct AllowedERC20 {
-    token: Address,
-    decimals: u8,
-}
+
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPool {
