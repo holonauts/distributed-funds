@@ -1,20 +1,13 @@
 [
     {
-        "dotrain": "./rain/src/nft-flow.rain",
-        "json": "./rain/src/snapshot.json",
+        "dotrain": "./rain/src/grantpool-flow.rain",
+        "json": "./rain/src/deposit.json",
         "entrypoints": [
-            "snapshot"
+            "deposit"
         ]
     },
     {
-        "dotrain": "./rain/src/nft-flow.rain",
-        "json": "./rain/src/mint.json",
-        "entrypoints": [
-            "mint"
-        ]
-    },
-    {
-        "dotrain": "./rain/src/nft-flow.rain",
+        "dotrain": "./rain/src/grantpool-flow.rain",
         "json": "./rain/src/claim.json",
         "entrypoints": [
             "claim"
