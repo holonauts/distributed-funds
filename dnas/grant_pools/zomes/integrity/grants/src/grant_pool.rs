@@ -6,11 +6,7 @@ pub struct AmountRange {
     min: U256,
     max: U256,
 }
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-pub struct AllowedERC20 {
-    token: Address,
-    decimals: u8,
-}
+
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPool {
@@ -21,7 +17,6 @@ pub struct GrantPool {
     pub application_template: ActionHash,
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
-    pub allowed_erc20: AllowedERC20,
     pub evaluators: Vec<AgentPubKey>,
 }
 pub fn validate_create_grant_pool(

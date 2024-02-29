@@ -12,9 +12,10 @@
 	import BaseBadgeRecordTimestamp from '$lib/components/BaseBadgeRecordTimestamp.svelte';
 	import BaseHeading from '$lib/components/BaseHeading.svelte';
 	import BaseBreadcrumbs from '$lib/components/BaseBreadcrumbs.svelte';
+	import ProfileInline from '$lib/components/ProfileInline.svelte';
 
 	$: actionHash = decodeHashFromBase64($page.params.actionHashB64);
-	$: applicationActionHashB64 = decodeHashFromBase64($page.params.applicationActionHashB64);
+	$: applicationActionHash = decodeHashFromBase64($page.params.applicationActionHashB64);
 </script>
 
 <RecordDetail
@@ -23,7 +24,7 @@
 		role_name: 'grant_pools',
 		zome_name: 'grants',
 		fn_name: 'get_latest_application',
-		payload: applicationActionHashB64
+		payload: applicationActionHash
 	}}
 >
 	<svelte:fragment let:entry let:record>
@@ -68,6 +69,10 @@
 							</div>
 						</div>
 					</div>
+
+					<BaseLabelContent label="Applicant">
+						<ProfileInline agentPubKey={record.signed_action.hashed.hash} />
+					</BaseLabelContent>
 					<div class="mb-8">
 						{#each JSON.parse(entry.form_content) as field}
 							<BaseLabelContent label={field.name} class="mb-8">
