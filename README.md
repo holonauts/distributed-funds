@@ -2,7 +2,9 @@
 
 ## Environment Setup
 
-> PREREQUISITE: set up the [holochain development environment](https://developer.holochain.org/docs/install/).
+> PREREQUISITES
+- set up the [holochain development environment](https://developer.holochain.org/docs/install/).
+- install [Foundry](https://foundry.sh)
 
 Enter the nix shell by running this in the root folder of the repository: 
 

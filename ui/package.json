@@ -2,8 +2,9 @@
 	"name": "ui",
 	"version": "0.0.1",
 	"scripts": {
-		"start": "vite --clearScreen false --port $UI_PORT",
-		"build": "npm run check && vite build",
+		"copy-abi": "cp ../rain/out/Flow.sol/Flow.json static/rain/Flow.json",
+		"start": "npm run copy-abi && vite --clearScreen false --port $UI_PORT",
+		"build": "npm run copy-abi && npm run check && vite build",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"package": "npm run build && cd dist && bestzip ../dist.zip *",
