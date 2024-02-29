@@ -1,7 +1,11 @@
-/* constants */
-#notary-address 0x8d0F52e2A9d9fF7F4a6952C32552dEAd4f732DD5 /* replace with grant pool creator */
-#payment-token 0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359 /* polygon USDC */
-#total-deposited-key 0xa16a225b4597aeee50ccb789ad6a3269c8447d9822f8f8f9e06244b1930c02a4 /* keccack256('total-deposited') */
+---
+/* coupon signer */
+#notary-address !notary-address must be the the coupon signer
+
+/* accepted payment token */
+/* 0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359  polygon USDC */
+#payment-token  !payment-token must be the accepted token address
+
 
 
 #deposit
@@ -9,12 +13,32 @@ you: context<0 0>(),
 me: context<0 1>(),
 payment-amount: context<1 0>(),
 
+/* ensure deposits are open */
+is-closed: get(hash("is-closed")),
+:ensure(not(eq(is-closed 1)) "deposits are closed"),
+
 /* deposit into contract */
 _ _ _ _: payment-token you me payment-amount,
 
 /* account that a deposit has been made */
-prev-amount: get(total-deposited-key),
-:set(total-deposited-key add(prev-amount payment-amount));
+prev-amount: get(hash("total-deposited")),
+:set(hash("total-deposited") add(prev-amount payment-amount));
+
+
+#close
+you: context<0 0>(),
+me: context<0 1>(),
+payment-amount: context<1 0>(),
+
+/* ensure not closed already */
+is-closed: get(hash("is-closed")),
+:ensure(not(eq(is-closed 1)) "deposits are already closed"),
+
+/* ensure you are the notary */
+:ensure(eq(you notary-address) "only the notary can close deposits"),
+
+/* account that a deposit has been made */
+:set(hash("is-closed") 1);
 
 
 #claim
@@ -22,40 +46,42 @@ prev-amount: get(total-deposited-key),
  * for claiming, users will use the signed coupon by the game master,
  * each user calls with the same coupon
  * 
+ * it is passed as signed context
+ * 
  * the coupon will be a signed message with the following fields:
- * [0] coupon signer address
- * [1] this contract address
- *
- * each subsequent field corresponds to an application's position in the leaderboard, and is an array of 2 elements:
- * [2]
- *      [0] application address 
- *      [1] application amount 
- *   ...
+ * [0] this contract address
+ * [1] application address 
+ * [2] application amount 
+ * [3] total deposit pool amount
  */
 you: context<0 0>(),
 me: context<0 1>(),
 
 coupon-signer: context<2 0>(),
-contract: context<2 1>(),
+
+/* coupon contents */
+contract: context<3 0>(),
+application-address: context<3 1>(),
+application-amount: context<3 2>(),
+expected-total-deposited: context<3 3>(),
 
 /* ensure that the coupon is signed by the notary */
-:ensure(eq(coupon-signer notary-address)),
+:ensure(eq(coupon-signer notary-address) "coupon must be signed by notary"),
 
 /* ensure that the coupon is for this contract */
-:ensure(eq(contract me)),
+:ensure(eq(contract me) "coupon must be for this contract"),
 
-/* TODO - figure out how to loop over remaining context for all applicants, until amount sum > :get(total-deposited-key) 
-    without knowing the number of applicants in advance */
-application-1-address: context<3 0>(),
-application-1-amount: context<3 1>(),
+/* ensure the coupon know the total amount deposited in the pool  */
+total-deposited: get(hash("total-deposited")),
+:ensure(eq(expected-total-deposited total-deposited) "coupon total deposited must match actual total deposited"),
 
 /* ensure applicant has not claimed yet */
-applicant-1-has-claimed: get(application-1-address),
-:ensure(eq(applicant-1-has-claimed 0)),
+applicant-1-has-claimed: get(application-address),
+:ensure(eq(applicant-1-has-claimed 0) "application funding has already been claimed"),
 
 /* transfer amount to applicant */
-:ensure(eq(application-1-address you)),
-_ _ _ _: payment-token you me application-1-amount,
+:ensure(eq(application-address you) "caller is not applicant"),
+_ _ _ _: payment-token you me application-amount,
 
 /* mark that applicant has claimed */
-:set(application-1-address 1);
+:set(application-address 1);
