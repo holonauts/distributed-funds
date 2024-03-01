@@ -5,5 +5,6 @@
     "editor.formatOnSave": true
   },
   "eslint.validate": ["javascript", "svelte"],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "git.detectSubmodules": false
 }

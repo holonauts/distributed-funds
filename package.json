@@ -6,7 +6,7 @@
     "tests"
   ],
   "scripts": {
-    "prepare-rain": "cd rain && ./build-abi.sh && cd ../ && cp rain/lib/rain.flow/out/Flow.sol/Flow.json ui/static/rain/ && cp rain/src/grantpool-flow.rain ui/static/rain/",
+    "prepare-rain": "cd  rain && ./build-copy-abi.sh",
     "start": "npm run prepare-rain && AGENTS=2 BOOTSTRAP_PORT=$(port) SIGNAL_PORT=$(port) npm run network",
     "network": "hc s clean && npm run build:happ && UI_PORT=8888 concurrently \"npm start -w ui\" \"npm run launch:happ\" \"holochain-playground\"",
     "test": "npm run build:zomes && hc app pack workdir --recursive && npm t -w tests",

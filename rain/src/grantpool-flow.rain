@@ -13,7 +13,7 @@ payment-amount: context<1 0>(),
 
 /* ensure deposits are open */
 is-closed: get(hash("is-closed")),
-:ensure(not(eq(is-closed 1)) "deposits are closed"),
+:ensure(eq(is-closed 0) "deposits are closed"),
 
 /* deposit into contract */
 _ _ _ _: payment-token you me payment-amount,
@@ -28,14 +28,14 @@ you: context<0 0>(),
 me: context<0 1>(),
 payment-amount: context<1 0>(),
 
-/* ensure not closed already */
+/* ensure deposits are open */
 is-closed: get(hash("is-closed")),
-:ensure(not(eq(is-closed 1)) "deposits are already closed"),
+:ensure(eq(is-closed 0) "deposits are already closed"),
 
 /* ensure you are the notary */
 :ensure(eq(you notary-address) "only the notary can close deposits"),
 
-/* account that a deposit has been made */
+/* mark deposits closed */
 :set(hash("is-closed") 1);
 
 
@@ -64,6 +64,10 @@ application-address: context<3 1>(),
 application-action-hash: context<3 2>(),
 application-amount: context<3 3>(),
 expected-total-deposited: context<3 4>(),
+
+/* ensure deposits are closed */
+is-closed: get(hash("is-closed")),
+:ensure(eq(is-closed 1) "deposits are still open"),
 
 /* ensure that the coupon is signed by the notary */
 :ensure(eq(coupon-signer notary-address) "coupon must be signed by notary"),

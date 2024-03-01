@@ -8,6 +8,10 @@ export const RAIN_PARSER_ADDRESS = "0xbe7eF1c2E86cd36642Be685715a089ecc1a15f5C";
 export const RAIN_STORE_ADDRESS = "0xCCe6D0653B6DAC3B5fAd3F2A8E47cCE537126aD0";
 export const RAIN_INTERPRETER_ADDRESS = "0x8bb0e1Ade233f386668f6e3c11762f18bF8293b3";
 export const RAIN_DEPLOYER_ADDRESS = "0xB16bbF12ECE3414af72F660aB63F4dDa1D7250FA";
+
+// contract to clone when creating a new flow
+export const ORIGINAL_FLOW_ADDRESS = "";
+
 export const CHAIN = polygon;
 
 export const WALLETCONNECT_PROJECT_ID = '5735acd24df027859c4745e718df7b0d';
