@@ -1,7 +1,4 @@
-// SPDX-License-Identifier: CAL
-pragma solidity ^0.8.18;
-
-import "rain.flow/concrete/basic/Flow.sol";
+import {CloneFactory} from "rain.factory/src/concrete/CloneFactory.sol";
 import "forge-std/Script.sol";
 
 contract Implementation is Script {
@@ -9,7 +6,7 @@ contract Implementation is Script {
         uint256 deployerPrivateKey = vm.envUint("DEPLOYMENT_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        Flow flow = new Flow();
-        console2.log("Flow Address: ", address(flow));
+        CloneFactory clonefactory = new CloneFactory();
+        console2.log("CloneFactory Address: ", address(clonefactory));
     }
 }

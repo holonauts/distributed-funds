@@ -1,5 +1,5 @@
 import { writeContract } from '@wagmi/core'
-import { config } from './web3modal';
+import { config } from '$lib/utils/web3modal';
 import { abi } from '$lib/abi/IERC20.json';
 import { ACCEPTED_TOKEN_ADDRESS } from '$lib/config';
 

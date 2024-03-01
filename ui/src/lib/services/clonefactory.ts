@@ -1,5 +1,5 @@
-import { FLOW_ADDRESS, RAIN_PARSER_ADDRESS } from "$lib/config";
-import { config } from '../utils/web3modal';
+import { RAIN_FLOW_ADDRESS, RAIN_PARSER_ADDRESS } from "$lib/config";
+import { config } from '$lib/utils/web3modal';
 import { abi } from '$lib/abi/CloneFactory.json';
 import { writeContract } from "@wagmi/core";
 
@@ -10,7 +10,7 @@ export async function cloneFlow(bytecode: Uint8Array) {
       abi, 
       functionName: 'clone',
       args: [
-        FLOW_ADDRESS,
+        RAIN_FLOW_ADDRESS,
         bytecode
       ]
   });

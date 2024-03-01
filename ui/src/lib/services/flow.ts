@@ -1,11 +1,11 @@
 import { ACCEPTED_TOKEN_ADDRESS, RAIN_PARSER_ADDRESS } from "$lib/config";
 import { RainLanguageServices, MetaStore, TextDocumentItem } from "@rainlanguage/dotrain";
 import { readContracts, writeContract } from '@wagmi/core';
-import { config } from './web3modal';
+import { config } from '$lib/utils/web3modal';
 import PARSER_ABI from '$lib/abi/Parser.json';
 import FLOW_ABI from '$lib/abi/Flow.json';
 import { toBytes } from "viem";
-import { cloneFlow } from "../services/clone";
+import { cloneFlow } from "$lib/services/clone";
 
 export async function createGrantPoolFlow(notaryAddress: `0x${string}`) {
   const rainlang = await prepareRainlangText(notaryAddress);
