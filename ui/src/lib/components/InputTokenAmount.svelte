@@ -4,9 +4,10 @@
 	import { formatUnits, parseUnits } from 'viem';
 	import type { InputMask } from 'imask';
 	import { imask } from '@imask/svelte';
+	import { ACCEPTED_TOKEN_DECIMALS, ACCEPTED_TOKEN_SYMBOL } from '$lib/config';
 
-	export let symbol: string | undefined = undefined;
-	export let decimals: number = 0;
+	export let symbol: string | undefined = ACCEPTED_TOKEN_SYMBOL;
+	export let decimals: number = ACCEPTED_TOKEN_DECIMALS;
 	export let maxValue: bigint | undefined = undefined;
 	export let showMaxButton = true;
 	export let placeholder = '';

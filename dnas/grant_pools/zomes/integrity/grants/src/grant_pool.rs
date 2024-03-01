@@ -1,4 +1,4 @@
-use alloy_primitives::U256;
+use alloy_primitives::{Address, U256};
 use hdi::prelude::*;
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, SerializedBytes)]
 pub struct AmountRange {
@@ -16,6 +16,12 @@ pub struct GrantPool {
     pub evaluation_template: ActionHash,
     pub amount_range: AmountRange,
     pub evaluators: BTreeSet<AgentPubKey>,
+
+    // EVM wallet used to sign coupons
+    pub notary_evm_wallet: Address,
+
+    // Address of deployed Flow contract
+    pub flow_evm_address: Address,
 }
 pub fn validate_create_grant_pool(
     _action: EntryCreationAction,

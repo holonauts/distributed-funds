@@ -1,3 +1,5 @@
+pub mod application_claim_coupons;
+pub use application_claim_coupons::*;
 pub mod grant_pool_to_applications;
 pub use grant_pool_to_applications::*;
 pub mod sponsor_to_grant_pools;
@@ -20,6 +22,8 @@ pub mod application_template;
 pub use application_template::*;
 pub mod evaluator_to_applications;
 pub use evaluator_to_applications::*;
+pub mod claim_coupon;
+pub use claim_coupon::*;
 use hdi::prelude::*;
 #[derive(Serialize, Deserialize)]
 #[serde(tag = "type")]
@@ -55,6 +59,7 @@ pub enum LinkTypes {
     GrantPoolToApplication,
     EvaluatorToApplications,
     ApplicationToEvaluators,
+    ApplicationClaimCoupons,
 }
 
 #[hdk_extern]
@@ -355,6 +360,12 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 target_address,
                 tag,
             ),
+            LinkTypes::ApplicationClaimCoupons => validate_create_link_application_claim_coupons(
+                action,
+                base_address,
+                target_address,
+                tag,
+            ),
         },
         FlatOp::RegisterDeleteLink {
             link_type,
@@ -490,6 +501,13 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                 tag,
             ),
             LinkTypes::ApplicationToEvaluators => validate_delete_link_application_to_evaluators(
+                action,
+                original_action,
+                base_address,
+                target_address,
+                tag,
+            ),
+            LinkTypes::ApplicationClaimCoupons => validate_delete_link_application_claim_coupons(
                 action,
                 original_action,
                 base_address,
@@ -982,6 +1000,14 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                         tag,
                     )
                 }
+                LinkTypes::ApplicationClaimCoupons => {
+                    validate_create_link_application_claim_coupons(
+                        action,
+                        base_address,
+                        target_address,
+                        tag,
+                    )
+                }
             },
             OpRecord::DeleteLink {
                 original_action_hash,
@@ -1144,6 +1170,15 @@ pub fn validate(op: Op) -> ExternResult<ValidateCallbackResult> {
                     }
                     LinkTypes::ApplicationToEvaluators => {
                         validate_delete_link_application_to_evaluators(
+                            action,
+                            create_link.clone(),
+                            base_address,
+                            create_link.target_address,
+                            create_link.tag,
+                        )
+                    }
+                    LinkTypes::ApplicationClaimCoupons => {
+                        validate_delete_link_application_claim_coupons(
                             action,
                             create_link.clone(),
                             base_address,

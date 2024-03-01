@@ -16,7 +16,6 @@
 	import type { RenderAPI } from '@pragmatic-engineering/svelte-form-builder-community';
 	import { config } from '$lib/utils/web3modal';
 	import { getAccount } from '@wagmi/core';
-	import { toBytes } from 'viem';
 
 	export let amount: bigint | undefined = undefined;
 	export let renderApi: typeof RenderAPI | undefined = undefined;
@@ -27,13 +26,18 @@
 
 	async function saveDraft() {
 		const formContent = await renderApi?.getData();
+		const evmWallet = getAccount(config).address;
+		if (evmWallet === undefined) {
+			toasts.error('Connect an EVM wallet');
+			return;
+		}
 
 		const applicationEntry: Application = {
 			grant_pool: actionHash,
 			form_content: formContent!,
 			amount: bigintToU256(amount!),
 			status: { type: StatusType.Draft, content: undefined },
-			evm_wallet: getAccount(config).address!
+			evm_wallet: evmWallet
 		};
 
 		try {
@@ -111,8 +115,6 @@
 
 				<BaseLabelContent label="Funding Amount" class="mb-8">
 					<InputTokenAmount
-						decimals={ACCEPTED_TOKEN_DECIMALS}
-						symbol={ACCEPTED_TOKEN_SYMBOL}
 						maxValue={u256ToBigint(entry.amount_range.max)}
 						bind:value={amount}
 						showMaxButton={false}

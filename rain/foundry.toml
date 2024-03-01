@@ -4,4 +4,4 @@ out = "out"
 libs = ["lib"]
 
 fs_permissions = [{ access = "read-write", path = "./" }]
-rpc_endpoints = { mumbai = "${RPC_URL}", polygon = "${POLYGON_RPC_URL}" }
+rpc_endpoints = { mumbai = "${MUMBAI_RPC_URL}", polygon = "${POLYGON_RPC_URL}" }

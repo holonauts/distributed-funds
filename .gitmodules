@@ -1,0 +1,15 @@
+[submodule "rain/lib/rain.flow"]
+	path = rain/lib/rain.flow
+	url = https://github.com/rainlanguage/rain.flow
+[submodule "rain/lib/rain.factory"]
+	path = rain/lib/rain.factory
+	url = https://github.com/rainlanguage/rain.factory
+[submodule "rain/lib/rain.interpreter"]
+	path = rain/lib/rain.interpreter
+	url = https://github.com/rainlanguage/rain.interpreter
+[submodule "rain/lib/openzeppelin-contracts"]
+	path = rain/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
+[submodule "rain/lib/rain.interpreter.interface"]
+	path = rain/lib/rain.interpreter.interface
+	url = https://github.com/rainlanguage/rain.interpreter.interface

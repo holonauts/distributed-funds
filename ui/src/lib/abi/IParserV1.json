@@ -1,0 +1,137 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "parse",
+      "inputs": [
+        {
+          "name": "data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "bytecode",
+          "type": "bytes",
+          "internalType": "bytes"
+        },
+        {
+          "name": "constants",
+          "type": "uint256[]",
+          "internalType": "uint256[]"
+        }
+      ],
+      "stateMutability": "pure"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "parse(bytes)": "fab4087a"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"parse\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"bytecode\",\"type\":\"bytes\"},{\"internalType\":\"uint256[]\",\"name\":\"constants\",\"type\":\"uint256[]\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"parse(bytes)\":{\"params\":{\"data\":\"The Rainlang bytes to parse.\"},\"returns\":{\"bytecode\":\"The expressions that can be evaluated.\",\"constants\":\"The constants that can be referenced by sources.\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"parse(bytes)\":{\"notice\":\"Parses a Rainlang string into an evaluable expression. MUST be deterministic and MUST NOT have side effects. The only inputs are the Rainlang string and the parse meta. MAY revert if the Rainlang string is invalid. This function takes `bytes` instead of `string` to allow for definitions of \\\"string\\\" other than UTF-8.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interface/IParserV1.sol\":\"IParserV1\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"appendCBOR\":false,\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":rain.lib.hash/=lib/rain.lib.hash/src/\",\":rain.lib.typecast/=lib/rain.lib.typecast/src/\",\":rain.solmem/=lib/rain.solmem/src/\"]},\"sources\":{\"src/interface/IParserV1.sol\":{\"keccak256\":\"0x7aa2e2071e1362e0d3e3f121340e967dc3e66fb4334559ee9a3d7a3577036d5a\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://cf25e938efa4930f1467b28f07fce27161d0022c42e8848feb2ac0664a5ef30e\",\"dweb:/ipfs/QmYgwnZe7p6oyGRn1TAhEwLu9ihjksbuQcnqfix3otuQf7\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.19+commit.7dd6d404"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "parse",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "bytecode",
+              "type": "bytes"
+            },
+            {
+              "internalType": "uint256[]",
+              "name": "constants",
+              "type": "uint256[]"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "parse(bytes)": {
+            "params": {
+              "data": "The Rainlang bytes to parse."
+            },
+            "returns": {
+              "bytecode": "The expressions that can be evaluated.",
+              "constants": "The constants that can be referenced by sources."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "parse(bytes)": {
+            "notice": "Parses a Rainlang string into an evaluable expression. MUST be deterministic and MUST NOT have side effects. The only inputs are the Rainlang string and the parse meta. MAY revert if the Rainlang string is invalid. This function takes `bytes` instead of `string` to allow for definitions of \"string\" other than UTF-8."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
+        "rain.lib.hash/=lib/rain.lib.hash/src/",
+        "rain.lib.typecast/=lib/rain.lib.typecast/src/",
+        "rain.solmem/=lib/rain.solmem/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 1000000
+      },
+      "metadata": {
+        "bytecodeHash": "none",
+        "appendCBOR": false
+      },
+      "compilationTarget": {
+        "src/interface/IParserV1.sol": "IParserV1"
+      },
+      "evmVersion": "paris",
+      "libraries": {}
+    },
+    "sources": {
+      "src/interface/IParserV1.sol": {
+        "keccak256": "0x7aa2e2071e1362e0d3e3f121340e967dc3e66fb4334559ee9a3d7a3577036d5a",
+        "urls": [
+          "bzz-raw://cf25e938efa4930f1467b28f07fce27161d0022c42e8848feb2ac0664a5ef30e",
+          "dweb:/ipfs/QmYgwnZe7p6oyGRn1TAhEwLu9ihjksbuQcnqfix3otuQf7"
+        ],
+        "license": "CAL"
+      }
+    },
+    "version": 1
+  },
+  "id": 39
+}

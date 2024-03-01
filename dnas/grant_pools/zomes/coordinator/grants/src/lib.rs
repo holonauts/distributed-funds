@@ -1,5 +1,3 @@
-pub mod evaluator_to_applications;
-
 pub mod agent_to_evm_wallet;
 pub mod all_application_templates;
 pub mod all_applications;
@@ -7,9 +5,11 @@ pub mod all_evaluation_templates;
 pub mod all_grant_pools;
 pub mod all_time_periods;
 pub mod application;
+pub mod application_claim_coupons;
 pub mod application_template;
 pub mod evaluation;
 pub mod evaluation_template;
+pub mod evaluator_to_applications;
 pub mod grant_pool;
 pub mod grant_pool_outcome;
 pub mod grant_pool_to_applications;
