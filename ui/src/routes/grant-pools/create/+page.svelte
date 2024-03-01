@@ -19,6 +19,8 @@
 	import InputTokenAmount from '$lib/components/InputTokenAmount.svelte';
 	import { ACCEPTED_TOKEN_SYMBOL, CHAIN } from '$lib/config';
 	import { getAccount } from '@wagmi/core';
+	import { createGrantPoolFlow, deposit } from '$lib/services/flow';
+	import { approve } from '$lib/services/erc20';
 	const dispatch = createEventDispatcher();
 
 	export let name: string = '';
@@ -44,25 +46,15 @@
 		depositAmount > 0n;
 
 	async function createGrantPool() {
-		/*
-		@todo 
-
-		- Deploy flow contract
-			- load dotrain 
-			- set rebindings
-			- compose rain
-			- call parser to parse rain
-			- call CloneFactory to deploy flow contract with rainlang as config
-		- Call erc20 token to approve spending *by flow contract address*
-		- Call flow contract to deposit initial amount
-		*/
-
-		const flowEvmAddress: `0x${string}` = '0x123';
+		// read wallet address
 		const notaryEvmWallet = getAccount(config).address;
 		if (notaryEvmWallet === undefined) {
 			toasts.error('Connect an EVM wallet');
 			return;
 		}
+
+		// deploy flow contract
+		const flowEvmAddress = await createGrantPoolFlow(notaryEvmWallet);
 
 		// create grant pool entry
 		const grantPoolEntry: GrantPool = {
@@ -89,6 +81,27 @@
 				fn_name: 'create_grant_pool',
 				payload: grantPoolEntry
 			});
+
+			// call erc20 approve
+			await approve(depositAmount, flowEvmAddress);
+
+			// call flow deposit
+			const depositTxHash = await deposit(depositAmount, flowEvmAddress);
+
+			// add grant pool <-> sponsor link
+			await $holochainClient.client.callZome({
+				cap_secret: null,
+				role_name: 'grant_pools',
+				zome_name: 'grants',
+				fn_name: 'add_grant_pool_for_sponsor',
+				payload: {
+					base_sponsor: $holochainClient.client.myPubKey,
+					target_grant_pool_hash: record.signed_action.hashed.hash,
+					amount: bigintToU256(depositAmount),
+					transaction_hash: depositTxHash
+				}
+			});
+
 			dispatch('grant-pool-created', { grantPoolHash: record.signed_action.hashed.hash });
 			goto('/grant-pools/');
 		} catch (e) {

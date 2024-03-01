@@ -10,7 +10,7 @@ export async function createGrantPoolFlow(notaryAddress: `0x${string}`) {
   const bytecode: Uint8Array = await parseRainlangText(rainlang);
   const flowAddress = await cloneFlow(bytecode);
 
-  return flowAddress;
+  return flowAddress as `0x${string}`;
 }
 
 export async function deposit(amount: bigint, flow_contract_address: `0x${string}`) {
