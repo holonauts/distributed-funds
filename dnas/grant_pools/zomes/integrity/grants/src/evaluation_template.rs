@@ -2,13 +2,13 @@ use hdi::prelude::*;
 use serde_json::Value;
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct NumberRange {
-    min: u32,
-    max: u32,
+    pub min: u32,
+    pub max: u32,
 }
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 pub struct AttributeScoreTemplate {
-    label: String,
-    weight: u32,
+    pub label: String,
+    pub weight: u64,
 }
 #[derive(Serialize, Deserialize, Debug, Clone, Eq, PartialEq, SerializedBytes)]
 #[serde(tag = "type", content = "content")]
