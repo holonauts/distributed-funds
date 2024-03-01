@@ -7,3 +7,6 @@
 [submodule "rain/lib/rain.interpreter"]
 	path = rain/lib/rain.interpreter
 	url = https://github.com/rainlanguage/rain.interpreter
+[submodule "rain/lib/openzeppelin-contracts"]
+	path = rain/lib/openzeppelin-contracts
+	url = https://github.com/OpenZeppelin/openzeppelin-contracts
