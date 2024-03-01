@@ -1,0 +1,113 @@
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "parse2",
+      "inputs": [
+        {
+          "name": "data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "bytecode",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "stateMutability": "pure"
+    }
+  ],
+  "bytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "sourceMap": "",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "parse2(bytes)": "a3869e14"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"parse2\",\"outputs\":[{\"internalType\":\"bytes\",\"name\":\"bytecode\",\"type\":\"bytes\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/interface/unstable/IParserV2.sol\":\"IParserV2\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"appendCBOR\":false,\"bytecodeHash\":\"none\"},\"optimizer\":{\"enabled\":true,\"runs\":1000000},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":forge-std/=lib/forge-std/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":rain.lib.hash/=lib/rain.lib.hash/src/\",\":rain.lib.typecast/=lib/rain.lib.typecast/src/\",\":rain.solmem/=lib/rain.solmem/src/\"]},\"sources\":{\"src/interface/unstable/IParserV2.sol\":{\"keccak256\":\"0x492388e745d7b8af970235fcef4058c8706e4590e0d884bc5182f8d746b113ff\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://164e01aeaa788fbfa7689af34f4214af256ea34ef4fa957de8ba92cea5eae60d\",\"dweb:/ipfs/Qmec2m7QaSPWM7JpfHyaGtYdXzWCSAbXFh4wnWaA1on628\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.19+commit.7dd6d404"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "pure",
+          "type": "function",
+          "name": "parse2",
+          "outputs": [
+            {
+              "internalType": "bytes",
+              "name": "bytecode",
+              "type": "bytes"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "ds-test/=lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "forge-std/=lib/forge-std/src/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
+        "rain.lib.hash/=lib/rain.lib.hash/src/",
+        "rain.lib.typecast/=lib/rain.lib.typecast/src/",
+        "rain.solmem/=lib/rain.solmem/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 1000000
+      },
+      "metadata": {
+        "bytecodeHash": "none",
+        "appendCBOR": false
+      },
+      "compilationTarget": {
+        "src/interface/unstable/IParserV2.sol": "IParserV2"
+      },
+      "evmVersion": "paris",
+      "libraries": {}
+    },
+    "sources": {
+      "src/interface/unstable/IParserV2.sol": {
+        "keccak256": "0x492388e745d7b8af970235fcef4058c8706e4590e0d884bc5182f8d746b113ff",
+        "urls": [
+          "bzz-raw://164e01aeaa788fbfa7689af34f4214af256ea34ef4fa957de8ba92cea5eae60d",
+          "dweb:/ipfs/Qmec2m7QaSPWM7JpfHyaGtYdXzWCSAbXFh4wnWaA1on628"
+        ],
+        "license": "CAL"
+      }
+    },
+    "version": 1
+  },
+  "id": 55
+}

@@ -12,4 +12,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 static/rain
-src/lib/abi
+# src/lib/abi
