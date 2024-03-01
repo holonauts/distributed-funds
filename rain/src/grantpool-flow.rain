@@ -48,9 +48,10 @@ is-closed: get(hash("is-closed")),
  * 
  * the coupon will be a signed message with the following fields:
  * [0] this contract address
- * [1] application address 
- * [2] application amount 
- * [3] total deposit pool amount
+ * [1] application evm wallet
+ * [2] application ActionHash (core 32 bytes)
+ * [3] application amount
+ * [4] total deposit pool amount
  */
 you: context<0 0>(),
 me: context<0 1>(),
@@ -60,8 +61,9 @@ coupon-signer: context<2 0>(),
 /* coupon contents */
 contract: context<3 0>(),
 application-address: context<3 1>(),
-application-amount: context<3 2>(),
-expected-total-deposited: context<3 3>(),
+application-action-hash-core32: context<3 2>(),
+application-amount: context<3 3>(),
+expected-total-deposited: context<3 4>(),
 
 /* ensure that the coupon is signed by the notary */
 :ensure(eq(coupon-signer notary-address) "coupon must be signed by notary"),
@@ -69,17 +71,19 @@ expected-total-deposited: context<3 3>(),
 /* ensure that the coupon is for this contract */
 :ensure(eq(contract me) "coupon must be for this contract"),
 
+/* ensure the application-address is the caller */
+:ensure(eq(you application-address) "caller must be application address"),
+
+/* ensure application has not claimed yet */
+application-has-claimed: get(application-action-hash-core32),
+:ensure(eq(application-has-claimed 0) "application funding has already been claimed"),
+
 /* ensure the coupon know the total amount deposited in the pool  */
 total-deposited: get(hash("total-deposited")),
 :ensure(eq(expected-total-deposited total-deposited) "coupon total deposited must match actual total deposited"),
 
-/* ensure applicant has not claimed yet */
-applicant-1-has-claimed: get(application-address),
-:ensure(eq(applicant-1-has-claimed 0) "application funding has already been claimed"),
+/* transfer amount to application-address */
+_ _ _ _: payment-token me you application-amount,
 
-/* transfer amount to applicant */
-:ensure(eq(application-address you) "caller is not applicant"),
-_ _ _ _: payment-token you me application-amount,
-
-/* mark that applicant has claimed */
-:set(application-address 1);
+/* mark that application has claimed */
+:set(application-action-hash-core32 1);
