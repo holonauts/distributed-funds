@@ -65,11 +65,20 @@ function useToastsStore() {
     });
   }
 
+  function info(text: string, payload: ToastPayload | object = {}) {
+    add({
+      message_type: ToastMessageType.Info,
+      text,
+      ...payload
+    });
+  }
+
   return {
     subscribe: toasts.subscribe,
     add,
     error,
-    success
+    success,
+    info
   }
 }
 

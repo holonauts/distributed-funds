@@ -1,1 +1,269 @@
-{"abi":[{"type":"function","name":"clone","inputs":[{"name":"implementation","type":"address","internalType":"address"},{"name":"data","type":"bytes","internalType":"bytes"}],"outputs":[{"name":"","type":"address","internalType":"address"}],"stateMutability":"nonpayable"},{"type":"event","name":"NewClone","inputs":[{"name":"sender","type":"address","indexed":false,"internalType":"address"},{"name":"implementation","type":"address","indexed":false,"internalType":"address"},{"name":"clone","type":"address","indexed":false,"internalType":"address"}],"anonymous":false},{"type":"error","name":"ERC1167FailedCreateClone","inputs":[]},{"type":"error","name":"InitializationFailed","inputs":[]},{"type":"error","name":"ZeroImplementationCodeSize","inputs":[]}],"bytecode":{"object":"0x608060405234801561001057600080fd5b5061031e806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fbe133c14610030575b600080fd5b61004361003e36600461020f565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6000836001600160a01b03163b60000361008c57604051637a19141960e11b815260040160405180910390fd5b60006100978561019d565b604080513381526001600160a01b03888116602083015283168183015290519192507f274b5f356634f32a865af65bdc3d8205939d9413d75e1f367652e4f3b24d0c3a919081900360600190a160405163439fab9160e01b81527fe0e57eda3f08f2a93bbe980d3df7f9c315eac41181f58b865a13d917fe769fc3906001600160a01b0383169063439fab919061013490889088906004016102a0565b6020604051808303816000875af1158015610153573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017791906102cf565b1461019557604051630337323560e31b815260040160405180910390fd5b949350505050565b6000763d602d80600a3d3981f3363d3d373d3d3d363d730000008260601b60e81c176000526e5af43d82803e903d91602b57fd5bf38260781b17602052603760096000f090506001600160a01b03811661020a576040516330be1a3d60e21b815260040160405180910390fd5b919050565b60008060006040848603121561022457600080fd5b83356001600160a01b038116811461023b57600080fd5b9250602084013567ffffffffffffffff8082111561025857600080fd5b818601915086601f83011261026c57600080fd5b81358181111561027b57600080fd5b87602082850101111561028d57600080fd5b6020830194508093505050509250925092565b60208152816020820152818360408301376000818301604090810191909152601f909201601f19160101919050565b6000602082840312156102e157600080fd5b505191905056fea2646970667358221220ccf685a5065a070233da9fcf818351b225fa8d5215bff361ccb588e9d86a30ef64736f6c63430008170033","sourceMap":"751:1205:15:-:0;;;;;;;;;;;;;;;;;;;","linkReferences":{}},"deployedBytecode":{"object":"0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fbe133c14610030575b600080fd5b61004361003e36600461020f565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6000836001600160a01b03163b60000361008c57604051637a19141960e11b815260040160405180910390fd5b60006100978561019d565b604080513381526001600160a01b03888116602083015283168183015290519192507f274b5f356634f32a865af65bdc3d8205939d9413d75e1f367652e4f3b24d0c3a919081900360600190a160405163439fab9160e01b81527fe0e57eda3f08f2a93bbe980d3df7f9c315eac41181f58b865a13d917fe769fc3906001600160a01b0383169063439fab919061013490889088906004016102a0565b6020604051808303816000875af1158015610153573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017791906102cf565b1461019557604051630337323560e31b815260040160405180910390fd5b949350505050565b6000763d602d80600a3d3981f3363d3d373d3d3d363d730000008260601b60e81c176000526e5af43d82803e903d91602b57fd5bf38260781b17602052603760096000f090506001600160a01b03811661020a576040516330be1a3d60e21b815260040160405180910390fd5b919050565b60008060006040848603121561022457600080fd5b83356001600160a01b038116811461023b57600080fd5b9250602084013567ffffffffffffffff8082111561025857600080fd5b818601915086601f83011261026c57600080fd5b81358181111561027b57600080fd5b87602082850101111561028d57600080fd5b6020830194508093505050509250925092565b60208152816020820152818360408301376000818301604090810191909152601f909201601f19160101919050565b6000602082840312156102e157600080fd5b505191905056fea2646970667358221220ccf685a5065a070233da9fcf818351b225fa8d5215bff361ccb588e9d86a30ef64736f6c63430008170033","sourceMap":"751:1205:15:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;842:1112;;;;;;:::i;:::-;;:::i;:::-;;;-1:-1:-1;;;;;948:32:58;;;930:51;;918:2;903:18;842:1112:15;;;;;;;;920:7;1294:14;-1:-1:-1;;;;;1294:26:15;;1324:1;1294:31;1290:97;;1348:28;;-1:-1:-1;;;1348:28:15;;;;;;;;;;;1290:97;1442:13;1458:28;1471:14;1458:12;:28::i;:::-;1649:43;;;1658:10;1232:34:58;;-1:-1:-1;;;;;1302:15:58;;;1297:2;1282:18;;1275:43;1354:15;;1334:18;;;1327:43;1649::15;;1354:15:58;;-1:-1:-1;1649:43:15;;;;;;1182:2:58;1649:43:15;;;1809:36;;-1:-1:-1;;;1809:36:15;;191::17;;-1:-1:-1;;;;;1809:30:15;;;;;:36;;1840:4;;;;1809:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;:61;1805:121;;1893:22;;-1:-1:-1;;;1893:22:15;;;;;;;;;;;1805:121;1942:5;842:1112;-1:-1:-1;;;;842:1112:15:o;1047:787:1:-;1104:16;1436:48;1418:14;1412:4;1408:25;1402:4;1398:36;1395:90;1389:4;1382:104;1643:32;1626:14;1620:4;1616:25;1613:63;1607:4;1600:77;1718:4;1712;1709:1;1702:21;1690:33;-1:-1:-1;;;;;;1746:22:1;;1742:86;;1791:26;;-1:-1:-1;;;1791:26:1;;;;;;;;;;;1742:86;1047:787;;;:::o;14:765:58:-;93:6;101;109;162:2;150:9;141:7;137:23;133:32;130:52;;;178:1;175;168:12;130:52;204:23;;-1:-1:-1;;;;;256:31:58;;246:42;;236:70;;302:1;299;292:12;236:70;325:5;-1:-1:-1;381:2:58;366:18;;353:32;404:18;434:14;;;431:34;;;461:1;458;451:12;431:34;499:6;488:9;484:22;474:32;;544:7;537:4;533:2;529:13;525:27;515:55;;566:1;563;556:12;515:55;606:2;593:16;632:2;624:6;621:14;618:34;;;648:1;645;638:12;618:34;693:7;688:2;679:6;675:2;671:15;667:24;664:37;661:57;;;714:1;711;704:12;661:57;745:2;741;737:11;727:21;;767:6;757:16;;;;;14:765;;;;;:::o;1381:388::-;1538:2;1527:9;1520:21;1577:6;1572:2;1561:9;1557:18;1550:34;1634:6;1626;1621:2;1610:9;1606:18;1593:48;1690:1;1661:22;;;1685:2;1657:31;;;1650:42;;;;1753:2;1732:15;;;-1:-1:-1;;1728:29:58;1713:45;1709:54;;1381:388;-1:-1:-1;1381:388:58:o;1774:184::-;1844:6;1897:2;1885:9;1876:7;1872:23;1868:32;1865:52;;;1913:1;1910;1903:12;1865:52;-1:-1:-1;1936:16:58;;1774:184;-1:-1:-1;1774:184:58:o","linkReferences":{}},"methodIdentifiers":{"clone(address,bytes)":"0fbe133c"},"rawMetadata":"{\"compiler\":{\"version\":\"0.8.23+commit.f704f362\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ERC1167FailedCreateClone\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InitializationFailed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ZeroImplementationCodeSize\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"clone\",\"type\":\"address\"}],\"name\":\"NewClone\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"clone\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"ERC1167FailedCreateClone()\":[{\"details\":\"A clone instance deployment failed.\"}]},\"events\":{\"NewClone(address,address,address)\":{\"params\":{\"clone\":\"The address of the new proxy contract.\",\"implementation\":\"The reference bytecode to clone as a proxy.\",\"sender\":\"The `msg.sender` that called `clone`.\"}}},\"kind\":\"dev\",\"methods\":{\"clone(address,bytes)\":{\"params\":{\"data\":\"As per `ICloneableV2`.\",\"implementation\":\"The contract to clone.\"},\"returns\":{\"_0\":\"New child contract address.\"}}},\"title\":\"CloneFactory\",\"version\":1},\"userdoc\":{\"errors\":{\"InitializationFailed()\":[{\"notice\":\"Thrown when initialization fails.\"}],\"ZeroImplementationCodeSize()\":[{\"notice\":\"Thrown when an implementation has zero code size which is always a mistake.\"}]},\"events\":{\"NewClone(address,address,address)\":{\"notice\":\"Emitted upon each `clone`.\"}},\"kind\":\"user\",\"methods\":{\"clone(address,bytes)\":{\"notice\":\"Clones an implementation using a proxy. EIP1167 proxy is recommended but the exact cloning procedure is not specified by this interface. The factory MUST call `ICloneableV2.initialize` atomically with the cloning process and MUST NOT call any other functions on the cloned proxy before `initialize` completes successfully. The factory MUST ONLY consider the clone to be successfully created if `initialize` returns the keccak256 hash of the string \\\"ICloneableV2.initialize\\\". MUST emit `NewClone` with the implementation and clone address.\"}},\"notice\":\"A fairly minimal implementation of `ICloneableFactoryV2` and `DeployerDiscoverableMetaV2` that uses Open Zeppelin `Clones` to create EIP1167 clones of a reference bytecode. The reference bytecode MUST implement `ICloneableV2`.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/rain.factory/src/concrete/CloneFactory.sol\":\"CloneFactory\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@prb/test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/\",\":bitwise/=lib/rain.interpreter/src/lib/bitwise/\",\":bytecode/=lib/rain.interpreter.interface/src/lib/bytecode/\",\":caller/=lib/rain.interpreter.interface/src/lib/caller/\",\":ds-test/=lib/rain.interpreter.interface/lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":eval/=lib/rain.interpreter/src/lib/eval/\",\":extern/=lib/rain.interpreter/src/lib/extern/\",\":forge-std/=lib/rain.interpreter.interface/lib/forge-std/src/\",\":integrity/=lib/rain.interpreter/src/lib/integrity/\",\":ns/=lib/rain.interpreter.interface/src/lib/ns/\",\":op/=lib/rain.interpreter/src/lib/op/\",\":openzeppelin-contracts-upgradeable/=lib/rain.flow/lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/rain.factory/lib/openzeppelin-contracts/contracts/\",\":parse/=lib/rain.interpreter/src/lib/parse/\",\":prb-math/=lib/rain.interpreter/lib/prb-math/src/\",\":prb-test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/\",\":rain.chainlink/=lib/rain.interpreter/lib/rain.chainlink/src/\",\":rain.datacontract/=lib/rain.interpreter/lib/rain.datacontract/src/\",\":rain.erc1820/=lib/rain.interpreter/lib/rain.erc1820/src/\",\":rain.extrospection/=lib/rain.factory/lib/rain.extrospection/\",\":rain.factory/=lib/rain.factory/\",\":rain.flow/=lib/rain.flow/src/\",\":rain.interpreter.interface/=lib/rain.interpreter.interface/src/\",\":rain.interpreter/=lib/rain.interpreter/\",\":rain.intorastring/=lib/rain.interpreter/lib/\",\":rain.lib.hash/=lib/rain.interpreter.interface/lib/rain.lib.hash/src/\",\":rain.lib.memkv/=lib/rain.interpreter/lib/rain.lib.memkv/src/\",\":rain.lib.typecast/=lib/rain.interpreter.interface/lib/rain.lib.typecast/src/\",\":rain.math.fixedpoint/=lib/rain.flow/lib/rain.math.fixedpoint/src/\",\":rain.math.saturating/=lib/rain.interpreter/lib/rain.math.saturating/src/\",\":rain.metadata/=lib/rain.interpreter/lib/rain.metadata/\",\":rain.solmem/=lib/rain.interpreter.interface/lib/rain.solmem/src/\",\":sol.lib.binmaskflag/=lib/rain.interpreter/lib/sol.lib.binmaskflag/src/\",\":state/=lib/rain.interpreter/src/lib/state/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/proxy/Clones.sol\":{\"keccak256\":\"0xd18408af8a91bedb3d56343eeb9b30eb852e6dea93a5e2d5c6db9ca4cb905155\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://061475b7302a732dc598907790f407417551c2b13e89daa57b3698489ef5484b\",\"dweb:/ipfs/QmdX5qmk3VSniSErFuD4aVawQxUi2MuUbP7spPcHddPfcX\"]},\"lib/rain.factory/src/concrete/CloneFactory.sol\":{\"keccak256\":\"0x4a4bff0a8a132ae58583cefdf5b76a1b15af020ee557c408bcefa08635f29b25\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://d83992f6119204d3d7d57bdec32dd82e53cbf7ae92a02b673356568c606a25a6\",\"dweb:/ipfs/QmTL7VejHbdV2t8UpwrAHABihDeSj3gSDvZrvaj6r8gbsH\"]},\"lib/rain.factory/src/interface/ICloneableFactoryV2.sol\":{\"keccak256\":\"0xc25b2884c91b31d814531ba801d702cbe8ca6f98b78199e6fe1fb8664547dbfb\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://bf2b74e4311d095acb0b033904d94cbde3cda965eac6428d5a864054acff6910\",\"dweb:/ipfs/QmQqh77n9o3Vt9f5aVqSWxygyVE65ygVE4oTCrD4GvjcZ9\"]},\"lib/rain.factory/src/interface/ICloneableV2.sol\":{\"keccak256\":\"0xbc1ceff073c177b6a0765abc20e897074b45cf620e6196a1d1c52f935d217a80\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://fd2bbdded11b1d41ee37c03e617b17d12dbdd8a2afebc17a91f463db296cb234\",\"dweb:/ipfs/QmWTtnexF9X6G12nEWPcmcsDVTuaYHmWKwUgJTvcak8pYP\"]}},\"version\":1}","metadata":{"compiler":{"version":"0.8.23+commit.f704f362"},"language":"Solidity","output":{"abi":[{"inputs":[],"type":"error","name":"ERC1167FailedCreateClone"},{"inputs":[],"type":"error","name":"InitializationFailed"},{"inputs":[],"type":"error","name":"ZeroImplementationCodeSize"},{"inputs":[{"internalType":"address","name":"sender","type":"address","indexed":false},{"internalType":"address","name":"implementation","type":"address","indexed":false},{"internalType":"address","name":"clone","type":"address","indexed":false}],"type":"event","name":"NewClone","anonymous":false},{"inputs":[{"internalType":"address","name":"implementation","type":"address"},{"internalType":"bytes","name":"data","type":"bytes"}],"stateMutability":"nonpayable","type":"function","name":"clone","outputs":[{"internalType":"address","name":"","type":"address"}]}],"devdoc":{"kind":"dev","methods":{"clone(address,bytes)":{"params":{"data":"As per `ICloneableV2`.","implementation":"The contract to clone."},"returns":{"_0":"New child contract address."}}},"version":1},"userdoc":{"kind":"user","methods":{"clone(address,bytes)":{"notice":"Clones an implementation using a proxy. EIP1167 proxy is recommended but the exact cloning procedure is not specified by this interface. The factory MUST call `ICloneableV2.initialize` atomically with the cloning process and MUST NOT call any other functions on the cloned proxy before `initialize` completes successfully. The factory MUST ONLY consider the clone to be successfully created if `initialize` returns the keccak256 hash of the string \"ICloneableV2.initialize\". MUST emit `NewClone` with the implementation and clone address."}},"version":1}},"settings":{"remappings":["@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/","@prb/test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/","bitwise/=lib/rain.interpreter/src/lib/bitwise/","bytecode/=lib/rain.interpreter.interface/src/lib/bytecode/","caller/=lib/rain.interpreter.interface/src/lib/caller/","ds-test/=lib/rain.interpreter.interface/lib/forge-std/lib/ds-test/src/","erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/","eval/=lib/rain.interpreter/src/lib/eval/","extern/=lib/rain.interpreter/src/lib/extern/","forge-std/=lib/rain.interpreter.interface/lib/forge-std/src/","integrity/=lib/rain.interpreter/src/lib/integrity/","ns/=lib/rain.interpreter.interface/src/lib/ns/","op/=lib/rain.interpreter/src/lib/op/","openzeppelin-contracts-upgradeable/=lib/rain.flow/lib/openzeppelin-contracts-upgradeable/","openzeppelin-contracts/=lib/openzeppelin-contracts/","openzeppelin/=lib/rain.factory/lib/openzeppelin-contracts/contracts/","parse/=lib/rain.interpreter/src/lib/parse/","prb-math/=lib/rain.interpreter/lib/prb-math/src/","prb-test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/","rain.chainlink/=lib/rain.interpreter/lib/rain.chainlink/src/","rain.datacontract/=lib/rain.interpreter/lib/rain.datacontract/src/","rain.erc1820/=lib/rain.interpreter/lib/rain.erc1820/src/","rain.extrospection/=lib/rain.factory/lib/rain.extrospection/","rain.factory/=lib/rain.factory/","rain.flow/=lib/rain.flow/src/","rain.interpreter.interface/=lib/rain.interpreter.interface/src/","rain.interpreter/=lib/rain.interpreter/","rain.intorastring/=lib/rain.interpreter/lib/","rain.lib.hash/=lib/rain.interpreter.interface/lib/rain.lib.hash/src/","rain.lib.memkv/=lib/rain.interpreter/lib/rain.lib.memkv/src/","rain.lib.typecast/=lib/rain.interpreter.interface/lib/rain.lib.typecast/src/","rain.math.fixedpoint/=lib/rain.flow/lib/rain.math.fixedpoint/src/","rain.math.saturating/=lib/rain.interpreter/lib/rain.math.saturating/src/","rain.metadata/=lib/rain.interpreter/lib/rain.metadata/","rain.solmem/=lib/rain.interpreter.interface/lib/rain.solmem/src/","sol.lib.binmaskflag/=lib/rain.interpreter/lib/sol.lib.binmaskflag/src/","state/=lib/rain.interpreter/src/lib/state/"],"optimizer":{"enabled":true,"runs":200},"metadata":{"bytecodeHash":"ipfs"},"compilationTarget":{"lib/rain.factory/src/concrete/CloneFactory.sol":"CloneFactory"},"evmVersion":"paris","libraries":{}},"sources":{"lib/openzeppelin-contracts/contracts/proxy/Clones.sol":{"keccak256":"0xd18408af8a91bedb3d56343eeb9b30eb852e6dea93a5e2d5c6db9ca4cb905155","urls":["bzz-raw://061475b7302a732dc598907790f407417551c2b13e89daa57b3698489ef5484b","dweb:/ipfs/QmdX5qmk3VSniSErFuD4aVawQxUi2MuUbP7spPcHddPfcX"],"license":"MIT"},"lib/rain.factory/src/concrete/CloneFactory.sol":{"keccak256":"0x4a4bff0a8a132ae58583cefdf5b76a1b15af020ee557c408bcefa08635f29b25","urls":["bzz-raw://d83992f6119204d3d7d57bdec32dd82e53cbf7ae92a02b673356568c606a25a6","dweb:/ipfs/QmTL7VejHbdV2t8UpwrAHABihDeSj3gSDvZrvaj6r8gbsH"],"license":"CAL"},"lib/rain.factory/src/interface/ICloneableFactoryV2.sol":{"keccak256":"0xc25b2884c91b31d814531ba801d702cbe8ca6f98b78199e6fe1fb8664547dbfb","urls":["bzz-raw://bf2b74e4311d095acb0b033904d94cbde3cda965eac6428d5a864054acff6910","dweb:/ipfs/QmQqh77n9o3Vt9f5aVqSWxygyVE65ygVE4oTCrD4GvjcZ9"],"license":"CAL"},"lib/rain.factory/src/interface/ICloneableV2.sol":{"keccak256":"0xbc1ceff073c177b6a0765abc20e897074b45cf620e6196a1d1c52f935d217a80","urls":["bzz-raw://fd2bbdded11b1d41ee37c03e617b17d12dbdd8a2afebc17a91f463db296cb234","dweb:/ipfs/QmWTtnexF9X6G12nEWPcmcsDVTuaYHmWKwUgJTvcak8pYP"],"license":"CAL"}},"version":1},"id":15}
+{
+  "abi": [
+    {
+      "type": "function",
+      "name": "clone",
+      "inputs": [
+        {
+          "name": "implementation",
+          "type": "address",
+          "internalType": "address"
+        },
+        {
+          "name": "data",
+          "type": "bytes",
+          "internalType": "bytes"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "",
+          "type": "address",
+          "internalType": "address"
+        }
+      ],
+      "stateMutability": "nonpayable"
+    },
+    {
+      "type": "event",
+      "name": "NewClone",
+      "inputs": [
+        {
+          "name": "sender",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "implementation",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "clone",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        }
+      ],
+      "anonymous": false
+    },
+    {
+      "type": "error",
+      "name": "ERC1167FailedCreateClone",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "InitializationFailed",
+      "inputs": []
+    },
+    {
+      "type": "error",
+      "name": "ZeroImplementationCodeSize",
+      "inputs": []
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b5061031e806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fbe133c14610030575b600080fd5b61004361003e36600461020f565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6000836001600160a01b03163b60000361008c57604051637a19141960e11b815260040160405180910390fd5b60006100978561019d565b604080513381526001600160a01b03888116602083015283168183015290519192507f274b5f356634f32a865af65bdc3d8205939d9413d75e1f367652e4f3b24d0c3a919081900360600190a160405163439fab9160e01b81527fe0e57eda3f08f2a93bbe980d3df7f9c315eac41181f58b865a13d917fe769fc3906001600160a01b0383169063439fab919061013490889088906004016102a0565b6020604051808303816000875af1158015610153573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017791906102cf565b1461019557604051630337323560e31b815260040160405180910390fd5b949350505050565b6000763d602d80600a3d3981f3363d3d373d3d3d363d730000008260601b60e81c176000526e5af43d82803e903d91602b57fd5bf38260781b17602052603760096000f090506001600160a01b03811661020a576040516330be1a3d60e21b815260040160405180910390fd5b919050565b60008060006040848603121561022457600080fd5b83356001600160a01b038116811461023b57600080fd5b9250602084013567ffffffffffffffff8082111561025857600080fd5b818601915086601f83011261026c57600080fd5b81358181111561027b57600080fd5b87602082850101111561028d57600080fd5b6020830194508093505050509250925092565b60208152816020820152818360408301376000818301604090810191909152601f909201601f19160101919050565b6000602082840312156102e157600080fd5b505191905056fea2646970667358221220ccf685a5065a070233da9fcf818351b225fa8d5215bff361ccb588e9d86a30ef64736f6c63430008170033",
+    "sourceMap": "751:1205:15:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b506004361061002b5760003560e01c80630fbe133c14610030575b600080fd5b61004361003e36600461020f565b61005f565b6040516001600160a01b03909116815260200160405180910390f35b6000836001600160a01b03163b60000361008c57604051637a19141960e11b815260040160405180910390fd5b60006100978561019d565b604080513381526001600160a01b03888116602083015283168183015290519192507f274b5f356634f32a865af65bdc3d8205939d9413d75e1f367652e4f3b24d0c3a919081900360600190a160405163439fab9160e01b81527fe0e57eda3f08f2a93bbe980d3df7f9c315eac41181f58b865a13d917fe769fc3906001600160a01b0383169063439fab919061013490889088906004016102a0565b6020604051808303816000875af1158015610153573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525081019061017791906102cf565b1461019557604051630337323560e31b815260040160405180910390fd5b949350505050565b6000763d602d80600a3d3981f3363d3d373d3d3d363d730000008260601b60e81c176000526e5af43d82803e903d91602b57fd5bf38260781b17602052603760096000f090506001600160a01b03811661020a576040516330be1a3d60e21b815260040160405180910390fd5b919050565b60008060006040848603121561022457600080fd5b83356001600160a01b038116811461023b57600080fd5b9250602084013567ffffffffffffffff8082111561025857600080fd5b818601915086601f83011261026c57600080fd5b81358181111561027b57600080fd5b87602082850101111561028d57600080fd5b6020830194508093505050509250925092565b60208152816020820152818360408301376000818301604090810191909152601f909201601f19160101919050565b6000602082840312156102e157600080fd5b505191905056fea2646970667358221220ccf685a5065a070233da9fcf818351b225fa8d5215bff361ccb588e9d86a30ef64736f6c63430008170033",
+    "sourceMap": "751:1205:15:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;842:1112;;;;;;:::i;:::-;;:::i;:::-;;;-1:-1:-1;;;;;948:32:58;;;930:51;;918:2;903:18;842:1112:15;;;;;;;;920:7;1294:14;-1:-1:-1;;;;;1294:26:15;;1324:1;1294:31;1290:97;;1348:28;;-1:-1:-1;;;1348:28:15;;;;;;;;;;;1290:97;1442:13;1458:28;1471:14;1458:12;:28::i;:::-;1649:43;;;1658:10;1232:34:58;;-1:-1:-1;;;;;1302:15:58;;;1297:2;1282:18;;1275:43;1354:15;;1334:18;;;1327:43;1649::15;;1354:15:58;;-1:-1:-1;1649:43:15;;;;;;1182:2:58;1649:43:15;;;1809:36;;-1:-1:-1;;;1809:36:15;;191::17;;-1:-1:-1;;;;;1809:30:15;;;;;:36;;1840:4;;;;1809:36;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;:61;1805:121;;1893:22;;-1:-1:-1;;;1893:22:15;;;;;;;;;;;1805:121;1942:5;842:1112;-1:-1:-1;;;;842:1112:15:o;1047:787:1:-;1104:16;1436:48;1418:14;1412:4;1408:25;1402:4;1398:36;1395:90;1389:4;1382:104;1643:32;1626:14;1620:4;1616:25;1613:63;1607:4;1600:77;1718:4;1712;1709:1;1702:21;1690:33;-1:-1:-1;;;;;;1746:22:1;;1742:86;;1791:26;;-1:-1:-1;;;1791:26:1;;;;;;;;;;;1742:86;1047:787;;;:::o;14:765:58:-;93:6;101;109;162:2;150:9;141:7;137:23;133:32;130:52;;;178:1;175;168:12;130:52;204:23;;-1:-1:-1;;;;;256:31:58;;246:42;;236:70;;302:1;299;292:12;236:70;325:5;-1:-1:-1;381:2:58;366:18;;353:32;404:18;434:14;;;431:34;;;461:1;458;451:12;431:34;499:6;488:9;484:22;474:32;;544:7;537:4;533:2;529:13;525:27;515:55;;566:1;563;556:12;515:55;606:2;593:16;632:2;624:6;621:14;618:34;;;648:1;645;638:12;618:34;693:7;688:2;679:6;675:2;671:15;667:24;664:37;661:57;;;714:1;711;704:12;661:57;745:2;741;737:11;727:21;;767:6;757:16;;;;;14:765;;;;;:::o;1381:388::-;1538:2;1527:9;1520:21;1577:6;1572:2;1561:9;1557:18;1550:34;1634:6;1626;1621:2;1610:9;1606:18;1593:48;1690:1;1661:22;;;1685:2;1657:31;;;1650:42;;;;1753:2;1732:15;;;-1:-1:-1;;1728:29:58;1713:45;1709:54;;1381:388;-1:-1:-1;1381:388:58:o;1774:184::-;1844:6;1897:2;1885:9;1876:7;1872:23;1868:32;1865:52;;;1913:1;1910;1903:12;1865:52;-1:-1:-1;1936:16:58;;1774:184;-1:-1:-1;1774:184:58:o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "clone(address,bytes)": "0fbe133c"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.23+commit.f704f362\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"ERC1167FailedCreateClone\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"InitializationFailed\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ZeroImplementationCodeSize\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"clone\",\"type\":\"address\"}],\"name\":\"NewClone\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"implementation\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"clone\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"errors\":{\"ERC1167FailedCreateClone()\":[{\"details\":\"A clone instance deployment failed.\"}]},\"events\":{\"NewClone(address,address,address)\":{\"params\":{\"clone\":\"The address of the new proxy contract.\",\"implementation\":\"The reference bytecode to clone as a proxy.\",\"sender\":\"The `msg.sender` that called `clone`.\"}}},\"kind\":\"dev\",\"methods\":{\"clone(address,bytes)\":{\"params\":{\"data\":\"As per `ICloneableV2`.\",\"implementation\":\"The contract to clone.\"},\"returns\":{\"_0\":\"New child contract address.\"}}},\"title\":\"CloneFactory\",\"version\":1},\"userdoc\":{\"errors\":{\"InitializationFailed()\":[{\"notice\":\"Thrown when initialization fails.\"}],\"ZeroImplementationCodeSize()\":[{\"notice\":\"Thrown when an implementation has zero code size which is always a mistake.\"}]},\"events\":{\"NewClone(address,address,address)\":{\"notice\":\"Emitted upon each `clone`.\"}},\"kind\":\"user\",\"methods\":{\"clone(address,bytes)\":{\"notice\":\"Clones an implementation using a proxy. EIP1167 proxy is recommended but the exact cloning procedure is not specified by this interface. The factory MUST call `ICloneableV2.initialize` atomically with the cloning process and MUST NOT call any other functions on the cloned proxy before `initialize` completes successfully. The factory MUST ONLY consider the clone to be successfully created if `initialize` returns the keccak256 hash of the string \\\"ICloneableV2.initialize\\\". MUST emit `NewClone` with the implementation and clone address.\"}},\"notice\":\"A fairly minimal implementation of `ICloneableFactoryV2` and `DeployerDiscoverableMetaV2` that uses Open Zeppelin `Clones` to create EIP1167 clones of a reference bytecode. The reference bytecode MUST implement `ICloneableV2`.\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"lib/rain.factory/src/concrete/CloneFactory.sol\":\"CloneFactory\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/\",\":@prb/test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/\",\":bitwise/=lib/rain.interpreter/src/lib/bitwise/\",\":bytecode/=lib/rain.interpreter.interface/src/lib/bytecode/\",\":caller/=lib/rain.interpreter.interface/src/lib/caller/\",\":ds-test/=lib/rain.interpreter.interface/lib/forge-std/lib/ds-test/src/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":eval/=lib/rain.interpreter/src/lib/eval/\",\":extern/=lib/rain.interpreter/src/lib/extern/\",\":forge-std/=lib/rain.interpreter.interface/lib/forge-std/src/\",\":integrity/=lib/rain.interpreter/src/lib/integrity/\",\":ns/=lib/rain.interpreter.interface/src/lib/ns/\",\":op/=lib/rain.interpreter/src/lib/op/\",\":openzeppelin-contracts-upgradeable/=lib/rain.flow/lib/openzeppelin-contracts-upgradeable/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/\",\":openzeppelin/=lib/rain.factory/lib/openzeppelin-contracts/contracts/\",\":parse/=lib/rain.interpreter/src/lib/parse/\",\":prb-math/=lib/rain.interpreter/lib/prb-math/src/\",\":prb-test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/\",\":rain.chainlink/=lib/rain.interpreter/lib/rain.chainlink/src/\",\":rain.datacontract/=lib/rain.interpreter/lib/rain.datacontract/src/\",\":rain.erc1820/=lib/rain.interpreter/lib/rain.erc1820/src/\",\":rain.extrospection/=lib/rain.factory/lib/rain.extrospection/\",\":rain.factory/=lib/rain.factory/\",\":rain.flow/=lib/rain.flow/src/\",\":rain.interpreter.interface/=lib/rain.interpreter.interface/src/\",\":rain.interpreter/=lib/rain.interpreter/\",\":rain.intorastring/=lib/rain.interpreter/lib/\",\":rain.lib.hash/=lib/rain.interpreter.interface/lib/rain.lib.hash/src/\",\":rain.lib.memkv/=lib/rain.interpreter/lib/rain.lib.memkv/src/\",\":rain.lib.typecast/=lib/rain.interpreter.interface/lib/rain.lib.typecast/src/\",\":rain.math.fixedpoint/=lib/rain.flow/lib/rain.math.fixedpoint/src/\",\":rain.math.saturating/=lib/rain.interpreter/lib/rain.math.saturating/src/\",\":rain.metadata/=lib/rain.interpreter/lib/rain.metadata/\",\":rain.solmem/=lib/rain.interpreter.interface/lib/rain.solmem/src/\",\":sol.lib.binmaskflag/=lib/rain.interpreter/lib/sol.lib.binmaskflag/src/\",\":state/=lib/rain.interpreter/src/lib/state/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/proxy/Clones.sol\":{\"keccak256\":\"0xd18408af8a91bedb3d56343eeb9b30eb852e6dea93a5e2d5c6db9ca4cb905155\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://061475b7302a732dc598907790f407417551c2b13e89daa57b3698489ef5484b\",\"dweb:/ipfs/QmdX5qmk3VSniSErFuD4aVawQxUi2MuUbP7spPcHddPfcX\"]},\"lib/rain.factory/src/concrete/CloneFactory.sol\":{\"keccak256\":\"0x4a4bff0a8a132ae58583cefdf5b76a1b15af020ee557c408bcefa08635f29b25\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://d83992f6119204d3d7d57bdec32dd82e53cbf7ae92a02b673356568c606a25a6\",\"dweb:/ipfs/QmTL7VejHbdV2t8UpwrAHABihDeSj3gSDvZrvaj6r8gbsH\"]},\"lib/rain.factory/src/interface/ICloneableFactoryV2.sol\":{\"keccak256\":\"0xc25b2884c91b31d814531ba801d702cbe8ca6f98b78199e6fe1fb8664547dbfb\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://bf2b74e4311d095acb0b033904d94cbde3cda965eac6428d5a864054acff6910\",\"dweb:/ipfs/QmQqh77n9o3Vt9f5aVqSWxygyVE65ygVE4oTCrD4GvjcZ9\"]},\"lib/rain.factory/src/interface/ICloneableV2.sol\":{\"keccak256\":\"0xbc1ceff073c177b6a0765abc20e897074b45cf620e6196a1d1c52f935d217a80\",\"license\":\"CAL\",\"urls\":[\"bzz-raw://fd2bbdded11b1d41ee37c03e617b17d12dbdd8a2afebc17a91f463db296cb234\",\"dweb:/ipfs/QmWTtnexF9X6G12nEWPcmcsDVTuaYHmWKwUgJTvcak8pYP\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.23+commit.f704f362"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ERC1167FailedCreateClone"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "InitializationFailed"
+        },
+        {
+          "inputs": [],
+          "type": "error",
+          "name": "ZeroImplementationCodeSize"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "sender",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address",
+              "indexed": false
+            },
+            {
+              "internalType": "address",
+              "name": "clone",
+              "type": "address",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "NewClone",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "implementation",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "data",
+              "type": "bytes"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "clone",
+          "outputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {
+          "clone(address,bytes)": {
+            "params": {
+              "data": "As per `ICloneableV2`.",
+              "implementation": "The contract to clone."
+            },
+            "returns": {
+              "_0": "New child contract address."
+            }
+          }
+        },
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {
+          "clone(address,bytes)": {
+            "notice": "Clones an implementation using a proxy. EIP1167 proxy is recommended but the exact cloning procedure is not specified by this interface. The factory MUST call `ICloneableV2.initialize` atomically with the cloning process and MUST NOT call any other functions on the cloned proxy before `initialize` completes successfully. The factory MUST ONLY consider the clone to be successfully created if `initialize` returns the keccak256 hash of the string \"ICloneableV2.initialize\". MUST emit `NewClone` with the implementation and clone address."
+          }
+        },
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+        "@prb/test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/",
+        "bitwise/=lib/rain.interpreter/src/lib/bitwise/",
+        "bytecode/=lib/rain.interpreter.interface/src/lib/bytecode/",
+        "caller/=lib/rain.interpreter.interface/src/lib/caller/",
+        "ds-test/=lib/rain.interpreter.interface/lib/forge-std/lib/ds-test/src/",
+        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+        "eval/=lib/rain.interpreter/src/lib/eval/",
+        "extern/=lib/rain.interpreter/src/lib/extern/",
+        "forge-std/=lib/rain.interpreter.interface/lib/forge-std/src/",
+        "integrity/=lib/rain.interpreter/src/lib/integrity/",
+        "ns/=lib/rain.interpreter.interface/src/lib/ns/",
+        "op/=lib/rain.interpreter/src/lib/op/",
+        "openzeppelin-contracts-upgradeable/=lib/rain.flow/lib/openzeppelin-contracts-upgradeable/",
+        "openzeppelin-contracts/=lib/openzeppelin-contracts/",
+        "openzeppelin/=lib/rain.factory/lib/openzeppelin-contracts/contracts/",
+        "parse/=lib/rain.interpreter/src/lib/parse/",
+        "prb-math/=lib/rain.interpreter/lib/prb-math/src/",
+        "prb-test/=lib/rain.interpreter/lib/prb-math/lib/prb-test/src/",
+        "rain.chainlink/=lib/rain.interpreter/lib/rain.chainlink/src/",
+        "rain.datacontract/=lib/rain.interpreter/lib/rain.datacontract/src/",
+        "rain.erc1820/=lib/rain.interpreter/lib/rain.erc1820/src/",
+        "rain.extrospection/=lib/rain.factory/lib/rain.extrospection/",
+        "rain.factory/=lib/rain.factory/",
+        "rain.flow/=lib/rain.flow/src/",
+        "rain.interpreter.interface/=lib/rain.interpreter.interface/src/",
+        "rain.interpreter/=lib/rain.interpreter/",
+        "rain.intorastring/=lib/rain.interpreter/lib/",
+        "rain.lib.hash/=lib/rain.interpreter.interface/lib/rain.lib.hash/src/",
+        "rain.lib.memkv/=lib/rain.interpreter/lib/rain.lib.memkv/src/",
+        "rain.lib.typecast/=lib/rain.interpreter.interface/lib/rain.lib.typecast/src/",
+        "rain.math.fixedpoint/=lib/rain.flow/lib/rain.math.fixedpoint/src/",
+        "rain.math.saturating/=lib/rain.interpreter/lib/rain.math.saturating/src/",
+        "rain.metadata/=lib/rain.interpreter/lib/rain.metadata/",
+        "rain.solmem/=lib/rain.interpreter.interface/lib/rain.solmem/src/",
+        "sol.lib.binmaskflag/=lib/rain.interpreter/lib/sol.lib.binmaskflag/src/",
+        "state/=lib/rain.interpreter/src/lib/state/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "lib/rain.factory/src/concrete/CloneFactory.sol": "CloneFactory"
+      },
+      "evmVersion": "paris",
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/proxy/Clones.sol": {
+        "keccak256": "0xd18408af8a91bedb3d56343eeb9b30eb852e6dea93a5e2d5c6db9ca4cb905155",
+        "urls": [
+          "bzz-raw://061475b7302a732dc598907790f407417551c2b13e89daa57b3698489ef5484b",
+          "dweb:/ipfs/QmdX5qmk3VSniSErFuD4aVawQxUi2MuUbP7spPcHddPfcX"
+        ],
+        "license": "MIT"
+      },
+      "lib/rain.factory/src/concrete/CloneFactory.sol": {
+        "keccak256": "0x4a4bff0a8a132ae58583cefdf5b76a1b15af020ee557c408bcefa08635f29b25",
+        "urls": [
+          "bzz-raw://d83992f6119204d3d7d57bdec32dd82e53cbf7ae92a02b673356568c606a25a6",
+          "dweb:/ipfs/QmTL7VejHbdV2t8UpwrAHABihDeSj3gSDvZrvaj6r8gbsH"
+        ],
+        "license": "CAL"
+      },
+      "lib/rain.factory/src/interface/ICloneableFactoryV2.sol": {
+        "keccak256": "0xc25b2884c91b31d814531ba801d702cbe8ca6f98b78199e6fe1fb8664547dbfb",
+        "urls": [
+          "bzz-raw://bf2b74e4311d095acb0b033904d94cbde3cda965eac6428d5a864054acff6910",
+          "dweb:/ipfs/QmQqh77n9o3Vt9f5aVqSWxygyVE65ygVE4oTCrD4GvjcZ9"
+        ],
+        "license": "CAL"
+      },
+      "lib/rain.factory/src/interface/ICloneableV2.sol": {
+        "keccak256": "0xbc1ceff073c177b6a0765abc20e897074b45cf620e6196a1d1c52f935d217a80",
+        "urls": [
+          "bzz-raw://fd2bbdded11b1d41ee37c03e617b17d12dbdd8a2afebc17a91f463db296cb234",
+          "dweb:/ipfs/QmWTtnexF9X6G12nEWPcmcsDVTuaYHmWKwUgJTvcak8pYP"
+        ],
+        "license": "CAL"
+      }
+    },
+    "version": 1
+  },
+  "id": 15
+}

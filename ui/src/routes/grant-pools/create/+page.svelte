@@ -2,7 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import type { Record, ActionHash, AgentPubKey } from '@holochain/client';
 	import type { AmountRangeBigInt, GrantPool } from '../../../grant_pools/grants/types';
-	import { Textarea, Button, Input } from 'flowbite-svelte';
+	import { Textarea, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
 	import InputApplicationTemplate from './InputApplicationTemplate.svelte';
 	import InputEvaluationTemplate from './InputEvaluationTemplate.svelte';
@@ -21,6 +21,7 @@
 	import { getAccount } from '@wagmi/core';
 	import { createGrantPoolFlow, deposit } from '$lib/services/flow';
 	import { approve } from '$lib/services/erc20';
+	import BaseButtonLoading from '$lib/components/BaseButtonLoading.svelte';
 	const dispatch = createEventDispatcher();
 
 	export let name: string = '';
@@ -32,11 +33,12 @@
 	export let evaluationTemplate: ActionHash | undefined = undefined;
 	export let evaluators: AgentPubKey[] = [];
 	export let depositAmount: bigint = 0n;
+	let isCreating = false;
 
 	$: isGrantPoolValid =
-		name !== '' &&
-		purposeDescription !== '' &&
-		rulesDescription !== '' &&
+		name.length > 0 &&
+		purposeDescription.length > 0 &&
+		rulesDescription.length > 0 &&
 		timePeriod !== undefined &&
 		amountRange !== undefined &&
 		applicationTemplate !== undefined &&
@@ -46,34 +48,35 @@
 		depositAmount > 0n;
 
 	async function createGrantPool() {
-		// read wallet address
-		const notaryEvmWallet = getAccount(config).address;
-		if (notaryEvmWallet === undefined) {
-			toasts.error('Connect an EVM wallet');
-			return;
-		}
-
-		// deploy flow contract
-		const flowEvmAddress = await createGrantPoolFlow(notaryEvmWallet);
-
-		// create grant pool entry
-		const grantPoolEntry: GrantPool = {
-			name: name!,
-			purpose_description: purposeDescription!,
-			rules_description: rulesDescription!,
-			time_period: timePeriod!,
-			application_template: applicationTemplate!,
-			evaluation_template: evaluationTemplate!,
-			amount_range: {
-				min: bigintToU256(amountRange!.min),
-				max: bigintToU256(amountRange!.max)
-			},
-			evaluators: evaluators!,
-			notary_evm_wallet: notaryEvmWallet,
-			flow_evm_address: flowEvmAddress
-		};
+		isCreating = true;
 
 		try {
+			// read wallet address
+			const notaryEvmWallet = getAccount(config).address;
+			if (notaryEvmWallet === undefined) {
+				throw Error('Connect an EVM Wallert');
+			}
+
+			// deploy flow contract
+			const flowEvmAddress = await createGrantPoolFlow(notaryEvmWallet);
+
+			// create grant pool entry
+			const grantPoolEntry: GrantPool = {
+				name: name!,
+				purpose_description: purposeDescription!,
+				rules_description: rulesDescription!,
+				time_period: timePeriod!,
+				application_template: applicationTemplate!,
+				evaluation_template: evaluationTemplate!,
+				amount_range: {
+					min: bigintToU256(amountRange!.min),
+					max: bigintToU256(amountRange!.max)
+				},
+				evaluators: evaluators!,
+				notary_evm_wallet: notaryEvmWallet,
+				flow_evm_address: flowEvmAddress
+			};
+
 			const record: Record = await $holochainClient.client.callZome({
 				cap_secret: null,
 				role_name: 'grant_pools',
@@ -83,9 +86,13 @@
 			});
 
 			// call erc20 approve
+			toasts.info(
+				`Transaction 1/2 (Approve Spending ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`
+			);
 			await approve(depositAmount, flowEvmAddress);
 
 			// call flow deposit
+			toasts.info(`Transaction 2/2 (Deposit ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`);
 			const depositTxHash = await deposit(depositAmount, flowEvmAddress);
 
 			// add grant pool <-> sponsor link
@@ -107,6 +114,8 @@
 		} catch (e) {
 			toasts.error(`Error creating the grant pool: ${e}`);
 		}
+
+		isCreating = false;
 	}
 </script>
 
@@ -179,5 +188,12 @@
 </BaseLabelContent>
 
 <div class="flex justify-end">
-	<Button disabled={!isGrantPoolValid} on:click={createGrantPool} color="green">Create</Button>
+	<BaseButtonLoading
+		disabled={!isGrantPoolValid}
+		on:click={createGrantPool}
+		color="green"
+		loading={isCreating}
+	>
+		Create
+	</BaseButtonLoading>
 </div>
