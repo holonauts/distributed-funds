@@ -49,7 +49,7 @@ is-closed: get(hash("is-closed")),
  * the coupon will be a signed message with the following fields:
  * [0] this contract address
  * [1] application evm wallet
- * [2] application ActionHash (core 32 bytes)
+ * [2] application ActionHash (core 32 bytes only)
  * [3] application amount
  * [4] total deposit pool amount
  */
@@ -61,7 +61,7 @@ coupon-signer: context<2 0>(),
 /* coupon contents */
 contract: context<3 0>(),
 application-address: context<3 1>(),
-application-action-hash-core32: context<3 2>(),
+application-action-hash: context<3 2>(),
 application-amount: context<3 3>(),
 expected-total-deposited: context<3 4>(),
 
@@ -75,7 +75,7 @@ expected-total-deposited: context<3 4>(),
 :ensure(eq(you application-address) "caller must be application address"),
 
 /* ensure application has not claimed yet */
-application-has-claimed: get(application-action-hash-core32),
+application-has-claimed: get(application-action-hash),
 :ensure(eq(application-has-claimed 0) "application funding has already been claimed"),
 
 /* ensure the coupon know the total amount deposited in the pool  */
@@ -86,4 +86,4 @@ total-deposited: get(hash("total-deposited")),
 _ _ _ _: payment-token me you application-amount,
 
 /* mark that application has claimed */
-:set(application-action-hash-core32 1);
+:set(application-action-hash 1);
