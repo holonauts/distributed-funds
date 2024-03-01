@@ -1,3 +1,6 @@
 [submodule "rain/lib/rain.flow"]
 	path = rain/lib/rain.flow
 	url = https://github.com/rainlanguage/rain.flow
+[submodule "rain/lib/rain.factory"]
+	path = rain/lib/rain.factory
+	url = https://github.com/rainlanguage/rain.factory
