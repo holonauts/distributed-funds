@@ -1,7 +1,7 @@
 use hdi::prelude::*;
 pub fn validate_create_link_evaluator_to_applications(
     _action: CreateLink,
-    _base_address: AnyLinkableHash,
+    base_address: AnyLinkableHash,
     target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
@@ -19,6 +19,12 @@ pub fn validate_create_link_evaluator_to_applications(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Linked action must reference an entry"
         ))))?;
+    if !AgentPubKey::try_from(base_address).is_ok() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Can only evaluator from an AgentPubKey".to_string(),
+        ));
+    }
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_evaluator_to_applications(
@@ -35,7 +41,7 @@ pub fn validate_delete_link_evaluator_to_applications(
 pub fn validate_create_link_application_to_evaluators(
     _action: CreateLink,
     base_address: AnyLinkableHash,
-    _target_address: AnyLinkableHash,
+    target_address: AnyLinkableHash,
     _tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
     // Check the entry type for the given action hash
@@ -52,7 +58,12 @@ pub fn validate_create_link_application_to_evaluators(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Linked action must reference an entry"
         ))))?;
-    // TODO: add the appropriate validation rules
+    if !AgentPubKey::try_from(target_address).is_ok() {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Can only link application to valid evaluator AgentPubKey".to_string(),
+        ));
+    }
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_application_to_evaluators(

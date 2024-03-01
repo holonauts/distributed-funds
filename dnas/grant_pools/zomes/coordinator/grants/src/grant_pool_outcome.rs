@@ -1,9 +1,8 @@
-use crate::evaluation::{get_evaluation, get_score_for_evaluation};
+use crate::evaluation::get_evaluation;
 use alloy_primitives::U256;
-use grants_integrity::GrantPoolOutcome;
 use grants_integrity::*;
+use grants_integrity::{calc_absolute_score, get_score_for_evaluation, GrantPoolOutcome};
 use hdk::prelude::*;
-use rust_decimal::Decimal;
 use std::collections::BTreeMap;
 #[hdk_extern]
 pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> ExternResult<Record> {
@@ -54,17 +53,18 @@ pub fn create_grant_pool_outcome_for_grant_pool(grant_pool: ActionHash) -> Exter
             let score = get_score_for_evaluation(evaluation.clone());
             evaluation_scores.push(score);
         }
+        let num_evals = evaluation_scores.clone().len();
 
         let absolute_score = AbsoluteScore {
             application: app_action_hash.clone(),
-            score: Decimal::from(evaluation_scores.iter().sum::<u64>())
-                / Decimal::from(links_for_evaluations.len()),
+            score: calc_absolute_score(evaluation_scores, num_evals),
         };
 
         absolute_scores.push(absolute_score);
         grant_pool_evaluations.insert(app_action_hash, evaluation_action_hashes);
     }
     absolute_scores.sort_by(|a, b| b.score.cmp(&a.score));
+    // TODO: Coupon
     let coupon = Vec::new();
     let grant_pool_outcome = GrantPoolOutcome {
         grant_pool,

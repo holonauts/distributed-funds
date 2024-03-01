@@ -1,5 +1,6 @@
 use crate::{EvaluationTemplate, ScoreTemplate};
 use hdi::prelude::*;
+use rust_decimal::Decimal;
 use std::iter::zip;
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq, SerializedBytes)]
 pub struct AttributeScore {
@@ -21,6 +22,21 @@ pub struct Evaluation {
     pub comments: String,
     pub score: Score,
 }
+
+pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
+    match evaluation.score {
+        Score::Single(score) => score,
+        Score::Weighted(vec) => {
+            let total: u64 = vec.iter().map(|score| score.value * score.weight).sum();
+            total
+        }
+    }
+}
+
+pub fn calc_absolute_score(raw_scores: Vec<u64>, num_evals: usize) -> Decimal {
+    Decimal::from(raw_scores.iter().sum::<u64>()) / Decimal::from(num_evals)
+}
+
 pub fn validate_create_evaluation(
     action: EntryCreationAction,
     evaluation: Evaluation,

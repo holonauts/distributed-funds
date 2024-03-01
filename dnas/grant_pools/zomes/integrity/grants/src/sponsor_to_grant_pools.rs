@@ -1,10 +1,16 @@
+use alloy_primitives::U256;
 use hdi::prelude::*;
 pub fn validate_create_link_sponsor_to_grant_pool(
     _action: CreateLink,
     _base_address: AnyLinkableHash,
     target_address: AnyLinkableHash,
-    _tag: LinkTag,
+    tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
+    if U256::from_le_slice(&tag.into_inner()) == U256::from(0) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "amount cannot be zero".to_string(),
+        ));
+    }
     let action_hash =
         target_address
             .into_action_hash()
