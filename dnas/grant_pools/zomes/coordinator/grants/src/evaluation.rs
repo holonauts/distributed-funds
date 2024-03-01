@@ -50,12 +50,3 @@ pub fn get_evaluations_for_application_by_agent(
     .filter(|l| l.author == input.agent)
     .collect())
 }
-pub fn get_score_for_evaluation(evaluation: Evaluation) -> u64 {
-    match evaluation.score {
-        Score::Single(score) => score,
-        Score::Weighted(vec) => {
-            let total: u64 = vec.iter().map(|score| score.value * score.weight).sum();
-            total
-        }
-    }
-}
