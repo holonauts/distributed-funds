@@ -1,11 +1,19 @@
 use alloy_primitives::U256;
 use hdi::prelude::*;
 pub fn validate_create_link_sponsor_to_grant_pool(
-    _action: CreateLink,
-    _base_address: AnyLinkableHash,
+    action: CreateLink,
+    base_address: AnyLinkableHash,
     target_address: AnyLinkableHash,
     tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
+    let author_pubkey = base_address
+        .into_agent_pub_key()
+        .ok_or(wasm_error!("Base address must be an AgentPubKey"))?;
+    if action.author != author_pubkey {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Author not valid, can only add yourself as a sponsor".to_string(),
+        ));
+    }
     if U256::from_le_slice(&tag.into_inner()) == U256::from(0) {
         return Ok(ValidateCallbackResult::Invalid(
             "amount cannot be zero".to_string(),

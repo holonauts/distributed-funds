@@ -41,6 +41,17 @@ pub fn validate_create_grant_pool(
             "Evaluators cannot be empty".to_string(),
         ));
     }
+    if grant_pool.amount_range.min > grant_pool.amount_range.min {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Amount range max must be greater than min".to_string(),
+        ));
+    }
+    if grant_pool.evaluators.len() == 0 {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Must have at least one evaluator".to_string(),
+        ));
+    }
+
     let record = must_get_valid_record(grant_pool.time_period.clone())?;
     let _time_period: crate::TimePeriod = record
         .entry()
