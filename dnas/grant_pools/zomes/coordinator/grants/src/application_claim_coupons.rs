@@ -62,11 +62,11 @@ pub fn construct_claim_context_for_application(
         .filter_map(|l| U256::try_from_le_slice(l.tag.0.as_slice()))
         .sum();
 
-    Ok(ClaimContext::new(
+    ClaimContext::new(
         grant_pool.flow_evm_address,
         application.evm_wallet,
         application_hash,
         application.amount,
         total_deposit_amount,
-    )?)
+    )
 }
