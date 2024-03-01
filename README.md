@@ -1,5 +1,8 @@
 # Distributed Funds
 
+## Deploy Rain contracts
+- Deploy clone factory `forge create --rpc-url <RPC_URL> --private-key <DEPLOYMENT_KEY>  src/MyCloneFactory.sol:MyCloneFactory`
+
 ## Environment Setup
 
 > PREREQUISITES
