@@ -2,11 +2,11 @@
 
 # build
 forge install
+cd lib/openzeppelin-contracts && forge build -o ../out && cd ../
+cd lib/rain.flow && forge build -o ../out && cd ../
+cd lib/rain.interpreter.interface && forge build && cd ../
+cd lib/rain.interpreter && forge build -o ../out  && cd ../
 forge build 
-forge build --root lib/openzeppelin-contracts -o out
-forge build --root lib/rain.flow -o out
-forge build --root lib/rain.interpreter.interface -o out
-forge build --root lib/rain.interpreter -o out
 
 # copy
 cp out/IParserV2.sol/IParserV2.json ../ui/src/lib/abi/
