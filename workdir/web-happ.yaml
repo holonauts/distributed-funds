@@ -1,7 +1,7 @@
 ---
 manifest_version: "1"
-name: grant-funding
+name: distributed-funds
 ui:
   bundled: "../ui/dist.zip"
 happ_manifest:
-  bundled: "./grant-funding.happ"
+  bundled: "./distributed-funds.happ"

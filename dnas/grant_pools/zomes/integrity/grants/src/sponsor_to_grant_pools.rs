@@ -7,23 +7,17 @@ pub struct Deposit {
 }
 
 pub fn validate_create_link_sponsor_to_grant_pool(
-    _action: CreateLink,
-    _base_address: AnyLinkableHash,
+    action: CreateLink,
+    base_address: AnyLinkableHash,
     target_address: AnyLinkableHash,
     tag: LinkTag,
 ) -> ExternResult<ValidateCallbackResult> {
-    // check the link tag contains a Deposit
-    let coupon_serialized_bytes = SerializedBytes::try_from(UnsafeBytes::from(tag.0))?;
-    let deposit: Deposit = coupon_serialized_bytes.try_into().map_err(|_| {
-        wasm_error!(WasmErrorInner::Guest(
-            "Failed to deserialize link tag to Deposit".into()
-        ))
-    })?;
-
-    // check deposit amount is not 0
-    if deposit.amount == U256::from(0) {
+    let author_pubkey = base_address
+        .into_agent_pub_key()
+        .ok_or(wasm_error!("Base address must be an AgentPubKey"))?;
+    if action.author != author_pubkey {
         return Ok(ValidateCallbackResult::Invalid(
-            "amount cannot be zero".to_string(),
+            "Author not valid, can only add yourself as a sponsor".to_string(),
         ));
     }
 
@@ -41,6 +35,22 @@ pub fn validate_create_link_sponsor_to_grant_pool(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Linked action must reference an entry"
         ))))?;
+
+    // check the link tag contains a Deposit
+    let coupon_serialized_bytes = SerializedBytes::try_from(UnsafeBytes::from(tag.0))?;
+    let deposit: Deposit = coupon_serialized_bytes.try_into().map_err(|_| {
+        wasm_error!(WasmErrorInner::Guest(
+            "Failed to deserialize link tag to Deposit".into()
+        ))
+    })?;
+
+    // check deposit amount is not 0
+    if deposit.amount == U256::from(0) {
+        return Ok(ValidateCallbackResult::Invalid(
+            "amount cannot be zero".to_string(),
+        ));
+    }
+
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_delete_link_sponsor_to_grant_pool(
