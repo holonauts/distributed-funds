@@ -4,4 +4,4 @@ name: grant-funding
 ui:
   bundled: "../ui/dist.zip"
 happ_manifest:
-  bundled: "./grant-funding.happ"
+  bundled: "./distributed-funds.happ"
