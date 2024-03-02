@@ -1,4 +1,3 @@
-use grants_integrity::Score;
 use grants_integrity::*;
 use hdk::prelude::*;
 #[hdk_extern]
