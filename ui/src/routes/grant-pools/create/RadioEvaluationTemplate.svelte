@@ -8,5 +8,5 @@
 </script>
 
 <BaseRadioListItem bind:group value={encodeHashToBase64(evaluationTemplateHash)}>
-	<EvaluationTemplateListItem {evaluationTemplateHash} showCloneButton={true} />
+	<EvaluationTemplateListItem {evaluationTemplateHash} showCloneButton={true} on:clone />
 </BaseRadioListItem>
