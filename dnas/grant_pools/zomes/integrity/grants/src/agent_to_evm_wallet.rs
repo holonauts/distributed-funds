@@ -13,12 +13,12 @@ pub fn validate_create_link_agent_to_evm_wallet(
             e
         )))
     })?;
-    if !AgentPubKey::try_from(base_address).is_ok() {
+    if AgentPubKey::try_from(base_address).is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Can only link wallet from an AgentPubKey".to_string(),
         ));
     }
-    if !Address::parse_checksummed(&evm_address, None).is_ok() {
+    if Address::parse_checksummed(evm_address, None).is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Can only link to valid evm address".to_string(),
         ));
