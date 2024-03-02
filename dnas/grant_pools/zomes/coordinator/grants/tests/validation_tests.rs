@@ -1,7 +1,8 @@
 mod shared_test;
+use grants::time_period;
 use grants_integrity::{
     AbsoluteScore, Application, ApplicationStatus, ApplicationTemplate, AttributeScoreTemplate,
-    EvaluationTemplate, NumberRange, Score, ScoreTemplate,
+    EvaluationTemplate, NumberRange, Score, ScoreTemplate, TimePeriod,
 };
 use shared_test::*;
 
@@ -13,6 +14,42 @@ use holochain::{
 use serde_json::json;
 
 use alloy_primitives::{address, Address, U256};
+
+#[tokio::test(flavor = "multi_thread")]
+pub async fn test_time_period_validation() {
+    let (conductor, _agent, cell): (SweetConductor, AgentPubKey, SweetCell) =
+        setup_conductor().await;
+
+    let valid_time_period = TimePeriod {
+        start_at: Timestamp(1),
+        end_at: Timestamp(2),
+    };
+
+    let invalid_time_period = TimePeriod {
+        start_at: Timestamp(2),
+        end_at: Timestamp(1),
+    };
+
+    let valid_result: Record = conductor
+        .call(
+            &cell.zome("grants"),
+            "create_time_period",
+            valid_time_period,
+        )
+        .await;
+
+    println!("{:#?}", valid_result);
+
+    let invalid_result: Result<Record, ConductorApiError> = conductor
+        .call_fallible(
+            &cell.zome("grants"),
+            "create_time_period",
+            invalid_time_period,
+        )
+        .await;
+
+    assert!(invalid_result.is_err());
+}
 
 // #[tokio::test(flavor = "multi_thread")]
 // pub async fn test_application_template_validation() {
