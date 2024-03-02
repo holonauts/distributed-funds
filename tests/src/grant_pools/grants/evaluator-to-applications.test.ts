@@ -10,7 +10,7 @@ test('link a Evaluator to a Application', async () => {
   await runScenario(async scenario => {
     // Construct proper paths for your app.
     // This assumes app bundle created by the `hc app pack` command.
-    const testAppPath = process.cwd() + '/../workdir/grant-funding.happ';
+    const testAppPath = process.cwd() + '/../workdir/distributed-funds.happ';
 
     // Set up the app to be installed 
     const appSource = { appBundleSource: { path: testAppPath } };

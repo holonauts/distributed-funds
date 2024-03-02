@@ -19,7 +19,7 @@ pub fn validate_create_link_evaluator_to_applications(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Linked action must reference an entry"
         ))))?;
-    if !AgentPubKey::try_from(base_address).is_ok() {
+    if AgentPubKey::try_from(base_address).is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Can only evaluator from an AgentPubKey".to_string(),
         ));
@@ -58,7 +58,7 @@ pub fn validate_create_link_application_to_evaluators(
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Linked action must reference an entry"
         ))))?;
-    if !AgentPubKey::try_from(target_address).is_ok() {
+    if AgentPubKey::try_from(target_address).is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Can only link application to valid evaluator AgentPubKey".to_string(),
         ));

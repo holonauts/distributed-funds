@@ -46,8 +46,8 @@ To package the web happ:
 npm run package
 ```
 
-You'll have the `grant-funding.webhapp` in `workdir`. This is what you should distribute so that the Holochain Launcher can install it.
-You will also have its subcomponent `grant-funding.happ` in the same folder`.
+You'll have the `distributed-funds.webhapp` in `workdir`. This is what you should distribute so that the Holochain Launcher can install it.
+You will also have its subcomponent `distributed-funds.happ` in the same folder`.
 
 ## Documentation
 

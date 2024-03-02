@@ -15,7 +15,7 @@
 	import BaseNavbar from '$lib/components/BaseNavbar.svelte';
 
 	onMount(async () => {
-		await holochainClient.connect(new URL('ws://unused'), 'grant-funding');
+		await holochainClient.connect(new URL('ws://unused'), 'distributed-funds');
 	});
 
 	setContext(clientContext, {

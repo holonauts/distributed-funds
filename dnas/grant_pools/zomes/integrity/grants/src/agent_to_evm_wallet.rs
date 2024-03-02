@@ -21,8 +21,7 @@ pub fn validate_create_link_agent_to_evm_wallet(
             e
         )))
     })?;
-
-    if !Address::parse_checksummed(&evm_address, None).is_ok() {
+    if Address::parse_checksummed(evm_address, None).is_err() {
         return Ok(ValidateCallbackResult::Invalid(
             "Can only link to valid evm address".to_string(),
         ));
