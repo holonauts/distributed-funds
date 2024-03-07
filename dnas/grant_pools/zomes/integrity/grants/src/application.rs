@@ -47,13 +47,19 @@ pub fn validate_create_application(
         ));
     }
     let record = must_get_valid_record(application.grant_pool.clone())?;
-    let _grant_pool: crate::GrantPool = record
+    let grant_pool: crate::GrantPool = record
         .entry()
         .to_app_option()
         .map_err(|e| wasm_error!(e))?
         .ok_or(wasm_error!(WasmErrorInner::Guest(String::from(
             "Dependant action must be accompanied by an entry"
         ))))?;
+
+    if application.amount < grant_pool.amount_range.min {
+        return Ok(ValidateCallbackResult::Invalid(
+            "Application amount must be equal to or greater than Grant Pool min range".to_string(),
+        ));
+    }
     Ok(ValidateCallbackResult::Valid)
 }
 pub fn validate_update_application(
