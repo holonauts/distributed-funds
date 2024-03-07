@@ -8,6 +8,7 @@
   "scripts": {
     "start": "AGENTS=2 BOOTSTRAP_PORT=$(port) SIGNAL_PORT=$(port) npm run network",
     "network": "hc s clean && npm run build:happ && UI_PORT=8888 concurrently \"npm start -w ui\" \"npm run launch:happ\" \"holochain-playground\"",
+    "sweetest": "npm run build:happ && cargo test",
     "test": "npm run build:zomes && hc app pack workdir --recursive && npm t -w tests",
     "launch:happ": "hc-spin -n $AGENTS --ui-port $UI_PORT workdir/distributed-funds.happ",
     "start:tauri": "AGENTS=2 BOOTSTRAP_PORT=$(port) SIGNAL_PORT=$(port) npm run network:tauri",
