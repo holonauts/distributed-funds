@@ -101,6 +101,13 @@ export interface TimePeriod {
 	end_at: number;
 }
 
+export interface FlowCloneEvm {
+    flow_clone_address: string,
+    deposit_expression_address: string,
+    close_expression_address: string,
+    claim_expression_address: string,
+};
+
 export interface GrantPool {
 	name: string;
 
@@ -120,7 +127,7 @@ export interface GrantPool {
 	
 	notary_evm_wallet: string;
 
-	flow_evm_address: string;
+	flow_evm: FlowCloneEvm;
 }
 
 export enum StatusType {

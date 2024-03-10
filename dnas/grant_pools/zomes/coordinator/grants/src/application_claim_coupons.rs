@@ -63,7 +63,7 @@ pub fn construct_claim_context_for_application(
         .sum();
 
     ClaimContext::new(
-        grant_pool.flow_evm_address,
+        grant_pool.flow_evm.flow_clone_address,
         application.evm_wallet,
         application_hash,
         application.amount,

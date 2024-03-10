@@ -5,6 +5,16 @@ pub struct AmountRange {
     min: U256,
     max: U256,
 }
+
+/// Cloned EVM Flow contract addresses
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, SerializedBytes)]
+pub struct FlowCloneEvm {
+    pub flow_clone_address: Address,
+    pub deposit_expression_address: Address,
+    pub close_expression_address: Address,
+    pub claim_expression_address: Address,
+}
+
 #[hdk_entry_helper]
 #[derive(Clone, PartialEq)]
 pub struct GrantPool {
@@ -21,7 +31,7 @@ pub struct GrantPool {
     pub notary_evm_wallet: Address,
 
     // Address of deployed Flow contract
-    pub flow_evm_address: Address,
+    pub flow_evm: FlowCloneEvm,
 }
 pub fn validate_create_grant_pool(
     _action: EntryCreationAction,

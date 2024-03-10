@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import type { Record, ActionHash, AgentPubKey } from '@holochain/client';
+	import {
+		type Record,
+		type ActionHash,
+		type AgentPubKey,
+		encodeHashToBase64
+	} from '@holochain/client';
 	import type { AmountRangeBigInt, GrantPool } from '../../../grant_pools/grants/types';
 	import { Textarea, Input } from 'flowbite-svelte';
 	import { toasts } from '$lib/stores/toast';
@@ -58,7 +63,8 @@
 			}
 
 			// deploy flow contract
-			const flowEvmAddress = await createGrantPoolFlow(notaryEvmWallet);
+			toasts.info('Transaction 1/3 (Deploy Grant Pool Contract): Awaiting signature');
+			const flowEvm = await createGrantPoolFlow(notaryEvmWallet);
 
 			// create grant pool entry
 			const grantPoolEntry: GrantPool = {
@@ -74,8 +80,9 @@
 				},
 				evaluators: evaluators!,
 				notary_evm_wallet: notaryEvmWallet,
-				flow_evm_address: flowEvmAddress
+				flow_evm: flowEvm
 			};
+			console.log('grant pool entry is ', grantPoolEntry);
 
 			const record: Record = await $holochainClient.client.callZome({
 				cap_secret: null,
@@ -87,13 +94,17 @@
 
 			// call erc20 approve
 			toasts.info(
-				`Transaction 1/2 (Approve Spending ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`
+				`Transaction 2/2 (Approve Spending ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`
 			);
-			await approve(depositAmount, flowEvmAddress);
+			await approve(depositAmount, flowEvm.flow_clone_address);
 
 			// call flow deposit
-			toasts.info(`Transaction 2/2 (Deposit ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`);
-			const depositTxHash = await deposit(depositAmount, flowEvmAddress);
+			toasts.info(`Transaction 3/3 (Deposit ${ACCEPTED_TOKEN_SYMBOL}): Awaiting signature`);
+			const depositTxHash = await deposit(
+				depositAmount,
+				flowEvm.flow_clone_address,
+				flowEvm.deposit_expression_address
+			);
 
 			// add grant pool <-> sponsor link
 			await $holochainClient.client.callZome({
@@ -110,7 +121,7 @@
 			});
 
 			dispatch('grant-pool-created', { grantPoolHash: record.signed_action.hashed.hash });
-			goto('/grant-pools/');
+			goto(`/grant-pools/${encodeHashToBase64(record.signed_action.hashed.hash)}`);
 		} catch (e) {
 			toasts.error(`Error creating the grant pool: ${e}`);
 		}
