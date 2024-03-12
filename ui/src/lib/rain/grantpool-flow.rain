@@ -17,10 +17,10 @@ is-closed: get(hash("is-closed")),
 :ensure(equal-to(is-closed 0) "deposits are closed"),
 
 /* deposit into contract */
+_ _ _ _: payment-amount me you payment-token,
 transfererc1155slist: sentinel,
 transfererc721slist: sentinel,
 transfererc20slist: sentinel,
-_ _ _ _: payment-token you me payment-amount,
 
 /* account that a deposit has been made */
 prev-amount: get(hash("total-deposited")),
