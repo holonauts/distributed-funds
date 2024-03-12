@@ -5,6 +5,7 @@
 /* accepted payment token */
 #payment-token  !payment-token must be the accepted token address
 
+#sentinel 115183058774379759847873638693462432260838474092724525396123647190314935293775
 
 #deposit
 you: context<0 0>(),
@@ -16,6 +17,9 @@ is-closed: get(hash("is-closed")),
 :ensure(equal-to(is-closed 0) "deposits are closed"),
 
 /* deposit into contract */
+transfererc1155slist: sentinel,
+transfererc721slist: sentinel,
+transfererc20slist: sentinel,
 _ _ _ _: payment-token you me payment-amount,
 
 /* account that a deposit has been made */
@@ -87,6 +91,9 @@ total-deposited: get(hash("total-deposited")),
 :ensure(equal-to(expected-total-deposited total-deposited) "incorrect total deposited"),
 
 /* transfer amount to application-address */
+transfererc1155slist: sentinel,
+transfererc721slist: sentinel,
+transfererc20slist: sentinel,
 _ _ _ _: payment-token me you application-amount,
 
 /* mark that application has claimed */
