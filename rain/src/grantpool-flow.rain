@@ -5,7 +5,7 @@
 /* accepted payment token */
 #payment-token  !payment-token must be the accepted token address
 
-#sentinel 115183058774379759847873638693462432260838474092724525396123647190314935293775
+#sentinel 0xfea74d0c9bf4a3c28f0dd0674db22a3d7f8bf259c56af19f4ac1e735b156974f
 
 #deposit
 you: context<0 0>(),
